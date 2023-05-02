@@ -1164,7 +1164,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                     padding: EdgeInsets.only(
                                       bottom: MediaQuery.of(context).viewInsets.bottom,
                                     ),
-                                    child: BidNowPriceDialog(),
+                                    child: BidNowPriceDialog(isComeFrom: '1',),
                                   );
                                 });
                           },
