@@ -4,6 +4,7 @@ import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/presentation/home_module/create_new_load_form_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -105,7 +106,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
             child: GestureDetector(
               onDoubleTap: (){},
               onTap: (){
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=>NewLoadScreenForm()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>NewLoadScreenForm()));
               },
               child: Container(
                 height: SizeConfig.screenHeight*0.05,
