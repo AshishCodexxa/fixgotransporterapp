@@ -1,5 +1,8 @@
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/presentation/my_post_module/cancelled_post_screen.dart';
+import 'package:fixgotransporterapp/presentation/my_post_module/completed_post_screen.dart';
+import 'package:fixgotransporterapp/presentation/my_post_module/on_going_post_screen.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/pending_post_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -105,9 +108,9 @@ class _MyPostChildScreenState extends State<MyPostChildScreen> {
               child: TabBarView(
                 children: <Widget>[
                  PendingPostScreen(),
-                 Container(),
-                 Container(),
-                 Container(),
+                 OnGoingPostScreen(),
+                 CompletedPostScreen(),
+                 CancelledPostScreen(),
                 ],
               ),
             )),

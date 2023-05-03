@@ -24,5 +24,7 @@ class CommonColor{
   static const PAY_IN_CASH_COLOR = const Color(0xFF8A8A8A);
   static const LOWEST_BID_CONTAINER_COLOR = const Color(0xFFFFD4D4);
   static const SAME_BID_COUNT_COLOR = const Color(0xFF9E9E9E);
+  static const DECLINE_PAYMENT_COLOR = const Color(0xFF933030);
+  static const ACCEPT_PAYMENT_COLOR = const Color(0xFF28BCAA);
 
 }

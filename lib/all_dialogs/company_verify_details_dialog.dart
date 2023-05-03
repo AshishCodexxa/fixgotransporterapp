@@ -32,6 +32,7 @@ class _CompanyVerifyDialogState extends State<CompanyVerifyDialog> {
               topLeft: Radius.circular(20),
             )),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               height: SizeConfig.screenHeight*0.05,
@@ -97,7 +98,7 @@ class _CompanyVerifyDialogState extends State<CompanyVerifyDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
-                      Text("Mahesh Transporter",
+                      Text("XYZ",
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Roboto_Bold',
@@ -143,6 +144,31 @@ class _CompanyVerifyDialogState extends State<CompanyVerifyDialog> {
                               width: SizeConfig.screenWidth*0.55,
                               color: Colors.transparent,
                               child: Text("Pune , Maharashtra",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto_Regular',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: SizeConfig.blockSizeHorizontal*4.5
+                                ),),
+                            ),
+
+                          ],
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            Icon(Icons.phone_android_outlined,
+                              color: Colors.black,),
+
+                            Container(
+                              width: SizeConfig.screenWidth*0.55,
+                              color: Colors.transparent,
+                              child: Text("9857624589",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Roboto_Regular',

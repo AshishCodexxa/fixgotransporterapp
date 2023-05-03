@@ -1,6 +1,7 @@
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/presentation/my_post_module/booking_details_screen.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/vehicle_owner_info_profile.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
               ),),
           ),
           const Icon(Icons.more_vert,
-            color: Colors.white,)
+            color: Colors.transparent,)
         ],
       ),
     );
@@ -209,7 +210,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                                 GestureDetector(
                                   onDoubleTap: (){},
                                   onTap: (){
-                                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
                                   },
                                   child: Container(
                                     width: SizeConfig.screenWidth*0.18,
