@@ -207,8 +207,7 @@ class _DashboardState extends State<Dashboard> implements
           GestureDetector(
             onTap: () {
 
-              isShow = true;
-              heading = "FixGo";
+              isShow = false;
 
               addNewScreen(
                   MyPostChildScreen(
