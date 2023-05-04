@@ -14,6 +14,15 @@ class VehicleOwnerListFilter extends StatefulWidget {
 }
 
 class _VehicleOwnerListFilterState extends State<VehicleOwnerListFilter> {
+
+
+  bool Lr = false;
+  bool Rr = false;
+  bool Ad = false;
+
+  int sorId = 0;
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -81,30 +90,43 @@ class _VehicleOwnerListFilterState extends State<VehicleOwnerListFilter> {
 
                 Padding(
                   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, top: SizeConfig.screenHeight*0.02),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: SizeConfig.screenHeight*0.03,
-                        width: SizeConfig.screenWidth*0.068,
-                        decoration:  BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          shape: BoxShape.circle
-                        ),
+                  child: GestureDetector(
+                    onTap: (){
+                      if(mounted){
+                        setState(() {
+                          Lr = !Lr;
+                        });
+                      }
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: SizeConfig.screenHeight*0.03,
+                            width: SizeConfig.screenWidth*0.068,
+                            decoration:  BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              shape: BoxShape.circle,
+                              color: Lr == true ? CommonColor.SIGN_UP_TEXT_COLOR : Colors.white
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
+                            child: Text(
+                                "Lowest Rate",
+                                style: TextStyle(
+                                    fontSize:
+                                    SizeConfig.blockSizeHorizontal * 4.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto_Regular')
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
-                        child: Text(
-                            "Lowest Rate",
-                            style: TextStyle(
-                                fontSize:
-                                SizeConfig.blockSizeHorizontal * 4.0,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontFamily: 'Roboto_Regular')
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
 
@@ -126,30 +148,43 @@ class _VehicleOwnerListFilterState extends State<VehicleOwnerListFilter> {
 
                 Padding(
                   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, top: SizeConfig.screenHeight*0.02),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: SizeConfig.screenHeight*0.03,
-                        width: SizeConfig.screenWidth*0.068,
-                        decoration:  BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            shape: BoxShape.circle
-                        ),
+                  child: GestureDetector(
+                    onTap: (){
+                      if(mounted){
+                        setState(() {
+                          Rr = !Rr;
+                        });
+                      }
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: SizeConfig.screenHeight*0.03,
+                            width: SizeConfig.screenWidth*0.068,
+                            decoration:  BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                shape: BoxShape.circle,
+                                color: Rr == true ? CommonColor.SIGN_UP_TEXT_COLOR : Colors.white
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
+                            child: Text(
+                                "Rating / Reviews",
+                                style: TextStyle(
+                                    fontSize:
+                                    SizeConfig.blockSizeHorizontal * 4.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto_Regular')
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
-                        child: Text(
-                            "Rating / Reviews",
-                            style: TextStyle(
-                                fontSize:
-                                SizeConfig.blockSizeHorizontal * 4.0,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontFamily: 'Roboto_Regular')
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
 
@@ -171,30 +206,43 @@ class _VehicleOwnerListFilterState extends State<VehicleOwnerListFilter> {
 
                 Padding(
                   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, top: SizeConfig.screenHeight*0.02),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: SizeConfig.screenHeight*0.03,
-                        width: SizeConfig.screenWidth*0.068,
-                        decoration:  BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            shape: BoxShape.circle
-                        ),
+                  child: GestureDetector(
+                    onTap: (){
+                      if(mounted){
+                        setState(() {
+                          Ad = !Ad;
+                        });
+                      }
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: SizeConfig.screenHeight*0.03,
+                            width: SizeConfig.screenWidth*0.068,
+                            decoration:  BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                shape: BoxShape.circle,
+                              color: Ad == true ? CommonColor.SIGN_UP_TEXT_COLOR : Colors.white
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
+                            child: Text(
+                                "Availability Date",
+                                style: TextStyle(
+                                    fontSize:
+                                    SizeConfig.blockSizeHorizontal * 4.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto_Regular')
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
-                        child: Text(
-                            "Availability Date",
-                            style: TextStyle(
-                                fontSize:
-                                SizeConfig.blockSizeHorizontal * 4.0,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontFamily: 'Roboto_Regular')
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
 

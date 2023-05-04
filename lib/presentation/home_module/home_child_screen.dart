@@ -75,22 +75,221 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       childCount: 3,
                           (context, index) {
                         return  Padding(
-                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02,
-                              left: SizeConfig.screenWidth*0.03,
-                              right: SizeConfig.screenWidth*0.03),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 5,
-                                    spreadRadius: 1,
-                                    offset: const Offset(2, 6)),
-                              ],
+                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
+                            left: SizeConfig.screenWidth*0.0
+                          ),
+                          child: Theme(
+                            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                                trailing: SizedBox(width: 0,
+                                height: 0,),
+                              title: Container(
+                                // height: SizeConfig.screenHeight*0.0,
+                                decoration:  BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                        offset: const Offset(2, 6)),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02,
+                                  top: SizeConfig.screenHeight*0.01),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Codexxa Business Solution Pvt. Ltd.",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                fontFamily: "Roboto_Medium",
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+
+                                                  Text(
+                                                    "City Avenue, Wakad",
+                                                    style: TextStyle(
+                                                        color: CommonColor.BLACK_COLOR,
+                                                        fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                                                        fontFamily: "Roboto_Medium",
+                                                        fontWeight: FontWeight.w400
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    " - Pune Station",
+                                                    style: TextStyle(
+                                                        color: CommonColor.BLACK_COLOR,
+                                                        fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                                                        fontFamily: "Roboto_Medium",
+                                                        fontWeight: FontWeight.w400
+                                                    ),
+                                                  ),
+
+                                                  /*Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      // Container(
+                                                      //   height: SizeConfig.screenHeight*0.01,
+                                                      //   width: SizeConfig.screenWidth*0.021,
+                                                      //   decoration: BoxDecoration(
+                                                      //       color: CommonColor.FROM_AREA_COLOR,
+                                                      //       shape: BoxShape.circle
+                                                      //   ),
+                                                      // ),
+
+                                                      Container(
+                                                        width: SizeConfig.screenWidth*0.57,
+                                                        color: Colors.transparent,
+                                                        child: Text(
+                                                          "City Avenue, Wakad",
+                                                          style: TextStyle(
+                                                              color: CommonColor.BLACK_COLOR,
+                                                              fontSize: SizeConfig.blockSizeHorizontal*3.0,
+                                                              fontFamily: "Roboto_Medium",
+                                                              fontWeight: FontWeight.w400
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // Padding(
+                                                  //   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01),
+                                                  //   child: Row(
+                                                  //     mainAxisAlignment: MainAxisAlignment.start,
+                                                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                                                  //     children: [
+                                                  //       Container(
+                                                  //         height: SizeConfig.screenHeight*0.013,
+                                                  //         width: SizeConfig.screenWidth*0.003,
+                                                  //         color: Colors.black,
+                                                  //       ),
+                                                  //     ],
+                                                  //   ),
+                                                  // ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+
+                                                      // Container(
+                                                      //   height: SizeConfig.screenHeight*0.01,
+                                                      //   width: SizeConfig.screenWidth*0.021,
+                                                      //   decoration: BoxDecoration(
+                                                      //       color: CommonColor.TO_AREA_COLOR,
+                                                      //       shape: BoxShape.circle
+                                                      //   ),
+                                                      // ),
+
+                                                      Container(
+                                                        width: SizeConfig.screenWidth*0.6,
+                                                        color: Colors.transparent,
+                                                        child: Text(
+                                                          "Pune Station",
+                                                          style: TextStyle(
+                                                              color: CommonColor.BLACK_COLOR,
+                                                              fontSize: SizeConfig.blockSizeHorizontal*3.0,
+                                                              fontFamily: "Roboto_Medium",
+                                                              fontWeight: FontWeight.w400
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),*/
+
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.01,),
+                                              child: Column(
+                                                children: [
+                                                  RichText(
+                                                    text: TextSpan(
+                                                        text: '\u{20B9}',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.w400,
+                                                          fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                                        ),
+                                                        children: [
+                                                          TextSpan(
+                                                              text: ' 2000/-',
+                                                              style: TextStyle(
+                                                                  fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                                  color: Colors.black,
+                                                                  fontWeight: FontWeight.bold))
+                                                        ]),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.001),
+                                                    child: Row(
+                                                      children: [
+                                                        Text("(Transport Fare)",
+                                                          style: TextStyle(
+                                                              color: Colors.black54,
+                                                              fontSize: SizeConfig.blockSizeHorizontal*2.0,
+                                                              height: SizeConfig.screenHeight*0.002
+                                                          ),),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: SizeConfig.screenHeight*0.01,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
+                                      left: SizeConfig.screenWidth*0.03,
+                                      right: SizeConfig.screenWidth*0.03,
+                                  bottom: SizeConfig.screenHeight*0.02),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color: Colors.black.withOpacity(0.1),
+                                            blurRadius: 5,
+                                            spreadRadius: 1,
+                                            offset: const Offset(2, 6)),
+                                      ],
+                                    ),
+                                    child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth),
+                                  ),
+                                ),
+                              ]
                             ),
-                            child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth),
                           ),
                         );
                       },
@@ -436,7 +635,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                           child: Center(
                             child: Text("All",
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: filterType == 0 ? Colors.white : CommonColor.BLACK_COLOR,
                                   fontSize: SizeConfig.blockSizeHorizontal*4.0,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Roboto_Medium'
