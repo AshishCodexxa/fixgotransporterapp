@@ -319,7 +319,6 @@ class _CanceledBidScreenState extends State<CanceledBidScreen> {
                     padding: EdgeInsets.only(top: parentHeight*0.007,
                         left: parentWidth*0.03),
                     child:GestureDetector(
-                      onDoubleTap: (){},
                       onTap: (){
                         showCupertinoDialog(
                           context: context,
@@ -398,7 +397,7 @@ class _CanceledBidScreenState extends State<CanceledBidScreen> {
               Padding(
                 padding: EdgeInsets.only(right: parentWidth*0.05,),
                 child: GestureDetector(
-                  onDoubleTap: (){},
+                  
                   onTap: (){
                     showModalBottomSheet(
                         context: context,

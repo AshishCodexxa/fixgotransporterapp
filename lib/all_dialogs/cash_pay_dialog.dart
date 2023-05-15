@@ -121,7 +121,6 @@ class _VehicleCashAmountPayDialogState extends State<VehicleCashAmountPayDialog>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onDoubleTap: (){},
                             onTap: (){
                               Navigator.pop(context);
 
@@ -157,7 +156,7 @@ class _VehicleCashAmountPayDialogState extends State<VehicleCashAmountPayDialog>
                             ),
                           ),
                           GestureDetector(
-                            onDoubleTap: (){},
+                            
                             onTap: (){
                               Navigator.pop(context);
                             },

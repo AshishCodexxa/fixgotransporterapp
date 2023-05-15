@@ -130,7 +130,6 @@ class _VehicleAmountPayDialogState extends State<VehicleAmountPayDialog> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onDoubleTap: (){},
                             onTap: (){
                               Navigator.pop(context);
 
@@ -179,7 +178,7 @@ class _VehicleAmountPayDialogState extends State<VehicleAmountPayDialog> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: GestureDetector(
-                    onDoubleTap: (){},
+                    
                     onTap: (){
                       Navigator.pop(context);
                     },

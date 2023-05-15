@@ -101,7 +101,6 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onDoubleTap: (){},
                                   onTap: (){
                                     Navigator.pop(context);
 
@@ -155,7 +154,7 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onDoubleTap: (){},
+                                  
                                   onTap: (){
                                     Navigator.pop(context);
 
@@ -337,7 +336,6 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               Navigator.pop(context);
             },

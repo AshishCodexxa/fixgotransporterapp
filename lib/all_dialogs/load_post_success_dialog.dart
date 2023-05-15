@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 
 
 
-class RegisterSuccessDialog extends StatefulWidget {
-  const RegisterSuccessDialog({Key? key}) : super(key: key);
+class LoadPostSuccessDialog extends StatefulWidget {
+  const LoadPostSuccessDialog({Key? key}) : super(key: key);
 
   @override
-  State<RegisterSuccessDialog> createState() => _RegisterSuccessDialogState();
+  State<LoadPostSuccessDialog> createState() => _LoadPostSuccessDialogState();
 }
 
-class _RegisterSuccessDialogState extends State<RegisterSuccessDialog> {
+class _LoadPostSuccessDialogState extends State<LoadPostSuccessDialog> {
 
 
   @override
@@ -68,10 +68,10 @@ class _RegisterSuccessDialogState extends State<RegisterSuccessDialog> {
 
                     Padding(
                       padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02),
-                      child: Text("Successful",
+                      child: Text("Successfully Posted ",
                         style: TextStyle(
                             color: CommonColor.SIGN_UP_TEXT_COLOR,
-                            fontSize: SizeConfig.blockSizeHorizontal*8.0,
+                            fontSize: SizeConfig.blockSizeHorizontal*5.0,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Roboto_Medium'
                         ),),
@@ -82,7 +82,7 @@ class _RegisterSuccessDialogState extends State<RegisterSuccessDialog> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Your Registration is Completed Successfully",
+                          Text("Your Load Is Posted Successfully",
                             style: TextStyle(
                                 color: CommonColor.BLACK_COLOR,
                                 fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -102,14 +102,13 @@ class _RegisterSuccessDialogState extends State<RegisterSuccessDialog> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
-                    
                     onTap: (){
                       Navigator.pop(context);
                     },
                     child: Container(
                       color: Colors.transparent,
                       child: Icon(Icons.clear,
-                      color: Colors.black,),
+                        color: Colors.black,),
                     ),
                   ),
                 )

@@ -64,60 +64,82 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.only(left: parentWidth*0.05),
+            padding: EdgeInsets.only(left: parentWidth*0.05, right: parentWidth*0.05),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
 
-                Text(
-                  "Lowest Bid 9800/-",
-                  style: TextStyle(
-                      color: CommonColor.BLACK_COLOR,
-                      fontSize: SizeConfig.blockSizeHorizontal*3.5,
-                      fontFamily: "Roboto_Medium",
-                      fontWeight: FontWeight.w500
-                  ),
-                ),
+                    Text(
+                      "Lowest Bid 9800/-",
+                      style: TextStyle(
+                          color: CommonColor.BLACK_COLOR,
+                          fontSize: SizeConfig.blockSizeHorizontal*3.5,
+                          fontFamily: "Roboto_Medium",
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
 
-                Container(
-                  color: Colors.transparent,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: parentWidth*0.01),
-                            child: Icon(Icons.person,
-                            size: parentHeight*0.03,),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: parentHeight*0.01),
-                            child: Container(
-                              height: parentHeight*0.017,
-                              width: parentWidth*0.037,
-                              decoration: BoxDecoration(
-                                color: CommonColor.SAME_BID_COUNT_COLOR,
-                                shape: BoxShape.circle
+                    Container(
+                      color: Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Stack(
+                            alignment: Alignment.bottomRight,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: parentWidth*0.01),
+                                child: Icon(Icons.person,
+                                size: parentHeight*0.03,),
                               ),
-                              child: Center(
-                                child: Text(
-                                  "2",
-                                  style: TextStyle(
-                                      color: CommonColor.WHITE_COLOR,
-                                      fontSize: SizeConfig.blockSizeHorizontal*2.0,
-                                      fontFamily: "Roboto_Medium",
-                                      fontWeight: FontWeight.w400
+                              Padding(
+                                padding: EdgeInsets.only(top: parentHeight*0.01),
+                                child: Container(
+                                  height: parentHeight*0.017,
+                                  width: parentWidth*0.037,
+                                  decoration: BoxDecoration(
+                                    color: CommonColor.SAME_BID_COUNT_COLOR,
+                                    shape: BoxShape.circle
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "2",
+                                      style: TextStyle(
+                                          color: CommonColor.WHITE_COLOR,
+                                          fontSize: SizeConfig.blockSizeHorizontal*2.0,
+                                          fontFamily: "Roboto_Medium",
+                                          fontWeight: FontWeight.w400
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                              )
+                            ],
+                          ),
+                        )
                     )
-                )
 
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Time Left  23:59:59 hrs.",
+                        style: TextStyle(
+                            color: CommonColor.TO_AREA_COLOR,
+                            fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                            fontFamily: "Roboto_Medium",
+                            fontWeight: FontWeight.w400
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -233,7 +255,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                         ]),
                   ),
                   GestureDetector(
-                    onDoubleTap: (){},
+                    
                     onTap: (){
                       showModalBottomSheet(
                           context: context,
@@ -246,7 +268,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                               padding: EdgeInsets.only(
                                 bottom: MediaQuery.of(context).viewInsets.bottom,
                               ),
-                              child: BidNowPriceDialog(isComeFrom: '2',),
+                              child: BidNowPriceDialog(isComeFrom: '2', mainPrice: 2000,),
                             );
                           });
                     },
@@ -361,7 +383,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                   Row(
                     children: [
                       Text(
-                        "Bid End Date",
+                        "Pick-up Time",
                         style: TextStyle(
                             color: Colors.black54,
                             fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -377,7 +399,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "27 Jan 2023",
+                          "02:00 pm",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -414,7 +436,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     padding: EdgeInsets.only(top: parentHeight*0.007,
                         left: parentWidth*0.03),
                     child:GestureDetector(
-                      onDoubleTap: (){},
+                      
                       onTap: (){
                         showCupertinoDialog(
                           context: context,
@@ -493,7 +515,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
               Padding(
                 padding: EdgeInsets.only(right: parentWidth*0.05,),
                 child: GestureDetector(
-                  onDoubleTap: (){},
+
                   onTap: (){
                     showModalBottomSheet(
                         context: context,
@@ -522,13 +544,10 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                       padding: EdgeInsets.only(left: parentWidth*0.01,
                           right: parentWidth*0.01),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          Icon(Icons.verified_user,
-                            size: parentHeight*0.016,),
-
-                          Text("Verified",
+                          Text("Codexxa",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
@@ -541,7 +560,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

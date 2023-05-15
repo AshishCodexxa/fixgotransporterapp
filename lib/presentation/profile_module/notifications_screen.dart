@@ -52,7 +52,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               Navigator.pop(context);
             },

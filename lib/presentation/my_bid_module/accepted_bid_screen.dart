@@ -328,7 +328,6 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                     padding: EdgeInsets.only(top: parentHeight * 0.007,
                         left: parentWidth * 0.03),
                     child: GestureDetector(
-                      onDoubleTap: () {},
                       onTap: () {
                         showCupertinoDialog(
                           context: context,
@@ -494,7 +493,6 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                 padding: EdgeInsets.only(top: parentHeight*0.01,
                     right: parentWidth * 0.05),
                 child: GestureDetector(
-                  onDoubleTap: (){},
                   onTap: (){
 
                     showModalBottomSheet(

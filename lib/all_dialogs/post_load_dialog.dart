@@ -19,6 +19,12 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
   TextEditingController vehiclePriceController = TextEditingController();
   final _vehiclePriceFocus = FocusNode();
 
+ TextEditingController servicePriceController = TextEditingController();
+  final _servicePriceFocus = FocusNode();
+
+  TextEditingController advancePayController = TextEditingController();
+  final _advanceFocus = FocusNode();
+
   bool advPayAmountShow = false;
   bool deliverPayAmountShow = false;
 
@@ -34,14 +40,58 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
   int deliverPay = 0;
   String deliveryPayMethod = "";
 
+  int count = 50;
+  String val = "";
+  double perVal = 0.0;
+
+  double deliverPayment = 0.0;
+
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    double percent = count/100;
+
+    print(percent);
+
+    if(vehiclePriceController.text.isNotEmpty){
+      if(mounted) {
+        setState(() {
+          perVal = double.parse(vehiclePriceController.text);
+
+          print(perVal.toString());
+        });
+      }
+
+    }
+
+    double price = percent * perVal;
+
+
+
+    if(vehiclePriceController.text.isNotEmpty) {
+      if (mounted) {
+        setState(() {
+          deliverPayment = double.parse(vehiclePriceController.text) - price;
+          print("Hiii $deliverPayment");
+        });
+      }
+    }
+
+
+
+    print(price);
+
+
+    // double val = (double.parse(vehiclePriceController.text) * percent ) ?? 0.0;
+
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        height: SizeConfig.screenHeight * 0.7,
+        height: SizeConfig.screenHeight * 0.8,
         color: Colors.transparent,
         child: Container(
           decoration: const BoxDecoration(
@@ -50,7 +100,9 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                 topRight: Radius.circular(20),
                 topLeft: Radius.circular(20),
               )),
-          child: Column(
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
             children: [
               Container(
                 height: SizeConfig.screenHeight*0.05,
@@ -79,7 +131,6 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                     Padding(
                       padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.05),
                       child: GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           Navigator.pop(context);
                         },
@@ -264,6 +315,78 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                             fontSize: SizeConfig.blockSizeHorizontal * 3.5,
                             fontFamily: 'Roboto_Regular'),
                       ),
+                      onChanged: (val){
+                        if(mounted) {
+                          setState(() {
+
+                        });
+                        }
+                      },
+                      style: TextStyle(
+                          color: CommonColor.BLACK_COLOR,
+                          fontSize: SizeConfig.blockSizeHorizontal * 5.0,
+                          fontFamily: 'Roboto_Medium'),
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(
+                  top: SizeConfig.screenHeight*0.02,
+                  left: SizeConfig.screenWidth*0.03,
+                  right: SizeConfig.screenWidth*0.03,
+                ),
+                child: Container(
+                  height: SizeConfig.screenHeight*0.08,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 5,
+                          spreadRadius: 1,
+                          offset: const Offset(2, 6)),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.screenWidth*0.03,
+                      right: SizeConfig.screenWidth*0.03,
+                    ),
+                    child: TextFormField(
+                      controller: servicePriceController,
+                      focusNode: _servicePriceFocus,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black45)
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black45)
+                        ),
+                        prefixIcon: Icon(Icons.currency_rupee,
+                          size: SizeConfig.screenHeight*0.025,
+                          color: Colors.black,),
+                        label: RichText(
+                          text: TextSpan(
+                              text: 'Service Tax Per Vehicle',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w400,
+                                fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                              ),
+                              children: [
+
+                              ]),
+                        ),
+                        labelStyle: TextStyle(
+                            color: CommonColor.REGISTER_HINT_COLOR,
+                            fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                            fontFamily: 'Roboto_Regular'),
+                      ),
                       style: TextStyle(
                           color: CommonColor.BLACK_COLOR,
                           fontSize: SizeConfig.blockSizeHorizontal * 5.0,
@@ -278,7 +401,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                 children: [
 
                   Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, top: SizeConfig.screenHeight*0.007),
+                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, top: SizeConfig.screenHeight*0.015),
                     child: Text("Advance Payment",
                       style: TextStyle(
                           color: Colors.black54,
@@ -290,25 +413,36 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
 
                   Padding(
                     padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.03,
-                        top: SizeConfig.screenHeight*0.01),
+                        top: SizeConfig.screenHeight*0.02),
                     child: Row(
                       children: [
 
-                        Container(
-                          height: SizeConfig.screenHeight*0.027,
-                          width: SizeConfig.screenWidth*0.07,
-                          decoration: BoxDecoration(
-                              color: CommonColor.ADVANCE_INCREMENT_COLOR,
-                              borderRadius: BorderRadius.circular(5)
+                        GestureDetector(
+                          onTap: (){
+                            if(mounted){
+                              setState(() {
+                                if(count != 0){
+                                  count = count - 10;
+                                }
+                              });
+                            }
+                          },
+                          child: Container(
+                            height: SizeConfig.screenHeight*0.027,
+                            width: SizeConfig.screenWidth*0.07,
+                            decoration: BoxDecoration(
+                                color: CommonColor.ADVANCE_INCREMENT_COLOR,
+                                borderRadius: BorderRadius.circular(5)
+                            ),
+                            child: Icon(Icons.remove,
+                              color: Colors.white,
+                              size: SizeConfig.screenHeight*0.02,),
                           ),
-                          child: Icon(Icons.remove,
-                            color: Colors.white,
-                            size: SizeConfig.screenHeight*0.02,),
                         ),
 
                         Padding(
                           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02, right: SizeConfig.screenWidth*0.02),
-                          child: Text("50 %",
+                          child: Text("$count %",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: SizeConfig.blockSizeHorizontal*3.7,
@@ -317,16 +451,27 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                             ),),
                         ),
 
-                        Container(
-                          height: SizeConfig.screenHeight*0.027,
-                          width: SizeConfig.screenWidth*0.07,
-                          decoration: BoxDecoration(
-                              color: CommonColor.ADVANCE_INCREMENT_COLOR,
-                              borderRadius: BorderRadius.circular(5)
+                        GestureDetector(
+                          onTap: (){
+                            if(mounted){
+                              setState(() {
+                                if(count != 100) {
+                                  count = count + 10;
+                                }
+                              });
+                            }
+                          },
+                          child: Container(
+                            height: SizeConfig.screenHeight*0.027,
+                            width: SizeConfig.screenWidth*0.07,
+                            decoration: BoxDecoration(
+                                color: CommonColor.ADVANCE_INCREMENT_COLOR,
+                                borderRadius: BorderRadius.circular(5)
+                            ),
+                            child: Icon(Icons.add,
+                              color: Colors.white,
+                              size: SizeConfig.screenHeight*0.02,),
                           ),
-                          child: Icon(Icons.add,
-                            color: Colors.white,
-                            size: SizeConfig.screenHeight*0.02,),
                         ),
 
                       ],
@@ -357,16 +502,16 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                       ),
 
                       Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+                     child: Padding(
+                        padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
                           child: TextFormField(
-                            // controller: quantityLoadController,
-                            // focusNode: _userNameFocus,
+                            controller: advancePayController,
+                            focusNode: _advanceFocus,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
-                              hintText:"6000",
+                              hintText:perVal == 0.0 || vehiclePriceController.text.isEmpty? "Amount" : (percent * perVal).toStringAsFixed(1),
                               hintStyle: TextStyle(
-                                color: CommonColor.UNSELECT_TYPE_COLOR.withOpacity(1.0),
+                                color: perVal == 0.0 || vehiclePriceController.text.isEmpty ? CommonColor.UNSELECT_TYPE_COLOR.withOpacity(1.0) : Colors.black,
                                 fontWeight: FontWeight.w400,
                                 fontSize: SizeConfig.blockSizeHorizontal*6.0,
                               ),
@@ -392,7 +537,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onDoubleTap: (){},
+                                
                                 onTap: (){
                                   if(mounted){
                                     setState(() {
@@ -420,7 +565,6 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                                 ),
                               ),
                               GestureDetector(
-                                onDoubleTap: (){},
                                 onTap: (){
                                   if(mounted){
                                     setState(() {
@@ -506,9 +650,9 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                             // focusNode: _userNameFocus,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
-                              hintText:"6000",
+                              hintText:deliverPayment == 0.0 || vehiclePriceController.text.isEmpty? "Amount" : "${deliverPayment.toStringAsFixed(1)}",
                               hintStyle: TextStyle(
-                                color: CommonColor.UNSELECT_TYPE_COLOR.withOpacity(1.0),
+                                color:deliverPayment == 0.0 || vehiclePriceController.text.isEmpty ? CommonColor.UNSELECT_TYPE_COLOR.withOpacity(1.0) : Colors.black,
                                 fontWeight: FontWeight.w400,
                                 fontSize: SizeConfig.blockSizeHorizontal*6.0,
                               ),
@@ -534,7 +678,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onDoubleTap: (){},
+                                
                                 onTap: (){
                                   if(mounted){
                                     setState(() {
@@ -562,7 +706,6 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                                 ),
                               ),
                               GestureDetector(
-                                onDoubleTap: (){},
                                 onTap: (){
                                   if(mounted){
                                     setState(() {
@@ -626,7 +769,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
           left: parentWidth*0.1,
           right: parentWidth*0.1),
       child: GestureDetector(
-        onDoubleTap: (){},
+        
         onTap: (){
           // showCupertinoDialog(
           //   context: context,

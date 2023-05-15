@@ -110,7 +110,6 @@ class _DashboardState extends State<Dashboard> implements
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               // Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileChildScreen()));
             },
@@ -131,7 +130,7 @@ class _DashboardState extends State<Dashboard> implements
               ),),
           ),
           GestureDetector(
-            onDoubleTap: (){},
+            
             onTap: (){
               // Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationScreen()));
             },
@@ -172,7 +171,6 @@ class _DashboardState extends State<Dashboard> implements
                   ),
                   ScreenConstant.HOME_PAGE);
             },
-            onDoubleTap: () {},
             child: Container(
               height: parentHeight*0.07,
               width: parentWidth*0.17,
@@ -192,6 +190,50 @@ class _DashboardState extends State<Dashboard> implements
                       "Home",
                       style: TextStyle(
                           color: currentScreen == ScreenConstant.HOME_PAGE
+                              ? CommonColor.WHITE_COLOR
+                              : CommonColor.SIGN_UP_TEXT_COLOR,
+                          fontSize: SizeConfig.blockSizeHorizontal*3.5,
+                          fontFamily: "Roboto_Medium",
+                          fontWeight: FontWeight.w400),
+
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+
+              isShow = false;
+
+              // heading = "FixGo";
+
+              addNewScreen(
+                  MyBidChildScreen(
+                    mListener: this,
+                  ),
+                  ScreenConstant.MY_BID_FRAGMENT);
+            },
+            child: Container(
+              height: parentHeight*0.07,
+              width: parentWidth*0.17,
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.home_outlined,
+                    color: currentScreen == ScreenConstant.MY_BID_FRAGMENT ? CommonColor.WHITE_COLOR
+                        : CommonColor.SIGN_UP_TEXT_COLOR,),
+                  Padding(
+                    padding: EdgeInsets.only(top: parentHeight*0.003),
+                    child: Text(
+                      "My Bids",
+                      style: TextStyle(
+                          color: currentScreen == ScreenConstant.MY_BID_FRAGMENT
                               ? CommonColor.WHITE_COLOR
                               : CommonColor.SIGN_UP_TEXT_COLOR,
                           fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -244,51 +286,6 @@ class _DashboardState extends State<Dashboard> implements
                           fontFamily: "Roboto_Medium",
                           fontWeight: FontWeight.w400
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-
-              isShow = false;
-
-              // heading = "FixGo";
-
-              addNewScreen(
-                  MyBidChildScreen(
-                    mListener: this,
-                  ),
-                  ScreenConstant.MY_BID_FRAGMENT);
-            },
-            onDoubleTap: () {},
-            child: Container(
-              height: parentHeight*0.07,
-              width: parentWidth*0.17,
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.home_outlined,
-                    color: currentScreen == ScreenConstant.MY_BID_FRAGMENT ? CommonColor.WHITE_COLOR
-                        : CommonColor.SIGN_UP_TEXT_COLOR,),
-                  Padding(
-                    padding: EdgeInsets.only(top: parentHeight*0.003),
-                    child: Text(
-                      "My Bids",
-                      style: TextStyle(
-                          color: currentScreen == ScreenConstant.MY_BID_FRAGMENT
-                              ? CommonColor.WHITE_COLOR
-                              : CommonColor.SIGN_UP_TEXT_COLOR,
-                          fontSize: SizeConfig.blockSizeHorizontal*3.5,
-                          fontFamily: "Roboto_Medium",
-                          fontWeight: FontWeight.w400),
-
                     ),
                   ),
                 ],

@@ -53,7 +53,6 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               Navigator.pop(context);
             },
@@ -95,7 +94,6 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                     right: SizeConfig.screenWidth*0.05,
                   ),
                   child: GestureDetector(
-                    onDoubleTap: (){},
                     onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleOwnerInfoProfile()));
                     },
@@ -208,7 +206,6 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                                 ),
 
                                 GestureDetector(
-                                  onDoubleTap: (){},
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
                                   },

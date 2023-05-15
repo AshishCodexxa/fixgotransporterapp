@@ -145,7 +145,6 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: () {},
             onTap: () {
               Navigator.pop(context);
             },

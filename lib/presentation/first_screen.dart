@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/login_registration/login_screen.dart';
 import 'package:fixgotransporterapp/login_registration/transporter_registeration_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class _FirstScreenState extends State<FirstScreen> {
 
 
   void navigateParentPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyRegistration()));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
   }
 
   @override

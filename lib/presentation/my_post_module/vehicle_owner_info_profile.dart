@@ -77,7 +77,6 @@ class _VehicleOwnerInfoProfileState extends State<VehicleOwnerInfoProfile> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               Navigator.pop(context);
             },

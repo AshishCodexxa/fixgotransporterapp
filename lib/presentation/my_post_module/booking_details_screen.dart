@@ -81,7 +81,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               Navigator.pop(context);
             },
@@ -371,7 +370,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                       padding: EdgeInsets.only(top: parentHeight*0.007,
                           left: parentWidth*0.03),
                       child:GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           showCupertinoDialog(
                             context: context,
@@ -484,7 +482,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: parentWidth*0.05,),
                       child: GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           showModalBottomSheet(
                               context: context,
@@ -871,7 +868,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onDoubleTap: (){},
                       onTap: (){
 
                         showCupertinoDialog(

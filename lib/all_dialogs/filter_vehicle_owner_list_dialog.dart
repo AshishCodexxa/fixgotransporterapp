@@ -71,7 +71,6 @@ class _VehicleOwnerListFilterState extends State<VehicleOwnerListFilter> {
                             ),),
                         ),
                         GestureDetector(
-                          onDoubleTap: (){},
                           onTap: (){
                             Navigator.pop(context);
                           },

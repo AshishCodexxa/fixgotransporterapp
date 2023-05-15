@@ -46,6 +46,8 @@ dependencies:
   timelines:
   flutter_rating_bar:
   image_picker: ^0.8.5+3
+  intl_phone_field: ^3.1.0
+  sms_autofill: ^2.2.0
 
 dev_dependencies:
   flutter_test:

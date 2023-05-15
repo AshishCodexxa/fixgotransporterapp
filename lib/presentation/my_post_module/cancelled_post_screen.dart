@@ -94,7 +94,7 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                                             right: SizeConfig.screenWidth*0.05,
                                           ),
                                           child: GestureDetector(
-                                            onDoubleTap: (){},
+                                            
                                             onTap: (){
                                               Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleOwnerInfoProfile()));
                                             },
@@ -225,7 +225,7 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
 
 
                                                         GestureDetector(
-                                                          onDoubleTap: (){},
+                                                          
                                                           onTap: (){
                                                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
                                                           },
@@ -293,7 +293,7 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                                     Padding(
                                       padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01,),
                                       child: GestureDetector(
-                                        onDoubleTap: (){},
+                                        
                                         onTap: (){
                                           Navigator.push(context, MaterialPageRoute(builder: (context)=>InterestedVehicleOwnerList()));
                                         },
@@ -363,7 +363,6 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
             ),),
 
           GestureDetector(
-            onDoubleTap: (){},
             onTap: (){
               showModalBottomSheet(
                   context: context,
@@ -675,7 +674,7 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                       padding: EdgeInsets.only(top: parentHeight*0.007,
                           left: parentWidth*0.03),
                       child:GestureDetector(
-                        onDoubleTap: (){},
+                        
                         onTap: (){
                           showCupertinoDialog(
                             context: context,
@@ -797,7 +796,6 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: parentWidth*0.05,),
                   child: GestureDetector(
-                    onDoubleTap: (){},
                     onTap: (){
                       showModalBottomSheet(
                           context: context,
@@ -860,7 +858,7 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                 Row(
                   children: [
                     GestureDetector(
-                      onDoubleTap: (){},
+                      
                       onTap: (){
                         if(mounted){
                           setState(() {
@@ -882,7 +880,6 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                         Visibility(
                           visible: arrowShow,
                           child: GestureDetector(
-                            onDoubleTap: (){},
                             onTap: (){
                               if(mounted){
                                 setState(() {
@@ -901,7 +898,7 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                         Visibility(
                           visible: !arrowShow,
                           child: GestureDetector(
-                            onDoubleTap: (){},
+                            
                             onTap: (){
                               if(mounted){
                                 setState(() {
@@ -1040,7 +1037,6 @@ class _CancelledPostScreenState extends State<CancelledPostScreen> {
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 GestureDetector(
-                                                  onDoubleTap: (){},
                                                   onTap: (){
 
                                                     showCupertinoDialog(

@@ -7,8 +7,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class BidNowPriceDialog extends StatefulWidget {
 
   final String isComeFrom;
+  final int mainPrice;
 
-  const BidNowPriceDialog({Key? key, required this.isComeFrom}) : super(key: key);
+  const BidNowPriceDialog({Key? key, required this.isComeFrom, required this.mainPrice}) : super(key: key);
 
   @override
   State<BidNowPriceDialog> createState() => _BidNowPriceDialogState();
@@ -24,11 +25,30 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    int main = widget.mainPrice;
+    int remain = 0;
+    List tt = [];
+
+    for(int i = 0; i < 4; i++){
+
+      if(remain == 0){
+        remain = main;
+        tt.add(remain);
+        print(tt);
+      }else{
+        remain = remain - 100;
+        tt.add(remain);
+        print(tt);
+      }
+
+    }
+
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        height: SizeConfig.screenHeight * 0.47,
+        height: SizeConfig.screenHeight * 0.55,
         color: Colors.transparent,
         child: Container(
           decoration: const BoxDecoration(
@@ -66,7 +86,6 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
                     Padding(
                       padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.05),
                       child: GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           Navigator.pop(context);
                         },
@@ -195,9 +214,61 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
                 ),
               ),
 
+
+
+              Padding(
+                padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05),
+                child: Container(
+                  height: SizeConfig.screenHeight*0.07,
+                  color: Colors.transparent,
+                  child: Center(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+
+                        for(int i = 0; i < tt.length; i++)
+                        Padding(
+                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.03,
+                              left: SizeConfig.screenWidth*0.012,
+                              right: SizeConfig.screenWidth*0.012),
+                          child: GestureDetector(
+                            onTap: (){
+                              if(mounted){
+                                setState(() {
+                                  vehiclePriceController.text = tt[i].toString();
+                                });
+                              }
+                            },
+                            child: Container(
+                              height: SizeConfig.screenHeight*0.035,
+                              width: SizeConfig.screenWidth*0.2,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(7),
+                                  border: Border.all(color: Colors.black)
+                              ),
+                              child: Center(
+                                child: Text("${tt[i]}",
+                                  style: TextStyle(
+                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                      fontFamily: "Roboto_Medium",
+                                      fontWeight: FontWeight.w500,
+                                      color: CommonColor.BLACK_COLOR
+                                  ),),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+
               Padding(
                 padding: EdgeInsets.only(
-                  top: SizeConfig.screenHeight*0.02,
+                  top: SizeConfig.screenHeight*0.03,
                   left: SizeConfig.screenWidth*0.03,
                   right: SizeConfig.screenWidth*0.03,
                 ),
@@ -276,7 +347,6 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
           left: parentWidth*0.1,
           right: parentWidth*0.1),
       child: GestureDetector(
-        onDoubleTap: (){},
         onTap: (){
           // showCupertinoDialog(
           //   context: context,
@@ -293,13 +363,15 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
           height: parentHeight*0.055,
           width: parentWidth*0.75,
           decoration: BoxDecoration(
-              color: CommonColor.LOAD_SUBMIT_COLOR,
+              color: vehiclePriceController.text.isEmpty ? CommonColor.LOAD_SUBMIT_TEXT_COLOR
+                  : CommonColor.SIGN_UP_TEXT_COLOR,
               borderRadius: BorderRadius.circular(10)
           ),
           child: Center(
             child: Text("Submit",
               style: TextStyle(
-                  color: CommonColor.LOAD_SUBMIT_TEXT_COLOR,
+                  color: vehiclePriceController.text.isEmpty ? CommonColor.LOAD_SUBMIT_TEXT_COLOR
+                      : CommonColor.WHITE_COLOR,
                   fontSize: SizeConfig.blockSizeHorizontal*5.0,
                   fontFamily: 'Roboto_Bold'
               ),),
@@ -312,7 +384,6 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
           left: parentWidth*0.1,
           right: parentWidth*0.1),
       child: GestureDetector(
-        onDoubleTap: (){},
         onTap: (){
           // showCupertinoDialog(
           //   context: context,

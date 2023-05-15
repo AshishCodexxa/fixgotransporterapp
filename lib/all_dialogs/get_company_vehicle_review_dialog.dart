@@ -241,7 +241,6 @@ class _GetCompanyVehicleReviewState extends State<GetCompanyVehicleReview> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           // showCupertinoDialog(
                           //   context: context,

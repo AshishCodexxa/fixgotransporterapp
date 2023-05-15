@@ -54,6 +54,14 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
+                    getAdvContainer(SizeConfig.screenHeight, SizeConfig.screenWidth)
+                  ],
+                ),
+              ),
+
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
                     getPickUpAndDeliverLocation(SizeConfig.screenHeight, SizeConfig.screenWidth),
                   ],
                 ),
@@ -80,88 +88,92 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                           ),
                           child: Theme(
                             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                            child: ExpansionTile(
-                                trailing: SizedBox(width: 0,
-                                height: 0,),
-                              title: Container(
-                                // height: SizeConfig.screenHeight*0.0,
+                            child: Padding(
+                              padding:  EdgeInsets.only(
+                                  left: SizeConfig.screenWidth*0.02,
+                                  right: SizeConfig.screenWidth*0.02,
+                                top: SizeConfig.screenHeight*0.01
+                              ),
+                              child: Container(
                                 decoration:  BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
+                                        color: Colors.black.withOpacity(0.07),
                                         blurRadius: 5,
-                                        spreadRadius: 1,
-                                        offset: const Offset(2, 6)),
+                                        spreadRadius: 2,
+                                        offset: const Offset(2, 2)),
                                   ],
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02,
-                                  top: SizeConfig.screenHeight*0.01),
-                                  child: Column(
-                                    children: [
-                                      Row(
+                                child: ExpansionTile(
+                                  title: Container(
+                                    // height: SizeConfig.screenHeight*0.0,
+                                    // decoration:  BoxDecoration(
+                                    //   color: Colors.white,
+                                    //   borderRadius: BorderRadius.circular(10),
+                                    //   boxShadow: <BoxShadow>[
+                                    //     BoxShadow(
+                                    //         color: Colors.black.withOpacity(0.1),
+                                    //         blurRadius: 5,
+                                    //         spreadRadius: 1,
+                                    //         offset: const Offset(2, 6)),
+                                    //   ],
+                                    // ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02,
+                                      top: SizeConfig.screenHeight*0.01),
+                                      child: Column(
                                         children: [
-                                          Text(
-                                            "Codexxa Business Solution Pvt. Ltd.",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                                fontFamily: "Roboto_Medium",
-                                                fontWeight: FontWeight.w400
+                                          Padding(
+                                            padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  "Time Left  23:59:59 hrs.",
+                                                  style: TextStyle(
+                                                      color: CommonColor.TO_AREA_COLOR,
+                                                      fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                                                      fontFamily: "Roboto_Medium",
+                                                      fontWeight: FontWeight.w400
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,),
-                                              child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-
-                                                  Text(
-                                                    "City Avenue, Wakad",
-                                                    style: TextStyle(
-                                                        color: CommonColor.BLACK_COLOR,
-                                                        fontSize: SizeConfig.blockSizeHorizontal*2.5,
-                                                        fontFamily: "Roboto_Medium",
-                                                        fontWeight: FontWeight.w400
-                                                    ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Codexxa Business Solution Pvt. Ltd.",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                      fontFamily: "Roboto_Medium",
+                                                      fontWeight: FontWeight.w400
                                                   ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,),
+                                                  child: Container(
+                                                    color: Colors.transparent,
+                                                    width: SizeConfig.screenWidth*0.5,
+                                                    child: Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
 
-                                                  Text(
-                                                    " - Pune Station",
-                                                    style: TextStyle(
-                                                        color: CommonColor.BLACK_COLOR,
-                                                        fontSize: SizeConfig.blockSizeHorizontal*2.5,
-                                                        fontFamily: "Roboto_Medium",
-                                                        fontWeight: FontWeight.w400
-                                                    ),
-                                                  ),
-
-                                                  /*Row(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      // Container(
-                                                      //   height: SizeConfig.screenHeight*0.01,
-                                                      //   width: SizeConfig.screenWidth*0.021,
-                                                      //   decoration: BoxDecoration(
-                                                      //       color: CommonColor.FROM_AREA_COLOR,
-                                                      //       shape: BoxShape.circle
-                                                      //   ),
-                                                      // ),
-
-                                                      Container(
-                                                        width: SizeConfig.screenWidth*0.57,
-                                                        color: Colors.transparent,
-                                                        child: Text(
+                                                        Text(
                                                           "City Avenue, Wakad",
                                                           style: TextStyle(
                                                               color: CommonColor.BLACK_COLOR,
@@ -170,41 +182,9 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                                               fontWeight: FontWeight.w400
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  // Padding(
-                                                  //   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01),
-                                                  //   child: Row(
-                                                  //     mainAxisAlignment: MainAxisAlignment.start,
-                                                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //     children: [
-                                                  //       Container(
-                                                  //         height: SizeConfig.screenHeight*0.013,
-                                                  //         width: SizeConfig.screenWidth*0.003,
-                                                  //         color: Colors.black,
-                                                  //       ),
-                                                  //     ],
-                                                  //   ),
-                                                  // ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
 
-                                                      // Container(
-                                                      //   height: SizeConfig.screenHeight*0.01,
-                                                      //   width: SizeConfig.screenWidth*0.021,
-                                                      //   decoration: BoxDecoration(
-                                                      //       color: CommonColor.TO_AREA_COLOR,
-                                                      //       shape: BoxShape.circle
-                                                      //   ),
-                                                      // ),
-
-                                                      Container(
-                                                        width: SizeConfig.screenWidth*0.6,
-                                                        color: Colors.transparent,
-                                                        child: Text(
-                                                          "Pune Station",
+                                                        Text(
+                                                          " - Pune Station",
                                                           style: TextStyle(
                                                               color: CommonColor.BLACK_COLOR,
                                                               fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -212,83 +192,83 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                                               fontWeight: FontWeight.w400
                                                           ),
                                                         ),
-                                                      ),
 
-                                                    ],
-                                                  ),*/
-
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.01,),
-                                              child: Column(
-                                                children: [
-                                                  RichText(
-                                                    text: TextSpan(
-                                                        text: '\u{20B9}',
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontSize: SizeConfig.blockSizeHorizontal*3.7,
-                                                        ),
-                                                        children: [
-                                                          TextSpan(
-                                                              text: ' 2000/-',
-                                                              style: TextStyle(
-                                                                  fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                                                  color: Colors.black,
-                                                                  fontWeight: FontWeight.bold))
-                                                        ]),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.001),
-                                                    child: Row(
-                                                      children: [
-                                                        Text("(Transport Fare)",
-                                                          style: TextStyle(
-                                                              color: Colors.black54,
-                                                              fontSize: SizeConfig.blockSizeHorizontal*2.0,
-                                                              height: SizeConfig.screenHeight*0.002
-                                                          ),),
                                                       ],
                                                     ),
-                                                  )
-                                                ],
-                                              ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.01,
+                                                  top: SizeConfig.screenHeight*0.01),
+                                                  child: Column(
+                                                    children: [
+                                                      RichText(
+                                                        text: TextSpan(
+                                                            text: '\u{20B9}',
+                                                            style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.w400,
+                                                              fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                                            ),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text: ' 2000/-',
+                                                                  style: TextStyle(
+                                                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                                      color: Colors.black,
+                                                                      fontWeight: FontWeight.bold))
+                                                            ]),
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.001),
+                                                        child: Row(
+                                                          children: [
+                                                            Text("(Transport Fare)",
+                                                              style: TextStyle(
+                                                                  color: Colors.black54,
+                                                                  fontSize: SizeConfig.blockSizeHorizontal*2.0,
+                                                                  height: SizeConfig.screenHeight*0.002
+                                                              ),),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                            height: SizeConfig.screenHeight*0.01,
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight*0.01,
-                                      )
-                                    ],
+                                    ),
                                   ),
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
+                                          left: SizeConfig.screenWidth*0.03,
+                                          right: SizeConfig.screenWidth*0.03,
+                                      bottom: SizeConfig.screenHeight*0.02),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(15),
+                                          // boxShadow: <BoxShadow>[
+                                          //   BoxShadow(
+                                          //       color: Colors.black.withOpacity(0.1),
+                                          //       blurRadius: 5,
+                                          //       spreadRadius: 1,
+                                          //       offset: const Offset(2, 6)),
+                                          // ],
+                                        ),
+                                        child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth),
+                                      ),
+                                    ),
+                                  ]
                                 ),
                               ),
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
-                                      left: SizeConfig.screenWidth*0.03,
-                                      right: SizeConfig.screenWidth*0.03,
-                                  bottom: SizeConfig.screenHeight*0.02),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                            color: Colors.black.withOpacity(0.1),
-                                            blurRadius: 5,
-                                            spreadRadius: 1,
-                                            offset: const Offset(2, 6)),
-                                      ],
-                                    ),
-                                    child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth),
-                                  ),
-                                ),
-                              ]
                             ),
                           ),
                         );
@@ -303,7 +283,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
           Padding(
             padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.02),
             child: GestureDetector(
-              onDoubleTap: (){},
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>NewLoadScreenForm()));
               },
@@ -358,6 +337,31 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
     );
   }
 
+
+  Widget getAdvContainer(double parentHeight, double parentWidth){
+    return Padding(
+      padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02,
+          left: SizeConfig.screenWidth*0.03,
+          right: SizeConfig.screenWidth*0.03),
+      child: Container(
+        height: SizeConfig.screenHeight*0.2,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 5,
+                spreadRadius: 1,
+                offset: const Offset(2, 6)),
+          ],
+        ),
+        child: Image(image: AssetImage("assets/images/adv_demo.png"),
+          fit: BoxFit.cover,),
+      ),
+    );
+  }
+
   Widget getPickUpAndDeliverLocation(double parentHeight, double parentWidth){
     return Padding(
       padding: EdgeInsets.only(left: parentWidth*0.03,
@@ -388,7 +392,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: parentWidth*0.1, top: parentHeight*0.02),
                       child: GestureDetector(
-                        onDoubleTap: (){},
+                        
                         onTap: (){
                           locationType = 1;
                           _handlePressButton(locationType);
@@ -412,7 +416,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       padding: EdgeInsets.only(top: parentHeight*0.015,
                           right: parentWidth*0.06),
                       child: GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           locationType = 1;
                           _handlePressButton(locationType);
@@ -453,7 +456,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: parentWidth*0.1, top: parentHeight*0.015),
                       child: GestureDetector(
-                        onDoubleTap: (){},
+                        
                         onTap: (){
                           locationType = 2;
                           _handlePressButton(locationType);
@@ -477,7 +480,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       padding: EdgeInsets.only(top: parentHeight*0.015,
                           right: parentWidth*0.06),
                       child: GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           locationType = 2;
                           _handlePressButton(locationType);
@@ -525,7 +527,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                   Row(
                     children: [
                       GestureDetector(
-                        onDoubleTap: (){},
+                        
                         onTap: (){
                           if(mounted){
                             setState(() {
@@ -577,7 +579,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
   Widget getFindingLoadFilter(double parentHeight, double parentWidth){
     return  Padding(
       padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02,
-          left: SizeConfig.screenWidth*0.05),
+          left: SizeConfig.screenWidth*0.03,
+        right: parentWidth*0.03,),
       child: Column(
         children: [
           Row(
@@ -610,7 +613,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,
                       right: SizeConfig.screenWidth*0.04,),
                     child: GestureDetector(
-                      onDoubleTap: (){},
                       onTap: (){
                         if(mounted){
                           setState(() {
@@ -649,7 +651,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
                       right: SizeConfig.screenWidth*0.04,),
                     child: GestureDetector(
-                      onDoubleTap: (){},
+                      
                       onTap: (){
                         if(mounted){
                           setState(() {
@@ -704,7 +706,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
                       right: SizeConfig.screenWidth*0.04,),
                     child: GestureDetector(
-                      onDoubleTap: (){},
                       onTap: (){
                         if(mounted){
                           setState(() {
@@ -759,7 +760,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
                       right: SizeConfig.screenWidth*0.04,),
                     child: GestureDetector(
-                      onDoubleTap: (){},
+                      
                       onTap: (){
                         if(mounted){
                           setState(() {
@@ -824,11 +825,9 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
 
   Widget getInfoCardLayout(double parentHeight, double parentWidth){
     return Padding(
-      padding: EdgeInsets.only(top: parentHeight*0.012),
+      padding: EdgeInsets.only(top: parentHeight*0.00),
       child: Column(
         children: [
-
-
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -917,47 +916,47 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(right: parentWidth*0.05,),
-                child: Column(
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text: '\u{20B9}',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: SizeConfig.blockSizeHorizontal*3.7,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: ' 2000/-',
-                                style: TextStyle(
-                                    fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))
-                          ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: parentHeight*0.001),
-                      child: Row(
-                        children: [
-                          Text("(Transport Fare)",
-                            style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: SizeConfig.blockSizeHorizontal*2.0,
-                                height: parentHeight*0.002
-                            ),),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(right: parentWidth*0.05,),
+              //   child: Column(
+              //     children: [
+              //       RichText(
+              //         text: TextSpan(
+              //             text: '\u{20B9}',
+              //             style: TextStyle(
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.w400,
+              //               fontSize: SizeConfig.blockSizeHorizontal*3.7,
+              //             ),
+              //             children: [
+              //               TextSpan(
+              //                   text: ' 2000/-',
+              //                   style: TextStyle(
+              //                       fontSize: SizeConfig.blockSizeHorizontal*4.0,
+              //                       color: Colors.black,
+              //                       fontWeight: FontWeight.bold))
+              //             ]),
+              //       ),
+              //       Padding(
+              //         padding: EdgeInsets.only(top: parentHeight*0.001),
+              //         child: Row(
+              //           children: [
+              //             Text("(Transport Fare)",
+              //               style: TextStyle(
+              //                   color: Colors.black54,
+              //                   fontSize: SizeConfig.blockSizeHorizontal*2.0,
+              //                   height: parentHeight*0.002
+              //               ),),
+              //           ],
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           ),
 
-          Row(
+         /* Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
@@ -1084,7 +1083,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       padding: EdgeInsets.only(top: parentHeight*0.007,
                           left: parentWidth*0.03),
                       child:GestureDetector(
-                        onDoubleTap: (){},
                         onTap: (){
                           showCupertinoDialog(
                             context: context,
@@ -1124,7 +1122,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
             padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.015,
                 left: parentWidth*0.012),
             child: CustomPaint(painter: DrawDottedhorizontalline()),
-          ),
+          ),*/
 
           Padding(
             padding: EdgeInsets.only(left: parentWidth*0.05,
@@ -1197,7 +1195,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: parentWidth*0.05,),
                       child: GestureDetector(
-                        onDoubleTap: (){},
+                        
                         onTap: (){
                           showModalBottomSheet(
                               context: context,
@@ -1226,13 +1224,10 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                             padding: EdgeInsets.only(left: parentWidth*0.01,
                                 right: parentWidth*0.01),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                                Icon(Icons.verified_user,
-                                  size: parentHeight*0.016,),
-
-                                Text("Verified",
+                                Text("Codexxa",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w400,
@@ -1335,23 +1330,62 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
 
                           Padding(
                             padding: EdgeInsets.only(left: parentWidth*0.015),
-                            child: Text(
-                              "No. of vehicle 4",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: SizeConfig.blockSizeHorizontal*3.0,
-                                  fontFamily: "Roboto_Regular",
-                                  fontWeight: FontWeight.w400
+                            child: Container(
+                              color: Colors.transparent,
+                              width: parentWidth*0.75,
+                              child: Row(
+                                mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "No. of vehicle 4",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: SizeConfig.blockSizeHorizontal*3.0,
+                                        fontFamily: "Roboto_Regular",
+                                        fontWeight: FontWeight.w400
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: parentHeight*0.00,
+                                        left: parentWidth*0.03),
+                                    child:GestureDetector(
+                                      onTap: (){
+                                        showCupertinoDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          builder: (context) {
+                                            return const AnimatedOpacity(
+                                                opacity: 1.0,
+                                                duration: Duration(seconds: 2),
+                                                child: LoadMoreInfoDialog(isComeFrom: '1',));
+                                          },
+                                        );
+                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcessTimelinePage()));
+                                      },
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          "More",
+                                          style: TextStyle(
+                                              color: CommonColor.SIGN_UP_TEXT_COLOR,
+                                              fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                              fontFamily: "Roboto_Regular ",
+                                              fontWeight: FontWeight.w500
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
 
                         ],
                       ),
-                      Padding(
+                    /*  Padding(
                         padding: EdgeInsets.only(right: parentWidth*0.05,),
                         child: GestureDetector(
-                          onDoubleTap: (){},
                           onTap: (){
                             showModalBottomSheet(
                                 context: context,
@@ -1391,6 +1425,50 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                             ),
                           ),
                         ),
+                      ),*/
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: parentHeight*0.012,
+                  right: parentWidth*0.03),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              elevation: 10,
+                              isScrollControlled: true,
+                              isDismissible: true,
+                              builder: (BuildContext bc) {
+                                return BidNowPriceDialog(isComeFrom: '1', mainPrice: 2000,);
+                              });
+                        },
+                        child: Container(
+                          width: SizeConfig.screenWidth*0.18,
+                          height: SizeConfig.screenHeight*0.035,
+                          decoration: BoxDecoration(
+                            color: CommonColor.SIGN_UP_TEXT_COLOR,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+
+                              Text("Bid Now",
+                                style: TextStyle(
+                                    color: CommonColor.WHITE_COLOR,
+                                    fontSize: SizeConfig.blockSizeHorizontal*3.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Roboto_Medium'
+                                ),),
+
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -1399,9 +1477,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
             ),
           ),
 
-          SizedBox(
-            height: parentHeight*0.015,
-          )
 
         ],
       ),
