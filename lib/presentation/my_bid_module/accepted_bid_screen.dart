@@ -211,7 +211,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                     padding: const EdgeInsets.all(2.0),
                     child: Text("Order Confirm",
                       style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 2.0,
+                          fontSize: SizeConfig.blockSizeHorizontal * 2.3,
                           fontFamily: "Roboto_Medium",
                           fontWeight: FontWeight.w500,
                           color: CommonColor.BOOKING_CONFIRM_COLOR
@@ -225,7 +225,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
 
         Padding(
           padding: EdgeInsets.only(
-              left: parentWidth * 0.05, top: parentHeight * 0.01),
+              left: parentWidth * 0.05, top: parentHeight * 0.005),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -275,10 +275,10 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                   Row(
                     children: [
                       Text(
-                        "Bid End Date",
+                        "Pick-up Time",
                         style: TextStyle(
                             color: Colors.black54,
-                            fontSize: SizeConfig.blockSizeHorizontal * 3.0,
+                            fontSize: SizeConfig.blockSizeHorizontal*3.0,
                             fontFamily: "Roboto_Regular",
                             fontWeight: FontWeight.w400
                         ),
@@ -287,14 +287,14 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                   ),
 
                   Padding(
-                    padding: EdgeInsets.only(top: parentHeight * 0.007),
+                    padding: EdgeInsets.only(top: parentHeight*0.007),
                     child: Row(
                       children: [
                         Text(
-                          "27 Jan 2023",
+                          "02:00 pm",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                              fontSize: SizeConfig.blockSizeHorizontal*3.5,
                               fontFamily: "Roboto_Regular",
                               fontWeight: FontWeight.w400
                           ),
@@ -436,13 +436,10 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                       padding: EdgeInsets.only(left: parentWidth * 0.01,
                           right: parentWidth * 0.01),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          Icon(Icons.verified_user,
-                            size: parentHeight * 0.016,),
-
-                          Text("Verified",
+                          Text("Codexxa",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
