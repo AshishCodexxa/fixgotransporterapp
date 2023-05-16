@@ -5,6 +5,7 @@ import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/presentation/my_post_module/booking_details_screen.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/interested_vehicle_owner_list.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/vehicle_owner_info_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,12 +28,18 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
   bool vehicleDetailsHide = true;
   bool arrowShow = true;
 
+  int? selectedIndex;
+  int? selectedVehicleIndex;
+
+  int index = 0;
+  int vehicleIndex = -1;
+
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: ListView(
+      body: /*ListView(
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         children: [
@@ -41,7 +48,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
             height: SizeConfig.screenHeight*0.8,
             color: Colors.transparent,
             child:  ListView.builder(
-                itemCount: 2,
+                itemCount: 1,
                 padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.02),
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
@@ -336,6 +343,363 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
           ),
 
         ],
+      )*/
+      CustomScrollView(
+        slivers: <Widget>[
+
+          SliverPadding(
+            padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.1),
+            sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 2,
+                      (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: selectedIndex == index ? Colors.white : Colors.transparent,
+                            boxShadow: <BoxShadow>[
+                              selectedIndex == index ? BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 5,
+                                  spreadRadius: 1,
+                                  offset: const Offset(2, 6)) : BoxShadow(color: Colors.transparent),
+                            ],
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Column(
+                          children: [
+
+                            Padding(
+                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02,
+                                  left: SizeConfig.screenWidth*0.03,
+                                  right: SizeConfig.screenWidth*0.03),
+                              child: GestureDetector(
+                                onTap: (){
+                                  if(index != selectedIndex){
+                                    selectedIndex = index;
+
+                                    index = selectedIndex!;
+
+                                    print(selectedIndex);
+                                    if(mounted) {
+                                      setState(() {
+
+                                      });
+                                    }
+                                  }else{
+                                    selectedIndex = -1;
+                                    if(mounted) {
+                                      setState(() {
+
+                                      });
+                                    }
+                                  }
+                                },
+                                onDoubleTap: (){
+                                  if(selectedIndex == index){
+                                    selectedIndex = -1;
+                                    if(mounted){
+                                      setState(() {
+
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: selectedIndex != index ? Colors.white : Colors.transparent,
+                                      boxShadow: <BoxShadow>[
+                                        selectedIndex != index ? BoxShadow(
+                                            color: Colors.black.withOpacity(0.1),
+                                            blurRadius: 5,
+                                            spreadRadius: 1,
+                                            offset: const Offset(2, 6)) : BoxShadow(color: Colors.transparent),
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
+                                ),
+                              ),
+                            ),
+
+                            Visibility(
+                              visible: index == selectedIndex,
+                              child: Container(
+                                height: SizeConfig.screenHeight*0.49,
+                                child: CustomScrollView(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  slivers: [
+                                    SliverList(
+                                      delegate: SliverChildListDelegate(
+                                        [
+                                          getTransporterListHeading(SizeConfig.screenHeight, SizeConfig.screenWidth)
+                                        ],
+                                      ),
+                                    ),
+
+                                    SliverList(
+                                        delegate: SliverChildBuilderDelegate(
+                                          childCount: 3,
+                                              (context, index) {
+                                            return Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: SizeConfig.screenHeight*0.02,
+                                                    left: SizeConfig.screenWidth*0.05,
+                                                    right: SizeConfig.screenWidth*0.05,
+                                                  ),
+                                                  child: GestureDetector(
+                                                    onTap: (){
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleOwnerInfoProfile()));
+                                                    },
+                                                    child: Container(
+                                                      color: Colors.transparent,
+                                                      child: Column(
+                                                        children: [
+
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+
+                                                              Text("Nikita Vehicle Owner",
+                                                                style: TextStyle(
+                                                                    color: CommonColor.BLACK_COLOR,
+                                                                    fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                                    fontWeight: FontWeight.w500,
+                                                                    fontFamily: 'Roboto_Regular'
+                                                                ),),
+
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                    text: '\u{20B9}',
+                                                                    style: TextStyle(
+                                                                      color: Colors.black,
+                                                                      fontWeight: FontWeight.w400,
+                                                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                                    ),
+                                                                    children: [
+                                                                      TextSpan(
+                                                                          text: ' 2000 / Vehicle',
+                                                                          style: TextStyle(
+                                                                              fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                                                              color: Colors.black,
+                                                                              fontWeight: FontWeight.w400))
+                                                                    ]),
+                                                              ),
+
+                                                            ],
+                                                          ),
+
+                                                          Padding(
+                                                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.003),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
+                                                                Text("Pune",
+                                                                  style: TextStyle(
+                                                                      color: CommonColor.BLACK_COLOR,
+                                                                      fontSize: SizeConfig.blockSizeHorizontal*3.0,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      fontFamily: 'Roboto_Regular'
+                                                                  ),),
+                                                              ],
+                                                            ),
+                                                          ),
+
+                                                          Padding(
+                                                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.003),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
+                                                                Text("Vehicle Available on : 1 Feb 23",
+                                                                  style: TextStyle(
+                                                                      color: CommonColor.BLACK_COLOR,
+                                                                      fontSize: SizeConfig.blockSizeHorizontal*3.5,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      fontFamily: 'Roboto_Regular'
+                                                                  ),),
+                                                              ],
+                                                            ),
+                                                          ),
+
+                                                          Padding(
+                                                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.002),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      width: SizeConfig.screenWidth*0.11,
+                                                                      height: SizeConfig.screenHeight*0.023,
+                                                                      decoration: BoxDecoration(
+                                                                        color: CommonColor.SELECT_TYPE_COLOR,
+                                                                        borderRadius: BorderRadius.circular(5),
+                                                                      ),
+                                                                      child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+
+                                                                          Padding(
+                                                                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02),
+                                                                            child: Text("4.5",
+                                                                              style: TextStyle(
+                                                                                  color: CommonColor.WHITE_COLOR,
+                                                                                  fontSize: SizeConfig.blockSizeHorizontal*2.7,
+                                                                                  fontWeight: FontWeight.w500,
+                                                                                  fontFamily: 'Roboto_Medium'
+                                                                              ),),
+                                                                          ),
+
+                                                                          Padding(
+                                                                            padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.017),
+                                                                            child: Icon(Icons.star,
+                                                                              size: SizeConfig.blockSizeHorizontal*2.5,
+                                                                              color: Colors.white,),
+                                                                          )
+
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02),
+                                                                      child: Text(
+                                                                        "No. of Vehicle : 04",
+                                                                        style: TextStyle(
+                                                                            color: Colors.black,
+                                                                            fontSize: SizeConfig.blockSizeHorizontal*2.7,
+                                                                            fontFamily: "Roboto_Regular",
+                                                                            fontWeight: FontWeight.w400
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+
+
+
+                                                                GestureDetector(
+
+                                                                  onTap: (){
+                                                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
+                                                                  },
+                                                                  child: Container(
+                                                                    width: SizeConfig.screenWidth*0.18,
+                                                                    height: SizeConfig.screenHeight*0.03,
+                                                                    decoration: BoxDecoration(
+                                                                      color: CommonColor.SIGN_UP_TEXT_COLOR,
+                                                                      borderRadius: BorderRadius.circular(7),
+                                                                    ),
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      children: [
+
+                                                                        Text("Book Now",
+                                                                          style: TextStyle(
+                                                                              color: CommonColor.WHITE_COLOR,
+                                                                              fontSize: SizeConfig.blockSizeHorizontal*3.0,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontFamily: 'Roboto_Medium'
+                                                                          ),),
+
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+
+
+
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.015),
+                                                  child: Container(
+                                                    height: SizeConfig.screenWidth*0.003,
+                                                    color: Colors.black12,
+                                                    child: Row(
+                                                      children: const [
+                                                        Text("hii",
+                                                          style: TextStyle(
+                                                              color: Colors.transparent
+                                                          ),),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        )
+                                    ),
+
+
+                                    SliverPadding(
+                                      padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.15),
+                                      sliver: SliverList(
+                                        delegate: SliverChildListDelegate(
+                                          [
+                                            Padding(
+                                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01,),
+                                              child: GestureDetector(
+
+                                                onTap: (){
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>InterestedVehicleOwnerList()));
+                                                },
+                                                child: Container(
+                                                  width: SizeConfig.screenWidth*0.21,
+                                                  height: SizeConfig.screenHeight*0.05,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.transparent,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+
+                                                      Padding(
+                                                        padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.02),
+                                                        child: Text("View All",
+                                                          style: TextStyle(
+                                                              color: CommonColor.BLACK_COLOR,
+                                                              fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                              fontWeight: FontWeight.w500,
+                                                              fontFamily: 'Roboto_Medium'
+                                                          ),),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )
+            ),
+          ),
+
+
+        ],
       ),
     );
   }
@@ -360,7 +724,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                 fontFamily: 'Roboto_Medium'
             ),),
 
-          GestureDetector(
+          /*GestureDetector(
             
             onTap: (){
               showModalBottomSheet(
@@ -381,24 +745,44 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                   child: Image(image: AssetImage("assets/images/filter_icon.png")),
                 )
             ),
-          )
+          )*/
 
         ],
       ),
     );
   }
 
-  Widget getInfoCardLayout(double parentHeight, double parentWidth){
+  Widget getInfoCardLayout(double parentHeight, double parentWidth, int index){
     return Padding(
       padding: EdgeInsets.only(top: parentHeight*0.012,),
       child: Column(
         children: [
 
+
+
+          Padding(
+            padding: EdgeInsets.only(right: parentWidth*0.05),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Time Left  23:59:59 hrs.",
+                  style: TextStyle(
+                      color: CommonColor.TO_AREA_COLOR,
+                      fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                      fontFamily: "Roboto_Medium",
+                      fontWeight: FontWeight.w400
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: parentWidth*0.05,),
+                padding: EdgeInsets.only(left: parentWidth*0.05, top: parentHeight*0.01),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -858,69 +1242,58 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      
-                      onTap: (){
-                        if(mounted){
-                          setState(() {
-                            vehicleDetailsHide = !vehicleDetailsHide;
-                            arrowShow = !arrowShow;
-                          });
-                        }
-                      },
-                      child: Text("Vehicle Details",
-                        style: TextStyle(
-                            color: CommonColor.BLACK_COLOR,
-                            fontSize: SizeConfig.blockSizeHorizontal*3.7,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Roboto_Medium'
-                        ),),
-                    ),
-                    Stack(
+                GestureDetector(
+                  onTap: (){
+                    if(index != vehicleIndex){
+                      vehicleIndex = index;
+
+                      index = vehicleIndex!;
+
+                      print(vehicleIndex);
+                      if(mounted) {
+                        setState(() {
+
+                        });
+                      }
+                    }else{
+                      vehicleIndex = -1;
+                      if(mounted) {
+                        setState(() {
+
+                        });
+                      }
+                    }
+
+
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
                       children: [
-                        Visibility(
-                          visible: arrowShow,
-                          child: GestureDetector(
-                            
-                            onTap: (){
-                              if(mounted){
-                                setState(() {
-                                  vehicleDetailsHide = !vehicleDetailsHide;
-                                  arrowShow = !arrowShow;
-                                });
-                              }
-                            },
-                            child: Container(
-                              color: Colors.transparent,
+                        Text("Vehicle Details",
+                          style: TextStyle(
+                              color: CommonColor.BLACK_COLOR,
+                              fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Roboto_Medium'
+                          ),),
+                        Stack(
+                          children: [
+                            Visibility(
+                              visible: index != vehicleIndex,
                               child: Icon(Icons.keyboard_arrow_down_outlined,
                                 color: Colors.black,),
                             ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: !arrowShow,
-                          child: GestureDetector(
-                            
-                            onTap: (){
-                              if(mounted){
-                                setState(() {
-                                  vehicleDetailsHide = !vehicleDetailsHide;
-                                  arrowShow = !arrowShow;
-                                });
-                              }
-                            },
-                            child: Container(
-                              color: Colors.transparent,
+                            Visibility(
+                              visible: index == vehicleIndex,
                               child: Icon(Icons.keyboard_arrow_up_outlined,
                                 color: Colors.black,),
                             ),
-                          ),
-                        ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -930,7 +1303,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
           for(int i = 0; i < 3; i++)
 
             Visibility(
-              visible: !vehicleDetailsHide,
+              visible: /*!vehicleDetailsHide*/ index == vehicleIndex,
               child: Padding(
                 padding: EdgeInsets.only(left: parentWidth*0.05,
                     right: parentWidth*0.05,

@@ -622,7 +622,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                     Row(
                       children: [
                         Text(
-                          "Bid End Date",
+                          "Pick-up Time",
                           style: TextStyle(
                               color: Colors.black54,
                               fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -638,7 +638,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                       child: Row(
                         children: [
                           Text(
-                            "27 Jan 2023",
+                            "02:00 pm",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -827,13 +827,10 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                             padding: EdgeInsets.only(left: parentWidth*0.01,
                                 right: parentWidth*0.01),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                                Icon(Icons.verified_user,
-                                  size: parentHeight*0.016,),
-
-                                Text("Verified",
+                                Text("Codexxa",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w400,

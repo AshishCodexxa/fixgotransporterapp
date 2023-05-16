@@ -114,13 +114,29 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       child: Column(
         children: [
 
-
+          Padding(
+            padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.05),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Time Left  23:59:59 hrs.",
+                  style: TextStyle(
+                      color: CommonColor.TO_AREA_COLOR,
+                      fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                      fontFamily: "Roboto_Medium",
+                      fontWeight: FontWeight.w400
+                  ),
+                ),
+              ],
+            ),
+          ),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: parentWidth*0.05,),
+                padding: EdgeInsets.only(left: parentWidth*0.05, top: parentHeight*0.01),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -139,7 +155,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                         Padding(
                           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02),
                           child: Container(
-                            width: parentWidth*0.57,
+                            width: parentWidth*0.53,
                             color: Colors.transparent,
                             child: Text(
                               "City Avenue, Wakad",
@@ -183,7 +199,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                         Padding(
                           padding: EdgeInsets.only(left: parentWidth*0.02),
                           child: Container(
-                            width: parentWidth*0.6,
+                            width: parentWidth*0.53,
                             color: Colors.transparent,
                             child: Text(
                               "Pune Station",
@@ -228,7 +244,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                       padding: EdgeInsets.only(top: parentHeight*0.001),
                       child: Row(
                         children: [
-                          Text("(Transport Fare)",
+                          Text("(Transport Fare Per Vehicle)",
                             style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: SizeConfig.blockSizeHorizontal*2.0,
@@ -317,7 +333,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                     Row(
                       children: [
                         Text(
-                          "Bid End Date",
+                          "Pick-up Time",
                           style: TextStyle(
                               color: Colors.black54,
                               fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -333,7 +349,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                       child: Row(
                         children: [
                           Text(
-                            "27 Jan 2023",
+                            "02:00 pm",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -510,13 +526,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                             padding: EdgeInsets.only(left: parentWidth*0.01,
                                 right: parentWidth*0.01),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
 
-                                Icon(Icons.verified_user,
-                                  size: parentHeight*0.016,),
-
-                                Text("Verified",
+                                Text("Codexxa",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w400,
