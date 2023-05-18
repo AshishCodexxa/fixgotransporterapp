@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
-import 'package:fixgotransporterapp/presentation/dashboard_screen.dart';
+import 'package:fixgotransporterapp/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 

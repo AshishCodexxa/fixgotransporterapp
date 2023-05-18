@@ -1,5 +1,6 @@
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/presentation/profile_module/add_fund_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -94,32 +95,21 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
 
                           Padding(
                             padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.03,
-                              left: SizeConfig.screenWidth*0.03,
-                              right: SizeConfig.screenWidth*0.03,
+                              left: SizeConfig.screenWidth*0.05,
+                              right: SizeConfig.screenWidth*0.05,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.pop(context);
 
-                                    // showCupertinoDialog(
-                                    //   context: context,
-                                    //   barrierDismissible: true,
-                                    //   builder: (context) {
-                                    //     return const AnimatedOpacity(
-                                    //         opacity: 1.0,
-                                    //         duration: Duration(seconds: 2),
-                                    //         child: GetCompanyVehicleReview());
-                                    //   },
-                                    // );
-
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>AddFundScreen()));
 
                                   },
                                   child: Container(
-                                    height: SizeConfig.screenHeight*0.06,
-                                    width: SizeConfig.screenWidth*0.4,
+                                    height: SizeConfig.screenHeight*0.055,
+                                    width: SizeConfig.screenWidth*0.35,
                                     decoration: BoxDecoration(
                                         color: CommonColor.SIGN_UP_TEXT_COLOR,
                                         borderRadius: BorderRadius.circular(10)
@@ -144,7 +134,7 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                                           child: Text("Add Funds",
                                             style: TextStyle(
                                                 color: CommonColor.WHITE_COLOR,
-                                                fontSize: SizeConfig.blockSizeHorizontal*5.0,
+                                                fontSize: SizeConfig.blockSizeHorizontal*4.5,
                                                 fontWeight: FontWeight.w500,
                                                 fontFamily: 'Roboto_Regular'
                                             ),),
@@ -158,22 +148,10 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                                   onTap: (){
                                     Navigator.pop(context);
 
-                                    // showCupertinoDialog(
-                                    //   context: context,
-                                    //   barrierDismissible: true,
-                                    //   builder: (context) {
-                                    //     return const AnimatedOpacity(
-                                    //         opacity: 1.0,
-                                    //         duration: Duration(seconds: 2),
-                                    //         child: GetCompanyVehicleReview());
-                                    //   },
-                                    // );
-
-
                                   },
                                   child: Container(
-                                    height: SizeConfig.screenHeight*0.06,
-                                    width: SizeConfig.screenWidth*0.4,
+                                    height: SizeConfig.screenHeight*0.055,
+                                    width: SizeConfig.screenWidth*0.35,
                                     decoration: BoxDecoration(
                                         color: CommonColor.SIGN_UP_TEXT_COLOR,
                                         borderRadius: BorderRadius.circular(10)
@@ -198,7 +176,7 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                                           child: Text("Withdrawal",
                                             style: TextStyle(
                                                 color: CommonColor.WHITE_COLOR,
-                                                fontSize: SizeConfig.blockSizeHorizontal*5.0,
+                                                fontSize: SizeConfig.blockSizeHorizontal*4.5,
                                                 fontWeight: FontWeight.w500,
                                                 fontFamily: 'Roboto_Regular'
                                             ),),

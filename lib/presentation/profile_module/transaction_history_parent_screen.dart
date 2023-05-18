@@ -36,17 +36,6 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen>
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      /*body: Column(
-        children: [
-
-          Container(
-            color: CommonColor.APP_BAR_COLOR,
-            height: SizeConfig.safeUsedHeight * .12,
-            child: getTopText(SizeConfig.screenHeight, SizeConfig.screenWidth),
-          ),
-
-        ],
-      )*/
       appBar: AppBar(
         titleSpacing: SizeConfig.screenWidth*0.105,
         toolbarHeight: SizeConfig.screenHeight*0.1,
