@@ -3,6 +3,7 @@ import 'package:fixgotransporterapp/common_file/size_config.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/edit_profile_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/my_wallet_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/notifications_screen.dart';
+import 'package:fixgotransporterapp/presentation/profile_module/statistics_details_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/transaction_history_parent_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -172,6 +173,57 @@ class _ProfileChildScreenState extends State<ProfileChildScreen> {
                         Padding(
                           padding: EdgeInsets.only(left: parentWidth*0.03),
                           child: Text("My Wallet",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Roboto_Regular',
+                                fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                fontWeight: FontWeight.w500
+                            ),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.012,
+                    bottom: SizeConfig.screenHeight*0.01),
+                child: Container(
+                  height: SizeConfig.screenWidth*0.003,
+                  color: Colors.black12,
+                  child: Row(
+                    children: const [
+                      Text("hii",
+                        style: TextStyle(
+                            color: Colors.transparent
+                        ),),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: SizeConfig.screenHeight*0.0012,
+                    left: parentWidth*0.05),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>StatisticsDetailsScreen()));
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: SizeConfig.screenHeight*0.037,
+                          width: SizeConfig.screenWidth*0.08,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: parentWidth*0.03),
+                          child: Text("Statistics",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Roboto_Regular',
