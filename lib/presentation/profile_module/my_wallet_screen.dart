@@ -1,6 +1,7 @@
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/add_fund_screen.dart';
+import 'package:fixgotransporterapp/presentation/profile_module/withdrawal_request_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -144,9 +145,9 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  
                                   onTap: (){
-                                    Navigator.pop(context);
+
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WithdrawalRequestScreen()));
 
                                   },
                                   child: Container(
