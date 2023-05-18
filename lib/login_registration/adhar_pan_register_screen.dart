@@ -2,6 +2,7 @@
 import 'package:fixgotransporterapp/all_dialogs/register_success_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/login_registration/kyc_verification_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,15 +19,13 @@ class AadhaarPanCardRegisterScreen extends StatefulWidget {
 class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScreen> {
 
   TextEditingController userNameController = TextEditingController();
-  TextEditingController aadhaarNumberController = TextEditingController();
-  TextEditingController panNumberController = TextEditingController();
-  TextEditingController mobileNumberController = TextEditingController();
-  TextEditingController otpController = TextEditingController();
+  TextEditingController transporterNameController = TextEditingController();
+  TextEditingController transporterLocationController = TextEditingController();
 
   final _userNameFocus = FocusNode();
-  final _aadhaarNumberFocus = FocusNode();
-  final _panNumberFocus = FocusNode();
-  final _mobileNumberFocus = FocusNode();
+  final _transporterNameFocus = FocusNode();
+  final _transporterLocationFocus = FocusNode();
+
 
   @override
   Widget build(BuildContext context) {
@@ -179,15 +178,14 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
                 right: parentWidth*0.03,
               ),
               child: TextFormField(
-                controller: aadhaarNumberController,
-                focusNode: _aadhaarNumberFocus,
+                controller: transporterNameController,
+                focusNode: _transporterNameFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.person,
-                  color: Colors.black,),
+                  prefixIcon: Image(image: AssetImage("assets/images/company.png"),),
                   label: RichText(
                     text: TextSpan(
-                        text: 'Aadhaar Number',
+                        text: 'Transporter Name',
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.w400,
@@ -238,69 +236,14 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
                 right: parentWidth*0.03,
               ),
               child: TextFormField(
-                controller: panNumberController,
-                focusNode: _panNumberFocus,
+                controller: transporterLocationController,
+                focusNode: _transporterLocationFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person,
-                    color: Colors.black,),
+                  prefixIcon: Image(image: AssetImage("assets/images/company_location.png"),),
                   label: RichText(
                     text: TextSpan(
-                        text: 'Pan Number',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: SizeConfig.blockSizeHorizontal*3.5,
-                        ),
-                        children: [
-
-                        ]),
-                  ),
-                  labelStyle: TextStyle(
-                      color: CommonColor.REGISTER_HINT_COLOR,
-                      fontSize: SizeConfig.blockSizeHorizontal * 3.5,
-                      fontFamily: 'Roboto_Regular'),
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        Padding(
-          padding: EdgeInsets.only(
-            top: parentHeight*0.02,
-            left: parentWidth*0.03,
-            right: parentWidth*0.03,
-          ),
-          child: Container(
-            height: parentHeight*0.09,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: const Offset(2, 6)),
-              ],
-            ),
-            child:  Padding(
-              padding: EdgeInsets.only(
-                top: parentHeight*0.0,
-                left: parentWidth*0.03,
-                right: parentWidth*0.03,
-              ),
-              child: TextFormField(
-                controller: mobileNumberController,
-                focusNode: _mobileNumberFocus,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.phone_android_outlined,
-                    color: Colors.black,),
-                  label: RichText(
-                    text: TextSpan(
-                        text: 'Mobile Number',
+                        text: 'Transporter Location',
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.w400,
@@ -313,59 +256,6 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
                                   fontSize: SizeConfig.blockSizeHorizontal*4.0,
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold))
-                        ]),
-                  ),
-                  labelStyle: TextStyle(
-                      color: CommonColor.REGISTER_HINT_COLOR,
-                      fontSize: SizeConfig.blockSizeHorizontal * 3.5,
-                      fontFamily: 'Roboto_Regular'),
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        Padding(
-          padding: EdgeInsets.only(
-            top: parentHeight*0.02,
-            left: parentWidth*0.03,
-            right: parentWidth*0.03,
-          ),
-          child: Container(
-            height: parentHeight*0.09,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: const Offset(2, 6)),
-              ],
-            ),
-            child:  Padding(
-              padding: EdgeInsets.only(
-                top: parentHeight*0.0,
-                left: parentWidth*0.03,
-                right: parentWidth*0.03,
-              ),
-              child: TextFormField(
-                controller: otpController,
-                textInputAction: TextInputAction.done,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.phone_android_outlined,
-                    color: Colors.black,),
-                  label: RichText(
-                    text: TextSpan(
-                        text: 'Enter Your OTP',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: SizeConfig.blockSizeHorizontal*3.5,
-                        ),
-                        children: [
-
                         ]),
                   ),
                   labelStyle: TextStyle(
@@ -388,16 +278,7 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
             children: [
               GestureDetector(
                 onTap: (){
-                  showCupertinoDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (context) {
-                      return const AnimatedOpacity(
-                          opacity: 1.0,
-                          duration: Duration(seconds: 2),
-                          child: RegisterSuccessDialog());
-                    },
-                  );
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>KYCVerifyScreen()));
                 },
                 child: Container(
                   height: SizeConfig.screenHeight*0.057,
