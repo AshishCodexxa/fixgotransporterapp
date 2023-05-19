@@ -235,51 +235,53 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(right: parentWidth*0.05,),
-              child: Row(
-                children: [
-                  RichText(
-                    text: TextSpan(
-                        text: '\u{20B9}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: SizeConfig.blockSizeHorizontal*3.7,
-                        ),
-                        children: [
-                          TextSpan(
-                              text: ' 2000/-',
-                              style: TextStyle(
-                                  fontSize: SizeConfig.blockSizeHorizontal*4.5,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))
-                        ]),
+              child: GestureDetector(
+                onTap: (){
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      elevation: 10,
+                      isScrollControlled: true,
+                      isDismissible: true,
+                      builder: (BuildContext bc) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                          child: BidNowPriceDialog(isComeFrom: '2', mainPrice: 2000,),
+                        );
+                      });
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                            text: '\u{20B9}',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                            ),
+                            children: [
+                              TextSpan(
+                                  text: ' 2000/-',
+                                  style: TextStyle(
+                                      fontSize: SizeConfig.blockSizeHorizontal*4.5,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))
+                            ]),
+                      ),
+                      Container(
+                        color: Colors.transparent,
+                        child: Icon(Icons.edit,
+                        color: Colors.black,
+                        size: parentHeight*0.02,),
+                      )
+                    ],
                   ),
-                  GestureDetector(
-                    
-                    onTap: (){
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          elevation: 10,
-                          isScrollControlled: true,
-                          isDismissible: true,
-                          builder: (BuildContext bc) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                bottom: MediaQuery.of(context).viewInsets.bottom,
-                              ),
-                              child: BidNowPriceDialog(isComeFrom: '2', mainPrice: 2000,),
-                            );
-                          });
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Icon(Icons.edit,
-                      color: Colors.black,
-                      size: parentHeight*0.02,),
-                    ),
-                  )
-                ],
+                ),
               ),
             ),
           ],
