@@ -1,14 +1,21 @@
 import 'dart:async';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/dashboard/dashboard_screen.dart';
+import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
 import 'package:fixgotransporterapp/login_registration/adhar_pan_register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 
 
 class OtpPutScreen extends StatefulWidget {
-  const OtpPutScreen({Key? key}) : super(key: key);
+
+  final String mobileNo;
+
+  const OtpPutScreen({Key? key, required this.mobileNo}) : super(key: key);
 
   @override
   State<OtpPutScreen> createState() => _OtpPutScreenState();
@@ -57,6 +64,7 @@ class _OtpPutScreenState extends State<OtpPutScreen>  with TickerProviderStateMi
     _listenOtp();
     super.initState();
     startTimer();
+    print(widget.mobileNo);
   }
 
   void _listenOtp() async {
@@ -128,7 +136,7 @@ class _OtpPutScreenState extends State<OtpPutScreen>  with TickerProviderStateMi
                         padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01,
                             left: SizeConfig.screenWidth*0.0,
                             right: SizeConfig.screenWidth*0.03),
-                        child: Text("+911234567890",
+                        child: Text("+91${widget.mobileNo}",
                           style: TextStyle(
                               color: Colors.black54,
                               fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -193,7 +201,39 @@ class _OtpPutScreenState extends State<OtpPutScreen>  with TickerProviderStateMi
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>AadhaarPanCardRegisterScreen()));
+
+                          if(otpCode.isEmpty){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(content: Text("Please Enter Otp.")));
+                          }else{
+                            ApiClient().verifyOtp(otpCode).then((value){
+
+
+                              print(value['data']);
+
+                              if(value['data'] == "Invalid OTP format"){
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(content: Text("Invalid OTP format.")));
+                              }else if(value['message'] == "The OTP entered is incorrect ."){
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(content: Text("The OTP entered is incorrect.")));
+                              }else{
+                                GetStorage().write(ConstantData.userAccessToken, "${value['data']['accessToken']}");
+                                GetStorage().write(ConstantData.userRefreshToken, "${value['data']['refreshToken']}");
+
+                                print(value['data']['hasProfileSetup']);
+
+                                value['data']['hasProfileSetup'] == false?
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const AadhaarPanCardRegisterScreen()))
+                                    : Navigator.push(context, MaterialPageRoute(builder: (context)=>const Dashboard()));
+                              }
+
+
+                            });
+                          }
+
+
+
                         },
                         child: Container(
                           height: SizeConfig.screenHeight*0.05,

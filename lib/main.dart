@@ -4,8 +4,11 @@ import 'package:fixgotransporterapp/common_file/size_config.dart';
 import 'package:fixgotransporterapp/presentation/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

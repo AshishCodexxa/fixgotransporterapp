@@ -1,11 +1,13 @@
 
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/edit_profile_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/my_wallet_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/notifications_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/statistics_details_screen.dart';
 import 'package:fixgotransporterapp/presentation/profile_module/transaction_history_parent_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 
 
@@ -20,6 +22,33 @@ class ProfileChildScreen extends StatefulWidget {
 }
 
 class _ProfileChildScreenState extends State<ProfileChildScreen> {
+
+
+
+  String name = "";
+  String emailId = "";
+  String phoneNo = "";
+
+
+  @override
+  void initState() {
+    super.initState();
+    if(mounted){
+      setState(() {
+
+        if(GetStorage().read(ConstantData.userName) != null && GetStorage().read(ConstantData.emailId) != null &&
+            GetStorage().read(ConstantData.contactNo) != null){
+          name = GetStorage().read(ConstantData.userName);
+          emailId = GetStorage().read(ConstantData.emailId);
+          phoneNo = GetStorage().read(ConstantData.contactNo);
+        }
+
+      });
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -56,7 +85,7 @@ class _ProfileChildScreenState extends State<ProfileChildScreen> {
 
                         Padding(
                           padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
-                          child: Text("User Name",
+                          child: Text(name.isEmpty ? "User Name" : name,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Roboto_Regular',
@@ -67,7 +96,7 @@ class _ProfileChildScreenState extends State<ProfileChildScreen> {
 
                         Padding(
                           padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.015),
-                          child: Text("Email Id",
+                          child: Text(emailId.isEmpty ? "Email Id" : emailId,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Roboto_Regular',
@@ -84,7 +113,7 @@ class _ProfileChildScreenState extends State<ProfileChildScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Phone No.",
+                                Text(phoneNo.isEmpty ? "Phone No." : phoneNo,
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'Roboto_Regular',

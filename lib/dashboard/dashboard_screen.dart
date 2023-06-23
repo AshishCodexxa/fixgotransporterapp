@@ -1,6 +1,7 @@
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/fix_go__screen_constant.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/presentation/exit_app_dialog.dart';
 import 'package:fixgotransporterapp/presentation/home_module/home_child_screen.dart';
 import 'package:fixgotransporterapp/presentation/my_bid_module/my_bid_child_screen.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/my_post_child_screen.dart';
@@ -10,7 +11,11 @@ import 'package:flutter/material.dart';
 
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+
+  final String isComeFrom;
+
+  const Dashboard({Key? key, this.isComeFrom = ""}) : super(key: key);
+
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -33,6 +38,12 @@ class _DashboardState extends State<Dashboard> implements
   void initState() {
     super.initState();
     heading = "FixGo";
+    widget.isComeFrom == "1" ?
+    addNewScreen(
+        ProfileChildScreen(
+          mListener: this,
+        ),
+        ScreenConstant.PROFILE_FRAGMENT) :
     addNewScreen(
         HomeChildScreen(
           mListener: this,
@@ -65,40 +76,43 @@ class _DashboardState extends State<Dashboard> implements
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Material(
-      child: Column(
-        children: [
-          Visibility(
-            visible: isShow,
-            child: Container(
-              color: CommonColor.APP_BAR_COLOR,
-              height: SizeConfig.safeUsedHeight * .12,
-              child: getTopText(SizeConfig.screenHeight, SizeConfig.screenWidth),
-            ),
-          ),
-          Container(
-            height:isShow == true ? SizeConfig.safeUsedHeight * .8 : SizeConfig.safeUsedHeight * .92,
-            child: getContainer(),
-          ),
-          Container(
-            height: SizeConfig.safeUsedHeight * .08,
-            decoration:  BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Material(
+        child: Column(
+          children: [
+            Visibility(
+              visible: isShow,
+              child: Container(
+                color: CommonColor.APP_BAR_COLOR,
+                height: SizeConfig.safeUsedHeight * .12,
+                child: getTopText(SizeConfig.screenHeight, SizeConfig.screenWidth),
               ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 7,
-                    spreadRadius: 3,
-                    offset: const Offset(2, 2.0))
-              ],
             ),
-            child: getBottomBarDesign(
-                SizeConfig.screenHeight, SizeConfig.screenWidth),
-          ),
-        ],
+            Container(
+              height:isShow == true ? SizeConfig.safeUsedHeight * .8 : SizeConfig.safeUsedHeight * .92,
+              child: getContainer(),
+            ),
+            Container(
+              height: SizeConfig.safeUsedHeight * .08,
+              decoration:  BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 7,
+                      spreadRadius: 3,
+                      offset: const Offset(2, 2.0))
+                ],
+              ),
+              child: getBottomBarDesign(
+                  SizeConfig.screenHeight, SizeConfig.screenWidth),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -344,4 +358,33 @@ class _DashboardState extends State<Dashboard> implements
     );
   }
 
+  static showExitDialog(BuildContext context) {
+    showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+          // return Transform(
+          //   transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+          return Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: const ExitAppDialog(
+                message: "Are You Sure To Exit",
+              ),
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation2, animation1) {
+          return Container();
+        });
+  }
+
+  Future<bool> _onBackPressed() {
+    return showExitDialog(context);
+  }
 }

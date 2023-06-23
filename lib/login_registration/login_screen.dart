@@ -1,10 +1,13 @@
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
 import 'package:fixgotransporterapp/login_registration/adhar_pan_register_screen.dart';
 import 'package:fixgotransporterapp/login_registration/otp_put_screen.dart';
 import 'package:fixgotransporterapp/login_registration/sign_up_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 
@@ -88,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             right: SizeConfig.screenWidth*0.03,
                           ),
                           child: IntlPhoneField(
+                            controller: phoneNumberController,
                             decoration: const InputDecoration(
                               labelText: 'Phone Number',
                               enabledBorder: UnderlineInputBorder(
@@ -187,7 +191,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpPutScreen()));
+
+                          if(phoneNumberController.text.isEmpty || phoneNumberController.text.length < 10){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(content: Text("Please Enter a Valid Mobile Number")));
+                          }else if(isChecked == false){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(content: Text("Please Check the Privacy Policy and Terms of Service.")));
+                          }else{
+                            ApiClient().login(phoneNumberController.text.trim()).then((value){
+
+                              if(value.isEmpty) return;
+
+                              // print(value['data']['hash']);
+
+                              GetStorage().write(ConstantData.otpHashKey, value['data']['hash']);
+
+                              GetStorage().write(ConstantData.userMobileNumber, value['data']['phone']);
+
+                              print(GetStorage().read<String>(ConstantData.userMobileNumber));
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(content: Text("${value['message']}")));
+
+                              // phoneNumberController.clear();
+
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> OtpPutScreen(mobileNo: phoneNumberController.text,)));
+
+                            });
+                          }
+
+
                         },
                         child: Container(
                           height: SizeConfig.screenHeight*0.055,
