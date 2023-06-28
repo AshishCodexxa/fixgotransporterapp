@@ -221,12 +221,12 @@ class ApiClient {
 
 
 
-/////////////////////// Company Post Api ///////////////////////////////////////
+/////////////////////// Transporter Post Api ///////////////////////////////////
 
 
-  Future<Map<String, dynamic>> getCompanyAllPost() async {
+  Future<Map<String, dynamic>> getTransporterAllPost() async {
 
-    String url = "${ApiConstants().baseUrl}${ApiConstants().companyAllPost}${ConstantData.PENDING_POST}";
+    String url = "${ApiConstants().baseUrl}${ApiConstants().transporterAllPost}${ConstantData.PENDING_POST}";
 
     String? sessionToken = GetStorage().read<String>(
         ConstantData.userAccessToken);
@@ -252,6 +252,34 @@ class ApiClient {
 
 
 
+/////////////////////// Company Post Api ///////////////////////////////////////
+
+
+  Future<Map<String, dynamic>> getCompanyAllPost() async {
+
+    String url = "${ApiConstants().baseUrl}${ApiConstants().getCompanyPost}";
+
+    String? sessionToken = GetStorage().read<String>(
+        ConstantData.userAccessToken);
+
+    try {
+      Response response = await _dio.get(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $sessionToken',
+          },
+        ),
+      );
+
+      print("getCompanyAllPostSC --> ${response.statusCode}");
+      print("getCompanyAllPost --> ${response.data}");
+
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
 
 
 }

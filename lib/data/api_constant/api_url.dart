@@ -24,12 +24,18 @@ class ApiConstants {
 
 
 
-/////////////////////// Company Post Api ///////////////////////////////////////
+/////////////////////// Transporter Post Api ///////////////////////////////////
 
 
   String createCompanyPost = "post/";
-  String companyAllPost = "post/?status=";
+  String transporterAllPost = "post/?status=";
   String companyPostImagesUpload = "file";
+
+
+/////////////////////// Company Post Api ///////////////////////////////////////
+
+
+  String getCompanyPost = "post/company";
 
 
 

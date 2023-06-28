@@ -1,6 +1,7 @@
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/model/get_all_company_post_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
 
@@ -22,8 +23,14 @@ const todoColor = Color(0xffd1d2d7);
 class LoadMoreInfoDialog extends StatefulWidget {
 
   final String isComeFrom;
+  final List <Datum>postDetails;
+  final int postIndex;
+  final String pickupDate;
+  final String pickupTime;
+  final String pickupLocation;
+  final String finalLocation;
 
-  const LoadMoreInfoDialog({Key? key, required this.isComeFrom}) : super(key: key);
+  const LoadMoreInfoDialog({Key? key, required this.postDetails, required this.postIndex, this.pickupDate = '', this.pickupTime ='', this.pickupLocation = '', this.finalLocation = '', this.isComeFrom = ""}) : super(key: key);
 
   @override
   State<LoadMoreInfoDialog> createState() => _LoadMoreInfoDialogState();
@@ -54,6 +61,8 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
   @override
   void initState() {
     super.initState();
+
+    print(widget.postDetails);
   }
 
 

@@ -4,8 +4,11 @@ import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
+import 'package:fixgotransporterapp/data/model/get_all_company_post_response_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -18,12 +21,49 @@ class PendingBidScreen extends StatefulWidget {
 }
 
 class _PendingBidScreenState extends State<PendingBidScreen> {
+
+  final items = <Datum>[];
+
+  String postOnDate = "";
+  String postOnTime = "";
+
+  String pickUpDate = "";
+  String pickUpTime = "";
+
+  String pickUpLocation = "";
+  String finalLocation = "";
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    ApiClient().getCompanyAllPost().then((value){
+
+      if(mounted){
+        setState(() {
+
+        });
+      }
+
+      var jsonList = GetAllCompanyPostResponseModel.fromJson(value);
+
+      print(jsonList);
+
+      items.addAll(jsonList.data);
+
+      print(items.length);
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       body: ListView.builder(
-          itemCount: 5,
+          itemCount: items.length,
           padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.03),
           itemBuilder: (BuildContext context, int index) {
             return Padding(
@@ -42,7 +82,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                         offset: const Offset(2, 6)),
                   ],
                 ),
-                child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth),
+                child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
               ),
             );
           }
@@ -50,7 +90,33 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
     );
   }
 
-  Widget getInfoCardLayout(double parentHeight, double parentWidth){
+  Widget getInfoCardLayout(double parentHeight, double parentWidth, postIndex){
+
+    DateTime tempDate = DateFormat("yyyy-MM-dd").parse(items[postIndex].createdAt.toString());
+    var inputDate = DateTime.parse(tempDate.toString());
+    var outputFormat = DateFormat('dd MMMM yyyy');
+    postOnDate = outputFormat.format(inputDate);
+
+    DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[postIndex].createdAt.toString());
+    var inputTime = DateTime.parse(parseDate.toString());
+    var inputFormat = DateFormat('hh:mm a');
+    postOnTime = inputFormat.format(inputTime);
+
+    DateTime pickDate = DateFormat("yyyy-MM-dd").parse(items[postIndex].pickupDate.toString());
+    var pickDates = DateTime.parse(pickDate.toString());
+    var outputFormats = DateFormat('dd MMMM yyyy');
+    pickUpDate = outputFormats.format(pickDates);
+
+    DateTime pickTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[postIndex].pickupDate.toString());
+    var pickTimes = DateTime.parse(pickTime.toString());
+    var inputFormats = DateFormat('hh:mm a');
+    pickUpTime = inputFormats.format(pickTimes);
+
+    pickUpLocation = "${items[postIndex].pickup?.address?.street}, ${items[postIndex].pickup?.address?.city}, ${items[postIndex].pickup?.address?.district}, ${items[postIndex].pickup?.address?.laneNumber}, ${items[postIndex].pickup?.address?.state}, ${items[postIndex].pickup?.address?.country}, ${items[postIndex].pickup?.address?.postalCode}";
+
+    finalLocation = "${items[postIndex].receiver?.address?.street}, ${items[postIndex].receiver?.address?.city}, ${items[postIndex].pickup?.address?.district}, ${items[postIndex].pickup?.address?.laneNumber}, ${items[postIndex].receiver?.address?.state}, ${items[postIndex].receiver?.address?.country}, ${items[postIndex].receiver?.address?.postalCode}";
+
+
     return Column(
       children: [
 
@@ -73,7 +139,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                   children: [
 
                     Text(
-                      "Lowest Bid 9800/-",
+                      "Lowest Bid ${items[postIndex].lowestBid}/-",
                       style: TextStyle(
                           color: CommonColor.BLACK_COLOR,
                           fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -172,13 +238,14 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                           width: parentWidth*0.55,
                           color: Colors.transparent,
                           child: Text(
-                            "City Avenue, Wakad",
+                            pickUpLocation,
                             style: TextStyle(
                                 color: CommonColor.BLACK_COLOR,
                                 fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                 fontFamily: "Roboto_Medium",
                                 fontWeight: FontWeight.w400
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -216,13 +283,14 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                           width: parentWidth*0.55,
                           color: Colors.transparent,
                           child: Text(
-                            "Pune Station",
+                            finalLocation,
                             style: TextStyle(
                                 color: CommonColor.BLACK_COLOR,
                                 fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                 fontFamily: "Roboto_Medium",
                                 fontWeight: FontWeight.w400
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -296,7 +364,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Post on 26th Jan 2023 | 10:30 am",
+                    "Post on $postOnDate | $postOnTime",
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -363,7 +431,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "28 Jan 2023",
+                          pickUpDate,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -401,7 +469,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "02:00 pm",
+                          pickUpTime,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -444,10 +512,18 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                           context: context,
                           barrierDismissible: true,
                           builder: (context) {
-                            return const AnimatedOpacity(
+                            return AnimatedOpacity(
                                 opacity: 1.0,
                                 duration: Duration(seconds: 2),
-                                child: LoadMoreInfoDialog(isComeFrom: '',));
+                                child: LoadMoreInfoDialog(
+                                  isComeFrom: '',
+                                  postDetails: items,
+                                  postIndex: postIndex,
+                                  pickupDate: pickUpDate,
+                                  pickupTime: pickUpTime,
+                                  pickupLocation: pickUpLocation,
+                                  finalLocation: finalLocation,
+                                ));
                           },
                         );
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcessTimelinePage()));
@@ -502,7 +578,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             ),
                             children: [
                               TextSpan(
-                                  text: '10 Ton(s)',
+                                  text: '${items[postIndex].loadDetail?.load} ${items[postIndex].loadDetail?.loadUnit}',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*3.7,
                                       color: Colors.black,

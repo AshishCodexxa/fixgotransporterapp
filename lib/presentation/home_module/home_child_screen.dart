@@ -1357,7 +1357,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                             return const AnimatedOpacity(
                                                 opacity: 1.0,
                                                 duration: Duration(seconds: 2),
-                                                child: LoadMoreInfoDialog(isComeFrom: '1',));
+                                                child: LoadMoreInfoDialog(isComeFrom: '1', postDetails: [], postIndex: 0,));
                                           },
                                         );
                                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcessTimelinePage()));

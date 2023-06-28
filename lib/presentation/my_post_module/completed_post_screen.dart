@@ -684,7 +684,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                               return const AnimatedOpacity(
                                   opacity: 1.0,
                                   duration: Duration(seconds: 2),
-                                  child: LoadMoreInfoDialog(isComeFrom: '',));
+                                  child: LoadMoreInfoDialog(isComeFrom: '', postDetails: [], postIndex: 0,));
                             },
                           );
                         },
