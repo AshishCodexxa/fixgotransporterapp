@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     right: SizeConfig.screenWidth*0.03,
                   ),
                   child: Container(
-                    height: SizeConfig.screenHeight*0.1,
+                    height: SizeConfig.screenHeight*0.11,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
