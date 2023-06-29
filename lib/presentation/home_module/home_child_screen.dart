@@ -1444,7 +1444,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                               isScrollControlled: true,
                               isDismissible: true,
                               builder: (BuildContext bc) {
-                                return const BidNowPriceDialog(isComeFrom: '1', mainPrice: 2000,);
+                                return const BidNowPriceDialog(isComeFrom: '1', mainPrice: 2000, bidAmount: 0, postDetails: [], postIndex: 0, companyName: '',);
                               });
                         },
                         child: Container(

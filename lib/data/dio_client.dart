@@ -307,6 +307,39 @@ class ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> uploadBidAgainstPost(String postId, String bidAmount) async {
+
+    print("postId $postId");
+    print("bidAmount $bidAmount");
+
+    String url = "${ApiConstants().baseUrl}${ApiConstants().addBidAgainstPost}";
+
+    String? sessionToken = GetStorage().read<String>(
+        ConstantData.userAccessToken);
+
+    try {
+      Response response = await _dio.post(
+        url,
+        data: {
+          "post": "649bc4fb917e86c8dc74f1d0",
+          "bidAmount": bidAmount
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $sessionToken',
+          },
+        ),
+      );
+
+      print("getUserDetailsApiSC --> ${response.statusCode}");
+      print("getUserDetailsApiPost --> ${response.data}");
+
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
 
 
 }

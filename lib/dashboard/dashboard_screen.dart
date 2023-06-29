@@ -38,12 +38,24 @@ class _DashboardState extends State<Dashboard> implements
   void initState() {
     super.initState();
     heading = "FixGo";
+
+    widget.isComeFrom == "2" ?
+        isShow = false :
+        true;
+
+
     widget.isComeFrom == "1" ?
     addNewScreen(
         ProfileChildScreen(
           mListener: this,
         ),
         ScreenConstant.PROFILE_FRAGMENT) :
+    widget.isComeFrom == "2" ?
+    addNewScreen(
+        MyBidChildScreen(
+          mListener: this,
+        ),
+        ScreenConstant.MY_BID_FRAGMENT) :
     addNewScreen(
         HomeChildScreen(
           mListener: this,

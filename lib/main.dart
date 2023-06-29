@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/dashboard/dashboard_screen.dart';
+import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
 import 'package:fixgotransporterapp/presentation/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/frame': (BuildContext context) => const FirstScreen(),
+        '/dashboard': (BuildContext context) => const Dashboard(),
       }
     );
   }
@@ -75,8 +78,26 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pushReplacementNamed('/frame');
   }
 
+  void navigateHomePage() {
+    Navigator.of(context).pushReplacementNamed('/dashboard');
+  }
+
+
   startTimer() {
-    var durtaion = new Duration(seconds: 5);
+    var durtaion = const Duration(seconds: 3);
+    try {
+      String accessToken = GetStorage().read(ConstantData.userAccessToken);
+
+      print("-----> $accessToken");
+
+      if (accessToken.isEmpty) {
+        return Timer(durtaion, navigateParentPage);
+      } else if (accessToken.isNotEmpty) {
+        return Timer(durtaion, navigateHomePage);
+      }
+    } catch (e) {
+      print("eeeeeeee  $e");
+    }
     return Timer(durtaion, navigateParentPage);
   }
 

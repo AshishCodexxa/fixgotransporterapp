@@ -634,13 +634,31 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                Text("${widget.postDetails[widget.postIndex].vehicle?.vehicleType}",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: SizeConfig.blockSizeHorizontal*3.2,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Roboto_Regular'
-                  ),
+                Row(
+                  children: [
+                    Text("${widget.postDetails[widget.postIndex].vehicle?.vehicleType}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: SizeConfig.blockSizeHorizontal*3.2,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Roboto_Regular'
+                      ),
+                    ),
+                    Visibility(
+                      visible: widget.postDetails[widget.postIndex].vehicle?.vehicleType == "Trailor" ? true : false,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: parentWidth*0.01),
+                        child: Text("(${widget.postDetails[widget.postIndex].vehicle?.trailorType})",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: SizeConfig.blockSizeHorizontal*3.2,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Roboto_Regular'
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
 
                 Container(

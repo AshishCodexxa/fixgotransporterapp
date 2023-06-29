@@ -338,7 +338,12 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                           padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
-                          child: BidNowPriceDialog(isComeFrom: '2', mainPrice: items[postIndex].lowestBid ?? 0,),
+                          child: BidNowPriceDialog(
+                            isComeFrom: '2',
+                            mainPrice: (items[postIndex].lowestBid == 0 ? items[postIndex].fare : items[postIndex].lowestBid) ?? 0,
+                            bidAmount: items[postIndex].lowestBid ?? 0,
+                            postDetails: items, postIndex: postIndex, companyName: companyName,
+                          ),
                         );
                       });
                 },
