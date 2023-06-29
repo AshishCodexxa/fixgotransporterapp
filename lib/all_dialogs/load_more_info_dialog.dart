@@ -1,6 +1,7 @@
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/api_constant/api_url.dart';
 import 'package:fixgotransporterapp/data/model/get_all_company_post_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
@@ -46,7 +47,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
     'Delivered',
   ];
 
-  final int _processIndex = 0;
+  int _processIndex = 0;
 
   Color getColor(int index) {
     if (index == _processIndex) {
@@ -58,11 +59,41 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
     }
   }
 
+  double advancePay = 0.0;
+  double deliveryPay = 0.0;
+
   @override
   void initState() {
     super.initState();
 
     print(widget.postDetails);
+
+
+    int totalFare = widget.postDetails[widget.postIndex].fare ?? 0;
+    double ratio = (widget.postDetails[widget.postIndex].advancePayment?.ratio ?? 0) / 100;
+    advancePay = totalFare * ratio;
+
+    int totalsFare = widget.postDetails[widget.postIndex].fare ?? 0;
+    double ratios = (widget.postDetails[widget.postIndex].advancePayment?.ratio ?? 0) / 100;
+    deliveryPay = totalsFare * ratios;
+
+    if(widget.postDetails[widget.postIndex].status == "PENDING"){
+      setState(() {
+        _processIndex = 0;
+      });
+    }else if(widget.postDetails[widget.postIndex].status == "ACCEPTED"){
+      setState(() {
+        _processIndex = (_processIndex + 1) % _processes.length ;
+      });
+    }else if(widget.postDetails[widget.postIndex].status == "IN_TRANSIT"){
+      setState(() {
+        _processIndex = (_processIndex + 2) % _processes.length ;
+      });
+    }else if(widget.postDetails[widget.postIndex].status == "COMPLETED"){
+      setState(() {
+        _processIndex = (_processIndex + 3) % _processes.length ;
+      });
+    }
   }
 
 
@@ -294,7 +325,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                     width: parentWidth*0.57,
                     color: Colors.transparent,
                     child: Text(
-                      "City Avenue, Wakad",
+                      widget.pickupLocation,
                       style: TextStyle(
                           color: CommonColor.BLACK_COLOR,
                           fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -340,7 +371,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                     width: parentWidth*0.6,
                     color: Colors.transparent,
                     child: Text(
-                      "Pune Station",
+                      widget.finalLocation,
                       style: TextStyle(
                           color: CommonColor.BLACK_COLOR,
                           fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -400,7 +431,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                Text("Pack load",
+                Text("${widget.postDetails[widget.postIndex].loadDetail?.loadType}",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -415,7 +446,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text("10 Ton(s)",
+                        child: Text("${widget.postDetails[widget.postIndex].loadDetail?.load} ${widget.postDetails[widget.postIndex].loadDetail?.loadUnit}",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -464,7 +495,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting.",
+                        child: Text("${widget.postDetails[widget.postIndex].loadDetail?.description}",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -526,7 +557,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                Text("28 Jan 2023",
+                Text(widget.pickupDate,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -541,7 +572,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text("02:00 pm",
+                        child: Text(widget.pickupTime,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -603,7 +634,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                Text("Trailor",
+                Text("${widget.postDetails[widget.postIndex].vehicle?.vehicleType}",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -618,7 +649,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text("1550 RLW(kg)",
+                        child: Text("${widget.postDetails[widget.postIndex].vehicle?.capacity} ${widget.postDetails[widget.postIndex].vehicle?.capacityUnit}",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -680,7 +711,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                Text("04",
+                Text("${widget.postDetails[widget.postIndex].vehicle?.quantity}",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -695,7 +726,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text("L x W -40 x 08 (Ft) ",
+                        child: Text("L - ${widget.postDetails[widget.postIndex].vehicle?.length} (Ft) ",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.2,
@@ -719,7 +750,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
-                Text("Total Fare ",
+                Text("Total Fare",
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: SizeConfig.blockSizeHorizontal*3.0,
@@ -748,7 +779,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                       ),
                       children: [
                         TextSpan(
-                            text: ' 12000/-',
+                            text: ' ${widget.postDetails[widget.postIndex].fare}/-',
                             style: TextStyle(
                                 fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                 color: Colors.black,
@@ -819,13 +850,13 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                             ),
                             children: [
                               TextSpan(
-                                  text: ' 6000/-',
+                                  text: ' $advancePay/-',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400)),
                               TextSpan(
-                                  text: ' Company (Online)',
+                                  text: ' ${widget.postDetails[widget.postIndex].advancePayment?.payBy} (${widget.postDetails[widget.postIndex].advancePayment?.mode})',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*2.5,
                                       color: Colors.black,
@@ -849,13 +880,13 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                                     ),
                                     children: [
                                       TextSpan(
-                                          text: ' 6000/-',
+                                          text: ' $deliveryPay/-',
                                           style: TextStyle(
                                               fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w400)),
                                       TextSpan(
-                                          text: ' Company (Cash)',
+                                          text: ' ${widget.postDetails[widget.postIndex].deliveryPayment?.payBy} (${widget.postDetails[widget.postIndex].deliveryPayment?.mode})',
                                           style: TextStyle(
                                               fontSize: SizeConfig.blockSizeHorizontal*2.5,
                                               color: Colors.black,
@@ -936,56 +967,44 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                 left: parentWidth*0.1,
                 right: parentWidth*0.1),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
-                Container(
-                  height: parentHeight*0.074,
-                  width: parentWidth*0.172,
-                  decoration: BoxDecoration(
-                    color: CommonColor.LOAD_IMAGE_COLOR,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 7,
-                          spreadRadius: 3,
-                          offset: const Offset(2, 2.0))
-                    ],
-                  ),
-                ),
+                for(int i = 0; i < (widget.postDetails[widget.postIndex].loadDetail?.goodsImage?.length ?? 0); i++)
+                  Padding(
+                    padding: EdgeInsets.only(left: parentWidth*0.03),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image(
+                          image: const AssetImage("assets/images/grid_loading.gif"),
+                          height: SizeConfig.screenHeight*.05,
+                          width: SizeConfig.screenWidth*.05,
+                        ),
+                        Container(
+                          height: parentHeight*0.074,
+                          width: parentWidth*0.172,
+                          decoration: BoxDecoration(
+                            // color: CommonColor.LOAD_IMAGE_COLOR,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.15),
+                                  blurRadius: 7,
+                                  spreadRadius: 3,
+                                  offset: const Offset(2, 2.0))
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network("${ApiConstants().uploadImageUrl}${widget.postDetails[widget.postIndex].loadDetail?.goodsImage?[i]}",
+                              fit: BoxFit.cover,),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
 
-                Container(
-                  height: parentHeight*0.074,
-                  width: parentWidth*0.172,
-                  decoration: BoxDecoration(
-                    color: CommonColor.LOAD_IMAGE_COLOR,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 7,
-                          spreadRadius: 3,
-                          offset: const Offset(2, 2.0))
-                    ],
-                  ),
-                ),
-
-                Container(
-                  height: parentHeight*0.074,
-                  width: parentWidth*0.172,
-                  decoration: BoxDecoration(
-                    color: CommonColor.LOAD_IMAGE_COLOR,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 7,
-                          spreadRadius: 3,
-                          offset: const Offset(2, 2.0))
-                    ],
-                  ),
-                ),
 
               ],
             ),

@@ -373,12 +373,12 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                   isDismissible: true,
                   enableDrag: true,
                   builder: (BuildContext bc) {
-                    return VehicleOwnerListFilter();
+                    return const VehicleOwnerListFilter();
                   });
             },
             child: Container(
                 color: Colors.transparent,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(3.0),
                   child: Image(image: AssetImage("assets/images/filter_icon.png")),
                 )
@@ -410,7 +410,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.FROM_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -454,7 +454,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.TO_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -811,7 +811,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                                   padding: EdgeInsets.only(
                                     bottom: MediaQuery.of(context).viewInsets.bottom,
                                   ),
-                                  child: CompanyVerifyDialog(),
+                                  child: const CompanyVerifyDialog(companyId: '',),
                                 );
                               });
                         },
@@ -939,7 +939,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                             },
                             child: Container(
                               color: Colors.transparent,
-                              child: Icon(Icons.keyboard_arrow_down_outlined,
+                              child: const Icon(Icons.keyboard_arrow_down_outlined,
                                 color: Colors.black,),
                             ),
                           ),
@@ -957,7 +957,7 @@ class _CompletedPostScreenState extends State<CompletedPostScreen> {
                             },
                             child: Container(
                               color: Colors.transparent,
-                              child: Icon(Icons.keyboard_arrow_up_outlined,
+                              child: const Icon(Icons.keyboard_arrow_up_outlined,
                                 color: Colors.black,),
                             ),
                           ),

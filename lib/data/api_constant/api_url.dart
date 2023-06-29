@@ -36,6 +36,7 @@ class ApiConstants {
 
 
   String getCompanyPost = "post/company";
+  String getuserDetailsApi = "user/detail/";
 
 
 

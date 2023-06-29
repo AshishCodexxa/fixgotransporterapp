@@ -33,6 +33,13 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
   String pickUpLocation = "";
   String finalLocation = "";
 
+  String passPickIndexAddress = "";
+  String passLastIndexAddress = "";
+  String pickUpIndexDate = "";
+  String pickUpIndexTime = "";
+
+  String companyName = "";
+
 
 
   @override
@@ -51,6 +58,21 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
       print(jsonList);
 
       items.addAll(jsonList.data);
+
+      for(int i = 0; i < items.length; i++){
+
+          ApiClient().getUserDetailsApi(items[i].customer.toString()).then((value){
+
+            if(mounted){
+              setState(() {
+                companyName = value['data']['companyName'];
+              });
+            }
+
+
+          });
+
+      }
 
       print(items.length);
 
@@ -122,7 +144,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
 
         Container(
           height: parentHeight*0.04,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: CommonColor.LOWEST_BID_CONTAINER_COLOR,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15),
@@ -165,13 +187,13 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                                 child: Container(
                                   height: parentHeight*0.017,
                                   width: parentWidth*0.037,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: CommonColor.SAME_BID_COUNT_COLOR,
                                     shape: BoxShape.circle
                                   ),
                                   child: Center(
                                     child: Text(
-                                      "2",
+                                      "${items[postIndex].lowestBidder}",
                                       style: TextStyle(
                                           color: CommonColor.WHITE_COLOR,
                                           fontSize: SizeConfig.blockSizeHorizontal*2.0,
@@ -226,7 +248,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                       Container(
                         height: parentHeight*0.01,
                         width: parentWidth*0.021,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: CommonColor.FROM_AREA_COLOR,
                             shape: BoxShape.circle
                         ),
@@ -271,7 +293,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                       Container(
                         height: parentHeight*0.01,
                         width: parentWidth*0.021,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: CommonColor.TO_AREA_COLOR,
                             shape: BoxShape.circle
                         ),
@@ -316,7 +338,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                           padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
-                          child: BidNowPriceDialog(isComeFrom: '2', mainPrice: 2000,),
+                          child: BidNowPriceDialog(isComeFrom: '2', mainPrice: items[postIndex].lowestBid ?? 0,),
                         );
                       });
                 },
@@ -334,7 +356,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             ),
                             children: [
                               TextSpan(
-                                  text: ' 2000/-',
+                                  text: ' ${items[postIndex].lowestBid}/-',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*4.5,
                                       color: Colors.black,
@@ -506,23 +528,37 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     padding: EdgeInsets.only(top: parentHeight*0.007,
                         left: parentWidth*0.03),
                     child:GestureDetector(
-                      
-                      onTap: (){
-                        showCupertinoDialog(
+                    onTap: (){
+
+                      passPickIndexAddress = "${items[postIndex].pickup?.address?.street}, ${items[postIndex].pickup?.address?.city}, ${items[postIndex].pickup?.address?.district}, ${items[postIndex].pickup?.address?.laneNumber} ${items[postIndex].pickup?.address?.state}, ${items[postIndex].pickup?.address?.country}, ${items[postIndex].pickup?.address?.postalCode}";
+
+                      passLastIndexAddress = "${items[postIndex].receiver?.address?.street}, ${items[postIndex].receiver?.address?.city}, ${items[postIndex].receiver?.address?.state}, ${items[postIndex].receiver?.address?.country}, ${items[postIndex].receiver?.address?.postalCode}";
+
+                      DateTime tempDate = DateFormat("yyyy-MM-dd").parse(items[postIndex].pickupDate.toString());
+                      var inputDate = DateTime.parse(tempDate.toString());
+                      var outputFormat = DateFormat('dd MMMM yyyy');
+                      pickUpIndexDate = outputFormat.format(inputDate);
+
+                      DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[postIndex].pickupDate.toString());
+                      var inputTime = DateTime.parse(parseDate.toString());
+                      var inputFormat = DateFormat('hh:mm a');
+                      pickUpIndexTime = inputFormat.format(inputTime);
+
+                      showCupertinoDialog(
                           context: context,
                           barrierDismissible: true,
                           builder: (context) {
                             return AnimatedOpacity(
                                 opacity: 1.0,
-                                duration: Duration(seconds: 2),
+                                duration: const Duration(seconds: 2),
                                 child: LoadMoreInfoDialog(
                                   isComeFrom: '',
                                   postDetails: items,
                                   postIndex: postIndex,
-                                  pickupDate: pickUpDate,
-                                  pickupTime: pickUpTime,
-                                  pickupLocation: pickUpLocation,
-                                  finalLocation: finalLocation,
+                                  pickupDate: pickUpIndexDate,
+                                  pickupTime: pickUpIndexTime,
+                                  pickupLocation: passPickIndexAddress,
+                                  finalLocation: passLastIndexAddress,
                                 ));
                           },
                         );
@@ -593,7 +629,6 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
               Padding(
                 padding: EdgeInsets.only(right: parentWidth*0.05,),
                 child: GestureDetector(
-
                   onTap: (){
                     showModalBottomSheet(
                         context: context,
@@ -606,7 +641,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: CompanyVerifyDialog(),
+                            child: CompanyVerifyDialog(companyId: items[postIndex].pickup!.customer.toString(),),
                           );
                         });
                   },
@@ -625,13 +660,18 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          Text("Codexxa",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Roboto_Medium',
-                              fontSize: SizeConfig.blockSizeHorizontal*2.7,
-                            ),)
+                          Container(
+                            width: parentWidth*0.1,
+                            child: Text(companyName,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto_Medium',
+                                fontSize: SizeConfig.blockSizeHorizontal*2.7,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
 
                         ],
                       ),

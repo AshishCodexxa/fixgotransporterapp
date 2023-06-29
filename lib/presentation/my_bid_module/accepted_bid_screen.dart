@@ -71,7 +71,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                       Container(
                         height: parentHeight * 0.01,
                         width: parentWidth * 0.021,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: CommonColor.FROM_AREA_COLOR,
                             shape: BoxShape.circle
                         ),
@@ -117,7 +117,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                       Container(
                         height: parentHeight * 0.01,
                         width: parentWidth * 0.021,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: CommonColor.TO_AREA_COLOR,
                             shape: BoxShape.circle
                         ),
@@ -420,7 +420,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: CompanyVerifyDialog(),
+                            child: const CompanyVerifyDialog(companyId: '',),
                           );
                         });
                   },
@@ -503,7 +503,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: PostLoadDialog(),
+                            child: const PostLoadDialog(),
                           );
                         });
                   },

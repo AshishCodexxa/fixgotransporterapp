@@ -363,7 +363,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                   color: Colors.black.withOpacity(0.1),
                                   blurRadius: 5,
                                   spreadRadius: 1,
-                                  offset: const Offset(2, 6)) : BoxShadow(color: Colors.transparent),
+                                  offset: const Offset(2, 6)) : const BoxShadow(color: Colors.transparent),
                             ],
                             borderRadius: BorderRadius.circular(10)
                         ),
@@ -414,7 +414,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                             color: Colors.black.withOpacity(0.1),
                                             blurRadius: 5,
                                             spreadRadius: 1,
-                                            offset: const Offset(2, 6)) : BoxShadow(color: Colors.transparent),
+                                            offset: const Offset(2, 6)) : const BoxShadow(color: Colors.transparent),
                                       ],
                                       borderRadius: BorderRadius.circular(10)
                                   ),
@@ -428,7 +428,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                               child: Container(
                                 height: SizeConfig.screenHeight*0.49,
                                 child: CustomScrollView(
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   slivers: [
                                     SliverList(
                                       delegate: SliverChildListDelegate(
@@ -452,7 +452,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                   ),
                                                   child: GestureDetector(
                                                     onTap: (){
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleOwnerInfoProfile()));
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const VehicleOwnerInfoProfile()));
                                                     },
                                                     child: Container(
                                                       color: Colors.transparent,
@@ -583,7 +583,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                 GestureDetector(
 
                                                                   onTap: (){
-                                                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
+                                                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const BookingDetailsScreen()));
                                                                   },
                                                                   child: Container(
                                                                     width: SizeConfig.screenWidth*0.18,
@@ -624,8 +624,8 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                   child: Container(
                                                     height: SizeConfig.screenWidth*0.003,
                                                     color: Colors.black12,
-                                                    child: Row(
-                                                      children: const [
+                                                    child: const Row(
+                                                      children: [
                                                         Text("hii",
                                                           style: TextStyle(
                                                               color: Colors.transparent
@@ -651,7 +651,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                               child: GestureDetector(
 
                                                 onTap: (){
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>InterestedVehicleOwnerList()));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const InterestedVehicleOwnerList()));
                                                 },
                                                 child: Container(
                                                   width: SizeConfig.screenWidth*0.21,
@@ -792,7 +792,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.FROM_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -836,7 +836,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.TO_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -1198,7 +1198,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                               padding: EdgeInsets.only(
                                 bottom: MediaQuery.of(context).viewInsets.bottom,
                               ),
-                              child: CompanyVerifyDialog(),
+                              child: const CompanyVerifyDialog(companyId: '',),
                             );
                           });
                     },
@@ -1281,12 +1281,12 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                           children: [
                             Visibility(
                               visible: index != vehicleIndex,
-                              child: Icon(Icons.keyboard_arrow_down_outlined,
+                              child: const Icon(Icons.keyboard_arrow_down_outlined,
                                 color: Colors.black,),
                             ),
                             Visibility(
                               visible: index == vehicleIndex,
-                              child: Icon(Icons.keyboard_arrow_up_outlined,
+                              child: const Icon(Icons.keyboard_arrow_up_outlined,
                                 color: Colors.black,),
                             ),
                           ],

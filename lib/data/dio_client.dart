@@ -281,5 +281,32 @@ class ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> getUserDetailsApi(String customerId) async {
+
+    String url = "${ApiConstants().baseUrl}${ApiConstants().getuserDetailsApi}$customerId";
+
+    String? sessionToken = GetStorage().read<String>(
+        ConstantData.userAccessToken);
+
+    try {
+      Response response = await _dio.get(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $sessionToken',
+          },
+        ),
+      );
+
+      print("getUserDetailsApiSC --> ${response.statusCode}");
+      print("getUserDetailsApiPost --> ${response.data}");
+
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+
 
 }

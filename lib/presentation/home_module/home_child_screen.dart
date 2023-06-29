@@ -284,7 +284,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
             padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.02),
             child: GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>NewLoadScreenForm()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const NewLoadScreenForm()));
               },
               child: Container(
                 height: SizeConfig.screenHeight*0.05,
@@ -304,12 +304,12 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                           Container(
                             height: SizeConfig.screenHeight*0.035,
                             width: SizeConfig.screenWidth*0.07,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle
                             ),
                           ),
-                          Icon(Icons.add)
+                          const Icon(Icons.add)
                         ],
                       ),
 
@@ -356,7 +356,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                 offset: const Offset(2, 6)),
           ],
         ),
-        child: Image(image: AssetImage("assets/images/adv_demo.png"),
+        child: const Image(image: AssetImage("assets/images/adv_demo.png"),
           fit: BoxFit.cover,),
       ),
     );
@@ -422,7 +422,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         },
                         child: Container(
                           color: Colors.transparent,
-                          child: Icon(Icons.search,
+                          child: const Icon(Icons.search,
                           color: Colors.black26,),
                         ),
                       ),
@@ -438,8 +438,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                   child: Container(
                     height: SizeConfig.screenWidth*0.003,
                     color: Colors.black12,
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Text("hii",
                           style: TextStyle(
                               color: Colors.transparent
@@ -486,7 +486,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         },
                         child: Container(
                           color: Colors.transparent,
-                          child: Icon(Icons.search,
+                          child: const Icon(Icons.search,
                             color: Colors.black26,),
                         ),
                       ),
@@ -515,7 +515,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         Container(
                           height: parentHeight*0.013,
                           width: parentWidth*0.026,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.FROM_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -541,7 +541,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         },
                         child: Container(
                           color: Colors.transparent,
-                            child: Image(image: AssetImage("assets/images/add_reverse.png"),
+                            child: Image(image: const AssetImage("assets/images/add_reverse.png"),
                             height: parentHeight*0.017,)
                         ),
                       ),
@@ -556,7 +556,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         Container(
                           height: parentHeight*0.013,
                           width: parentWidth*0.026,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.TO_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -843,7 +843,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.FROM_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -887,7 +887,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.TO_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -1140,7 +1140,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                             Container(
                               height: parentHeight*0.02,
                               width: parentWidth*0.045,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: CommonColor.UNSELECT_TYPE_COLOR,
                                   shape: BoxShape.circle
                               ),
@@ -1208,7 +1208,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                   padding: EdgeInsets.only(
                                     bottom: MediaQuery.of(context).viewInsets.bottom,
                                   ),
-                                  child: CompanyVerifyDialog(),
+                                  child: const CompanyVerifyDialog(companyId: '',),
                                 );
                               });
                         },
@@ -1256,7 +1256,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                               Container(
                                 height: parentHeight*0.02,
                                 width: parentWidth*0.045,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: CommonColor.UNSELECT_TYPE_COLOR,
                                     shape: BoxShape.circle
                                 ),
@@ -1322,7 +1322,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                           Container(
                             height: parentHeight*0.02,
                             width: parentWidth*0.045,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: CommonColor.UNSELECT_TYPE_COLOR,
                                 shape: BoxShape.circle
                             ),
@@ -1444,7 +1444,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                               isScrollControlled: true,
                               isDismissible: true,
                               builder: (BuildContext bc) {
-                                return BidNowPriceDialog(isComeFrom: '1', mainPrice: 2000,);
+                                return const BidNowPriceDialog(isComeFrom: '1', mainPrice: 2000,);
                               });
                         },
                         child: Container(

@@ -86,7 +86,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             },
             child: Container(
                 color: Colors.transparent,
-                child: Icon(Icons.arrow_back_ios_new,
+                child: const Icon(Icons.arrow_back_ios_new,
                   color: CommonColor.WHITE_COLOR,)),
           ),
           Padding(
@@ -146,7 +146,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.FROM_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -190,7 +190,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                         Container(
                           height: parentHeight*0.01,
                           width: parentWidth*0.021,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: CommonColor.TO_AREA_COLOR,
                               shape: BoxShape.circle
                           ),
@@ -443,7 +443,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                             Container(
                               height: parentHeight*0.02,
                               width: parentWidth*0.045,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: CommonColor.UNSELECT_TYPE_COLOR,
                                   shape: BoxShape.circle
                               ),
@@ -510,7 +510,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                   padding: EdgeInsets.only(
                                     bottom: MediaQuery.of(context).viewInsets.bottom,
                                   ),
-                                  child: CompanyVerifyDialog(),
+                                  child: const CompanyVerifyDialog(companyId: '',),
                                 );
                               });
                         },
@@ -558,7 +558,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                               Container(
                                 height: parentHeight*0.02,
                                 width: parentWidth*0.045,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: CommonColor.UNSELECT_TYPE_COLOR,
                                     shape: BoxShape.circle
                                 ),
@@ -665,7 +665,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
 
                   Padding(
                     padding: EdgeInsets.only(right: parentWidth*0.05),
-                    child: Image(image: AssetImage("assets/images/adhar_tag.png")),
+                    child: const Image(image: AssetImage("assets/images/adhar_tag.png")),
                   )
 
                 ],
@@ -787,8 +787,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 child: Container(
                   height: SizeConfig.screenWidth*0.003,
                   color: Colors.black12,
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Text("hii",
                         style: TextStyle(
                             color: Colors.transparent
