@@ -345,5 +345,31 @@ class ApiClient {
   }
 
 
+  Future<Map<String, dynamic>> getMyBidStatusAllPost() async {
+
+    String url = "${ApiConstants().baseUrl}${ApiConstants().getAllMyBidListStatus}${ConstantData.PENDING_POST}";
+
+    String? sessionToken = GetStorage().read<String>(
+        ConstantData.userAccessToken);
+
+    try {
+      Response response = await _dio.get(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $sessionToken',
+          },
+        ),
+      );
+
+      print("getMyBidStatusAllPost --> ${response.statusCode}");
+      print("getMyBidStatusAllPost --> ${response.data}");
+
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
 
 }

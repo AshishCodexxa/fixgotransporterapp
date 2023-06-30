@@ -1,11 +1,10 @@
-import 'package:fixgotransporterapp/all_dialogs/bid_now_price_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.dart';
-import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
+import 'package:fixgotransporterapp/all_dialogs/get_update_bid_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
 import 'package:fixgotransporterapp/data/dio_client.dart';
-import 'package:fixgotransporterapp/data/model/get_all_company_post_response_model.dart';
+import 'package:fixgotransporterapp/data/model/get_all_bid_status_list_response_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -54,7 +53,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
       });
     }
 
-    ApiClient().getCompanyAllPost().then((value){
+    ApiClient().getMyBidStatusAllPost().then((value){
 
       if(mounted){
         setState(() {
@@ -62,19 +61,22 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
         });
       }
 
-      var jsonList = GetAllCompanyPostResponseModel.fromJson(value);
+      var jsonList = GetMyBidPostResponseModel.fromMap(value);
 
-      print(jsonList);
+      print("jsonList $jsonList");
 
       items.addAll(jsonList.data);
 
       for(int i = 0; i < items.length; i++){
+
+        print(items[i].customer.toString());
 
           ApiClient().getUserDetailsApi(items[i].customer.toString()).then((value){
 
             if(mounted){
               setState(() {
                 companyName = value['data']['companyName'];
+                print("companyName $companyName");
               });
             }
 
@@ -142,19 +144,19 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
     var inputFormat = DateFormat('hh:mm a');
     postOnTime = inputFormat.format(inputTime);
 
-    DateTime pickDate = DateFormat("yyyy-MM-dd").parse(items[postIndex].pickupDate.toString());
+    DateTime pickDate = DateFormat("yyyy-MM-dd").parse("${items[postIndex].post?.pickupDate}");
     var pickDates = DateTime.parse(pickDate.toString());
     var outputFormats = DateFormat('dd MMMM yyyy');
     pickUpDate = outputFormats.format(pickDates);
 
-    DateTime pickTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[postIndex].pickupDate.toString());
+    DateTime pickTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse("${items[postIndex].post?.pickupDate}");
     var pickTimes = DateTime.parse(pickTime.toString());
     var inputFormats = DateFormat('hh:mm a');
     pickUpTime = inputFormats.format(pickTimes);
 
-    pickUpLocation = "${items[postIndex].pickup?.address?.street}, ${items[postIndex].pickup?.address?.city}, ${items[postIndex].pickup?.address?.district}, ${items[postIndex].pickup?.address?.laneNumber}, ${items[postIndex].pickup?.address?.state}, ${items[postIndex].pickup?.address?.country}, ${items[postIndex].pickup?.address?.postalCode}";
+    pickUpLocation = "${items[postIndex].post?.pickup?.address?.street}, ${items[postIndex].post?.pickup?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber}, ${items[postIndex].post?.pickup?.address?.state}, ${items[postIndex].post?.pickup?.address?.country}, ${items[postIndex].post?.pickup?.address?.postalCode}";
 
-    finalLocation = "${items[postIndex].receiver?.address?.street}, ${items[postIndex].receiver?.address?.city}, ${items[postIndex].pickup?.address?.district}, ${items[postIndex].pickup?.address?.laneNumber}, ${items[postIndex].receiver?.address?.state}, ${items[postIndex].receiver?.address?.country}, ${items[postIndex].receiver?.address?.postalCode}";
+    finalLocation = "${items[postIndex].post?.receiver?.address?.street}, ${items[postIndex].post?.receiver?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber}, ${items[postIndex].post?.receiver?.address?.state}, ${items[postIndex].post?.receiver?.address?.country}, ${items[postIndex].post?.receiver?.address?.postalCode}";
 
 
     return Column(
@@ -179,7 +181,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                   children: [
 
                     Text(
-                      "Lowest Bid ${items[postIndex].lowestBid}/-",
+                      "Lowest Bid ${items[postIndex].post?.lowestBid}/-",
                       style: TextStyle(
                           color: CommonColor.BLACK_COLOR,
                           fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -211,7 +213,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      "${items[postIndex].lowestBidder}",
+                                      "${items[postIndex].post?.lowestBidder}",
                                       style: TextStyle(
                                           color: CommonColor.WHITE_COLOR,
                                           fontSize: SizeConfig.blockSizeHorizontal*2.0,
@@ -356,11 +358,11 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                           padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
-                          child: BidNowPriceDialog(
+                          child: BidUpdateNowPriceDialog(
                             isComeFrom: '2',
-                            mainPrice: (items[postIndex].lowestBid == 0 ? items[postIndex].fare : items[postIndex].lowestBid) ?? 0,
-                            bidAmount: items[postIndex].lowestBid ?? 0,
-                            postDetails: items, postIndex: postIndex, companyName: companyName,
+                            mainPrice: (items[postIndex].post?.lowestBid == 0 ? items[postIndex].post?.fare : items[postIndex].post?.lowestBid) ?? 0,
+                            bidAmount: items[postIndex].post?.lowestBid ?? 0,
+                            postDetails: items, postIndex: postIndex, companyName: companyName, postId: items[postIndex].post!.id.toString(),
                           ),
                         );
                       });
@@ -379,7 +381,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             ),
                             children: [
                               TextSpan(
-                                  text: ' ${items[postIndex].lowestBid}/-',
+                                  text: ' ${items[postIndex].bidAmount}/-',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*4.5,
                                       color: Colors.black,
@@ -553,21 +555,21 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     child:GestureDetector(
                     onTap: (){
 
-                      passPickIndexAddress = "${items[postIndex].pickup?.address?.street}, ${items[postIndex].pickup?.address?.city}, ${items[postIndex].pickup?.address?.district}, ${items[postIndex].pickup?.address?.laneNumber} ${items[postIndex].pickup?.address?.state}, ${items[postIndex].pickup?.address?.country}, ${items[postIndex].pickup?.address?.postalCode}";
+                      passPickIndexAddress = "${items[postIndex].post?.pickup?.address?.street}, ${items[postIndex].post?.pickup?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber} ${items[postIndex].post?.pickup?.address?.state}, ${items[postIndex].post?.pickup?.address?.country}, ${items[postIndex].post?.pickup?.address?.postalCode}";
 
-                      passLastIndexAddress = "${items[postIndex].receiver?.address?.street}, ${items[postIndex].receiver?.address?.city}, ${items[postIndex].receiver?.address?.state}, ${items[postIndex].receiver?.address?.country}, ${items[postIndex].receiver?.address?.postalCode}";
+                      passLastIndexAddress = "${items[postIndex].post?.receiver?.address?.street}, ${items[postIndex].post?.receiver?.address?.city}, ${items[postIndex].post?.receiver?.address?.state}, ${items[postIndex].post?.receiver?.address?.country}, ${items[postIndex].post?.receiver?.address?.postalCode}";
 
-                      DateTime tempDate = DateFormat("yyyy-MM-dd").parse(items[postIndex].pickupDate.toString());
+                      DateTime tempDate = DateFormat("yyyy-MM-dd").parse("${items[postIndex].post?.pickupDate}");
                       var inputDate = DateTime.parse(tempDate.toString());
                       var outputFormat = DateFormat('dd MMMM yyyy');
                       pickUpIndexDate = outputFormat.format(inputDate);
 
-                      DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[postIndex].pickupDate.toString());
+                      DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse("${items[postIndex].post?.pickupDate}");
                       var inputTime = DateTime.parse(parseDate.toString());
                       var inputFormat = DateFormat('hh:mm a');
                       pickUpIndexTime = inputFormat.format(inputTime);
 
-                      showCupertinoDialog(
+                      /*showCupertinoDialog(
                           context: context,
                           barrierDismissible: true,
                           builder: (context) {
@@ -584,7 +586,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                                   finalLocation: passLastIndexAddress,
                                 ));
                           },
-                        );
+                        );*/
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcessTimelinePage()));
                       },
                       child: Container(
@@ -637,7 +639,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             ),
                             children: [
                               TextSpan(
-                                  text: '${items[postIndex].loadDetail?.load} ${items[postIndex].loadDetail?.loadUnit}',
+                                  text: '${items[postIndex].post?.loadDetail?.load} ${items[postIndex].post?.loadDetail?.loadUnit}',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*3.7,
                                       color: Colors.black,
@@ -664,7 +666,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: CompanyVerifyDialog(companyId: items[postIndex].pickup!.customer.toString(),),
+                            child: CompanyVerifyDialog(companyId: items[postIndex].customer.toString(),),
                           );
                         });
                   },

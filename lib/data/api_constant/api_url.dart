@@ -39,6 +39,7 @@ class ApiConstants {
   String getuserDetailsApi = "user/detail/";
   String addBidAgainstPost = "bid/transporter";
   String deletePickupAddress = "pickup/delete/";
+  String getAllMyBidListStatus = "post/my-bid?status=";
 
 
 
