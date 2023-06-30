@@ -55,7 +55,7 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    int main = widget.mainPrice;
+/*    int main = widget.mainPrice;
 
     print(widget.mainPrice);
     int remain = 0;
@@ -72,7 +72,7 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
         print(tt);
       }
 
-    }
+    }*/
 
     pickUpLocation = "${widget.postDetails[widget.postIndex].pickup?.address?.street}, ${widget.postDetails[widget.postIndex].pickup?.address?.city}, ${widget.postDetails[widget.postIndex].pickup?.address?.district}, ${widget.postDetails[widget.postIndex].pickup?.address?.laneNumber}, ${widget.postDetails[widget.postIndex].pickup?.address?.state}, ${widget.postDetails[widget.postIndex].pickup?.address?.country}, ${widget.postDetails[widget.postIndex].pickup?.address?.postalCode}";
 

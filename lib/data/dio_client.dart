@@ -176,6 +176,8 @@ class ApiClient {
       String phoneNo,
       String street,
       String city,
+      String taluka,
+      String lane,
       String state,
       String country,
       String pinCode,
@@ -198,7 +200,9 @@ class ApiClient {
             "city": city,
             "state": state,
             "country": country,
-            "postalCode": pinCode
+            "postalCode": pinCode,
+            "district": taluka,
+            "laneNumber": lane,
           },
           "coordinate": {
             "latitude": lat,
@@ -321,7 +325,7 @@ class ApiClient {
       Response response = await _dio.post(
         url,
         data: {
-          "post": "649bc4fb917e86c8dc74f1d0",
+          "post": postId,
           "bidAmount": bidAmount
         },
         options: Options(

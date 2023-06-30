@@ -124,12 +124,16 @@ class Address {
     required this.state,
     required this.country,
     required this.postalCode,
+    required this.district,
+    required this.laneNumber,
   });
   late final String street;
   late final String city;
   late final String state;
   late final String country;
   late final String postalCode;
+  late final String district;
+  late final String laneNumber;
 
   Address.fromJson(Map<String, dynamic> json){
     street = json['street'];
@@ -137,6 +141,8 @@ class Address {
     state = json['state'];
     country = json['country'];
     postalCode = json['postalCode'];
+    district = json['district'];
+    laneNumber = json['laneNumber'];
   }
 
   Map<String, dynamic> toJson() {
@@ -146,6 +152,8 @@ class Address {
     _data['state'] = state;
     _data['country'] = country;
     _data['postalCode'] = postalCode;
+    _data['district'] = district;
+    _data['laneNumber'] = laneNumber;
     return _data;
   }
 }

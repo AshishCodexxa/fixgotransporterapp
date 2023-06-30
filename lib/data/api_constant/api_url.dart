@@ -38,6 +38,7 @@ class ApiConstants {
   String getCompanyPost = "post/company";
   String getuserDetailsApi = "user/detail/";
   String addBidAgainstPost = "bid/transporter";
+  String deletePickupAddress = "pickup/delete/";
 
 
 

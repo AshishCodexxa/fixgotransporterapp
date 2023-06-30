@@ -28,6 +28,8 @@ class NewLoadScreenForm extends StatefulWidget {
   final String postalCode;
   final String lat;
   final String long;
+  final String lane;
+  final String taluka;
 
   const NewLoadScreenForm(
       {Key? key,
@@ -41,7 +43,8 @@ class NewLoadScreenForm extends StatefulWidget {
         this.country = '',
         this.postalCode = '',
         this.lat = "",
-        this.long = ""})
+        this.long = "", this.lane = '',
+        this.taluka = ''})
       : super(key: key);
 
   @override
@@ -167,28 +170,31 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
 
   hideLoadError() {
     Future.delayed(const Duration(seconds: 3), () {
-      if(mounted)
-      setState(() {
+      if(mounted) {
+        setState(() {
         loadErrorShow = false;
       });
+      }
     });
   }
 
   hideVehicleError() {
     Future.delayed(const Duration(seconds: 3), () {
-      if(mounted)
-      setState(() {
+      if(mounted) {
+        setState(() {
         vehicleErrorShow = false;
       });
+      }
     });
   }
 
   hidePaymentError() {
     Future.delayed(const Duration(seconds: 3), () {
-      if(mounted)
-      setState(() {
+      if(mounted) {
+        setState(() {
         paymentErrorShow = false;
       });
+      }
     });
   }
 
@@ -273,20 +279,35 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
           ),
           Visibility(
             visible: isLoading,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                Padding(
-                  padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.03),
-                  child: Text("Please wait a moment.\nYour post will be created.",
-                    style: TextStyle(
-                        color: CommonColor.SIGN_UP_TEXT_COLOR,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Roboto_Medium'
-                    ),),
-                )
-              ],
+            child: Container(
+              height: SizeConfig.screenHeight*0.07,
+              width: SizeConfig.screenWidth*0.7,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(7),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.17),
+                      blurRadius: 4,
+                      spreadRadius: 4,
+                      offset: const Offset(1, 1)),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  Padding(
+                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05),
+                    child: const Text("Please wait a moment.\nYour post will be created.",
+                      style: TextStyle(
+                          color: CommonColor.SIGN_UP_TEXT_COLOR,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Roboto_Medium'
+                      ),),
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -423,7 +444,7 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => DeliveryLocationScreen(
-                                    pickUpAddress: widget.pickUpAddress,
+                                    pickUpAddress: widget.pickUpAddress, lane: '', taluka: '',
                                   )));
                         },
                         child: Container(

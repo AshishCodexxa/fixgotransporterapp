@@ -40,16 +40,25 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
 
   String companyName = "";
 
+  bool isLoading = false;
+
 
 
   @override
   void initState() {
     super.initState();
+
+    if(mounted){
+      setState(() {
+        isLoading = true;
+      });
+    }
+
     ApiClient().getCompanyAllPost().then((value){
 
       if(mounted){
         setState(() {
-
+          isLoading = false;
         });
       }
 
@@ -84,30 +93,39 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: ListView.builder(
-          itemCount: items.length,
-          padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.03),
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02,
-                  left: SizeConfig.screenWidth*0.03,
-                  right: SizeConfig.screenWidth*0.03),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 5,
-                        spreadRadius: 1,
-                        offset: const Offset(2, 6)),
-                  ],
-                ),
-                child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
-              ),
-            );
-          }
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          ListView.builder(
+              itemCount: items.length,
+              padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.03),
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02,
+                      left: SizeConfig.screenWidth*0.03,
+                      right: SizeConfig.screenWidth*0.03),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 5,
+                            spreadRadius: 1,
+                            offset: const Offset(2, 6)),
+                      ],
+                    ),
+                    child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
+                  ),
+                );
+              }
+          ),
+          Visibility(
+            visible: isLoading,
+              child: CircularProgressIndicator()
+          )
+        ],
       ),
     );
   }
