@@ -40,9 +40,10 @@ class _DashboardState extends State<Dashboard> implements
     heading = "FixGo";
 
     widget.isComeFrom == "2" ?
-        isShow = false :
-        true;
-
+        isShow = false
+        : widget.isComeFrom == "3" ?
+    isShow = false
+        : isShow = true;
 
     widget.isComeFrom == "1" ?
     addNewScreen(
@@ -56,6 +57,12 @@ class _DashboardState extends State<Dashboard> implements
           mListener: this,
         ),
         ScreenConstant.MY_BID_FRAGMENT) :
+    widget.isComeFrom == "3" ?
+    addNewScreen(
+        MyPostChildScreen(
+          mListener: this,
+        ),
+        ScreenConstant.MY_POST_FRAGMENT) :
     addNewScreen(
         HomeChildScreen(
           mListener: this,

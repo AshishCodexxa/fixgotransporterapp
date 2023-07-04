@@ -78,6 +78,8 @@ class _PickUpLocationState extends State<PickUpLocation> {
        cityController = TextEditingController(text: widget.citys);
        stateController = TextEditingController(text: widget.states);
        pinCodeController = TextEditingController(text: widget.pincodes);
+       talukaController = TextEditingController(text: widget.taluka);
+       laneNoController = TextEditingController(text: widget.lane);
      });
    }
 
@@ -520,6 +522,7 @@ class _PickUpLocationState extends State<PickUpLocation> {
                 controller: pinCodeController,
                 focusNode: _pinCodeFocus,
                 textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   prefixIcon: Image(image: AssetImage("assets/images/company.png"),),
                   label: RichText(

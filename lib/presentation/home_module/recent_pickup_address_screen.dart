@@ -185,7 +185,7 @@ class _PreviousAddressListScreenState extends State<PreviousAddressListScreen> {
                                               ),
                                               GestureDetector(
                                                 onTap: (){
-                                                var result = showGeneralDialog(
+                                                  showGeneralDialog(
                                                       barrierColor: Colors.black.withOpacity(0.5),
                                                       transitionBuilder: (context, a1, a2, widget) {
                                                         final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
@@ -197,7 +197,7 @@ class _PreviousAddressListScreenState extends State<PreviousAddressListScreen> {
                                                             opacity: a1.value,
                                                             child: PostDeleteConfirmationDialog(
                                                               message: "Are You Sure,\nYou Want To Delete a Address",
-                                                              postId: items[index].id, openFrom: "1",
+                                                              postId:items.isNotEmpty ? items[index].id : "", openFrom: "1",
                                                             ),
                                                           ),
                                                         );
@@ -208,8 +208,14 @@ class _PreviousAddressListScreenState extends State<PreviousAddressListScreen> {
                                                       context: context,
                                                       pageBuilder: (context, animation2, animation1) {
                                                         return Container();
+                                                      }).then((value){
+                                                    if(mounted){
+                                                      setState(() {
+                                                        items.clear();
+                                                        refresh();
                                                       });
-
+                                                    }
+                                                  });
                                                 },
                                                 child: Container(
                                                     color: Colors.transparent,

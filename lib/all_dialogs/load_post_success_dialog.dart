@@ -32,7 +32,7 @@ class _LoadPostSuccessDialogState extends State<LoadPostSuccessDialog> {
 
 
   void navigateParentPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> const Dashboard(isComeFrom: "3",)));
   }
 
   @override
