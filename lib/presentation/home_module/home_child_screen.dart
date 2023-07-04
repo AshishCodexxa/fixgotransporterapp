@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fixgotransporterapp/all_dialogs/bid_now_price_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
@@ -13,7 +15,12 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
 
 
-
+String _printDuration(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+}
 
 class HomeChildScreen extends StatefulWidget {
   
@@ -56,6 +63,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
   String companyName = "";
 
   bool isLoading = false;
+
+  Timer? _timer;
 
 
 
@@ -100,6 +109,14 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       }
 
       print("companyName $companyName");
+
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if(mounted) {
+          setState(
+                () {},
+          );
+        }
+      });
 
     });
   }
@@ -171,6 +188,11 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
 
                             finalLocation = "${items[index].receiver?.address?.street}, ${items[index].receiver?.address?.city}, ${items[index].pickup?.address?.district}, ${items[index].pickup?.address?.laneNumber}, ${items[index].receiver?.address?.state}, ${items[index].receiver?.address?.country}, ${items[index].receiver?.address?.postalCode}";
 
+                            final endTime = DateTime.parse("${items[index].postExpiryDate}");
+                            Duration remainingTime = endTime.difference(DateTime.now());
+
+                            final formattedTime = _printDuration(remainingTime);
+
                             return  Padding(
                           padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
                             left: SizeConfig.screenWidth*0.0
@@ -210,7 +232,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    "Time Left  23:59:59 hrs.",
+                                                    "Time Left  $formattedTime.",
                                                     style: TextStyle(
                                                         color: CommonColor.TO_AREA_COLOR,
                                                         fontSize: SizeConfig.blockSizeHorizontal*2.5,
@@ -227,7 +249,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                                 children: [
                                                   Container(
                                                     color: Colors.transparent,
-                                                    width: SizeConfig.screenWidth*0.75,
+                                                    width: SizeConfig.screenWidth*0.7,
                                                     child: Text(
                                                       companyName,
                                                       style: TextStyle(
@@ -1279,13 +1301,16 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                       },
                                       child: Container(
                                         color: Colors.transparent,
-                                        child: Text(
-                                          "More",
-                                          style: TextStyle(
-                                              color: CommonColor.SIGN_UP_TEXT_COLOR,
-                                              fontSize: SizeConfig.blockSizeHorizontal*3.7,
-                                              fontFamily: "Roboto_Regular ",
-                                              fontWeight: FontWeight.w500
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(3.0),
+                                          child: Text(
+                                            "More",
+                                            style: TextStyle(
+                                                color: CommonColor.SIGN_UP_TEXT_COLOR,
+                                                fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                                fontFamily: "Roboto_Regular ",
+                                                fontWeight: FontWeight.w500
+                                            ),
                                           ),
                                         ),
                                       ),

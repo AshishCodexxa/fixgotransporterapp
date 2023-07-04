@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/get_update_bid_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
@@ -10,7 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 
-
+String _printDuration(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+}
 
 class PendingBidScreen extends StatefulWidget {
   const PendingBidScreen({Key? key}) : super(key: key);
@@ -40,6 +47,8 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
   String companyName = "";
 
   bool isLoading = false;
+
+  Timer? _timer;
 
 
 
@@ -86,6 +95,14 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
       }
 
       print(items.length);
+
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if(mounted) {
+          setState(
+                () {},
+          );
+        }
+      });
 
     });
   }
@@ -157,6 +174,11 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
     pickUpLocation = "${items[postIndex].post?.pickup?.address?.street}, ${items[postIndex].post?.pickup?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber}, ${items[postIndex].post?.pickup?.address?.state}, ${items[postIndex].post?.pickup?.address?.country}, ${items[postIndex].post?.pickup?.address?.postalCode}";
 
     finalLocation = "${items[postIndex].post?.receiver?.address?.street}, ${items[postIndex].post?.receiver?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber}, ${items[postIndex].post?.receiver?.address?.state}, ${items[postIndex].post?.receiver?.address?.country}, ${items[postIndex].post?.receiver?.address?.postalCode}";
+
+    final endTime = DateTime.parse("${items[postIndex].post?.postExpiryDate}");
+    Duration remainingTime = endTime.difference(DateTime.now());
+
+    final formattedTime = _printDuration(remainingTime);
 
 
     return Column(
@@ -237,7 +259,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Time Left  23:59:59 hrs.",
+                        "Time Left  $formattedTime.",
                         style: TextStyle(
                             color: CommonColor.TO_AREA_COLOR,
                             fontSize: SizeConfig.blockSizeHorizontal*2.5,
