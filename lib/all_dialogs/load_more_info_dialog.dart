@@ -868,7 +868,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                             ),
                             children: [
                               TextSpan(
-                                  text: ' $advancePay/-',
+                                  text: ' ${advancePay.toStringAsFixed(1)}/-',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                       color: Colors.black,
@@ -898,7 +898,7 @@ class _LoadMoreInfoDialogState extends State<LoadMoreInfoDialog> {
                                     ),
                                     children: [
                                       TextSpan(
-                                          text: ' $deliveryPay/-',
+                                          text: ' ${deliveryPay.toStringAsFixed(1)}/-',
                                           style: TextStyle(
                                               fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                               color: Colors.black,
