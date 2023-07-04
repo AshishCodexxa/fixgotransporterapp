@@ -682,7 +682,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       child: Column(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Finding Load For",
                 style: TextStyle(
@@ -690,229 +691,304 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                     fontSize: SizeConfig.blockSizeHorizontal*4.5,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Roboto_Medium'
-                ),)
+                ),),
+
+              Padding(
+                padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,
+                  right: SizeConfig.screenWidth*0.04,),
+                child: GestureDetector(
+                  onTap: (){
+                    if(mounted){
+                      setState(() {
+                        filterType = 0;
+                      });
+                    }
+                  },
+                  child: Container(
+                      height: SizeConfig.screenHeight*0.05,
+                      width: SizeConfig.screenHeight*0.053,
+                      decoration: BoxDecoration(
+                        color: filterType != 0 ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.08),
+                              blurRadius: 3,
+                              spreadRadius: 2,
+                              offset: const Offset(2, 4)),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text("All",
+                          style: TextStyle(
+                              color: filterType == 0 ? Colors.white : CommonColor.BLACK_COLOR,
+                              fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Roboto_Medium'
+                          ),),
+                      )
+                  ),
+                ),
+              ),
             ],
           ),
 
-          Padding(
-            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
-            child: Container(
-              color: Colors.transparent,
-              height: SizeConfig.screenHeight*0.07,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01,
-                  bottom: SizeConfig.screenHeight*0.01,
-                ),
-                children: <Widget>[
-
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,
-                      right: SizeConfig.screenWidth*0.04,),
-                    child: GestureDetector(
-                      onTap: (){
-                        if(mounted){
-                          setState(() {
-                            filterType = 0;
-                          });
-                        }
-                      },
-                      child: Container(
-                          height: SizeConfig.screenHeight*0.05,
-                          width: SizeConfig.screenHeight*0.053,
-                          decoration: BoxDecoration(
-                            color: filterType != 0 ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 3,
-                                  spreadRadius: 2,
-                                  offset: const Offset(2, 4)),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text("All",
-                              style: TextStyle(
-                                  color: filterType == 0 ? Colors.white : CommonColor.BLACK_COLOR,
-                                  fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Roboto_Medium'
-                              ),),
-                          )
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
-                      right: SizeConfig.screenWidth*0.04,),
-                    child: GestureDetector(
-                      
-                      onTap: (){
-                        if(mounted){
-                          setState(() {
-                            filterType = 1;
-                          });
-                        }
-                      },
-                      child: Container(
-                          height: SizeConfig.screenHeight*0.05,
-                          width: SizeConfig.screenHeight*0.14,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 3,
-                                  spreadRadius: 2,
-                                  offset: const Offset(2, 4)),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01, right: SizeConfig.screenWidth*0.01),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-
-                                Container(
-                                  height: SizeConfig.screenHeight*0.03,
-                                  width: SizeConfig.screenWidth*0.06,
-                                  decoration: BoxDecoration(
-                                      color: filterType != 1 ? CommonColor.UNSELECT_TYPE_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
-                                      shape: BoxShape.circle
-                                  ),
-                                ),
-
-                                Text("Open Body",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Roboto_Medium'
-                                  ),),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
-                      right: SizeConfig.screenWidth*0.04,),
-                    child: GestureDetector(
-                      onTap: (){
-                        if(mounted){
-                          setState(() {
-                            filterType = 2;
-                          });
-                        }
-                      },
-                      child: Container(
-                          height: SizeConfig.screenHeight*0.05,
-                          width: SizeConfig.screenHeight*0.16,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 3,
-                                  spreadRadius: 2,
-                                  offset: const Offset(2, 4)),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01, right: SizeConfig.screenWidth*0.01),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-
-                                Container(
-                                  height: SizeConfig.screenHeight*0.03,
-                                  width: SizeConfig.screenWidth*0.06,
-                                  decoration: BoxDecoration(
-                                      color: filterType != 2 ? CommonColor.UNSELECT_TYPE_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
-                                      shape: BoxShape.circle
-                                  ),
-                                ),
-
-                                Text("Closed Body",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Roboto_Medium'
-                                  ),),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
-                      right: SizeConfig.screenWidth*0.04,),
-                    child: GestureDetector(
-                      
-                      onTap: (){
-                        if(mounted){
-                          setState(() {
-                            filterType = 3;
-                          });
-                        }
-                      },
-                      child: Container(
-                          height: SizeConfig.screenHeight*0.05,
-                          width: SizeConfig.screenHeight*0.11,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 3,
-                                  spreadRadius: 2,
-                                  offset: const Offset(2, 4)),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01, right: SizeConfig.screenWidth*0.01),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-
-                                Container(
-                                  height: SizeConfig.screenHeight*0.03,
-                                  width: SizeConfig.screenWidth*0.06,
-                                  decoration: BoxDecoration(
-                                      color: filterType != 3 ? CommonColor.UNSELECT_TYPE_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
-                                      shape: BoxShape.circle
-                                  ),
-                                ),
-
-                                Text("Trailor",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Roboto_Medium'
-                                  ),),
-                              ],
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+          //   child: Container(
+          //     color: Colors.transparent,
+          //     height: SizeConfig.screenHeight*0.07,
+          //     child: ListView(
+          //       scrollDirection: Axis.horizontal,
+          //       shrinkWrap: true,
+          //       padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01,
+          //         bottom: SizeConfig.screenHeight*0.01,
+          //       ),
+          //       children: <Widget>[
+          //
+          //         Padding(
+          //           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,
+          //             right: SizeConfig.screenWidth*0.04,),
+          //           child: GestureDetector(
+          //             onTap: (){
+          //               if(mounted){
+          //                 setState(() {
+          //                   filterType = 0;
+          //                 });
+          //               }
+          //             },
+          //             child: Container(
+          //                 height: SizeConfig.screenHeight*0.05,
+          //                 width: SizeConfig.screenHeight*0.053,
+          //                 decoration: BoxDecoration(
+          //                   color: filterType != 0 ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR,
+          //                   borderRadius: BorderRadius.circular(10),
+          //                   boxShadow: <BoxShadow>[
+          //                     BoxShadow(
+          //                         color: Colors.black.withOpacity(0.08),
+          //                         blurRadius: 3,
+          //                         spreadRadius: 2,
+          //                         offset: const Offset(2, 4)),
+          //                   ],
+          //                 ),
+          //                 child: Center(
+          //                   child: Text("All",
+          //                     style: TextStyle(
+          //                         color: filterType == 0 ? Colors.white : CommonColor.BLACK_COLOR,
+          //                         fontSize: SizeConfig.blockSizeHorizontal*4.0,
+          //                         fontWeight: FontWeight.w500,
+          //                         fontFamily: 'Roboto_Medium'
+          //                     ),),
+          //                 )
+          //             ),
+          //           ),
+          //         ),
+          //
+          //         Padding(
+          //           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
+          //             right: SizeConfig.screenWidth*0.04,),
+          //           child: GestureDetector(
+          //
+          //             onTap: (){
+          //               if(mounted){
+          //                 setState(() {
+          //                   filterType = 1;
+          //                 });
+          //               }
+          //             },
+          //             child: Container(
+          //                 height: SizeConfig.screenHeight*0.05,
+          //                 width: SizeConfig.screenHeight*0.14,
+          //                 decoration: BoxDecoration(
+          //                   color: Colors.white,
+          //                   borderRadius: BorderRadius.circular(10),
+          //                   boxShadow: <BoxShadow>[
+          //                     BoxShadow(
+          //                         color: Colors.black.withOpacity(0.08),
+          //                         blurRadius: 3,
+          //                         spreadRadius: 2,
+          //                         offset: const Offset(2, 4)),
+          //                   ],
+          //                 ),
+          //                 child: Padding(
+          //                   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01, right: SizeConfig.screenWidth*0.01),
+          //                   child: Row(
+          //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //                     children: [
+          //
+          //                       Container(
+          //                         height: SizeConfig.screenHeight*0.03,
+          //                         width: SizeConfig.screenWidth*0.06,
+          //                         decoration: BoxDecoration(
+          //                             color: filterType != 1 ? CommonColor.UNSELECT_TYPE_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
+          //                             shape: BoxShape.circle
+          //                         ),
+          //                       ),
+          //
+          //                       Text("Open Body",
+          //                         style: TextStyle(
+          //                             color: Colors.black,
+          //                             fontSize: SizeConfig.blockSizeHorizontal*4.0,
+          //                             fontWeight: FontWeight.w500,
+          //                             fontFamily: 'Roboto_Medium'
+          //                         ),),
+          //                     ],
+          //                   ),
+          //                 )
+          //             ),
+          //           ),
+          //         ),
+          //
+          //         Padding(
+          //           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
+          //             right: SizeConfig.screenWidth*0.04,),
+          //           child: GestureDetector(
+          //             onTap: (){
+          //               if(mounted){
+          //                 setState(() {
+          //                   filterType = 2;
+          //                 });
+          //               }
+          //             },
+          //             child: Container(
+          //                 height: SizeConfig.screenHeight*0.05,
+          //                 width: SizeConfig.screenHeight*0.16,
+          //                 decoration: BoxDecoration(
+          //                   color: Colors.white,
+          //                   borderRadius: BorderRadius.circular(10),
+          //                   boxShadow: <BoxShadow>[
+          //                     BoxShadow(
+          //                         color: Colors.black.withOpacity(0.08),
+          //                         blurRadius: 3,
+          //                         spreadRadius: 2,
+          //                         offset: const Offset(2, 4)),
+          //                   ],
+          //                 ),
+          //                 child: Padding(
+          //                   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01, right: SizeConfig.screenWidth*0.01),
+          //                   child: Row(
+          //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //                     children: [
+          //
+          //                       Container(
+          //                         height: SizeConfig.screenHeight*0.03,
+          //                         width: SizeConfig.screenWidth*0.06,
+          //                         decoration: BoxDecoration(
+          //                             color: filterType != 2 ? CommonColor.UNSELECT_TYPE_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
+          //                             shape: BoxShape.circle
+          //                         ),
+          //                       ),
+          //
+          //                       Text("Closed Body",
+          //                         style: TextStyle(
+          //                             color: Colors.black,
+          //                             fontSize: SizeConfig.blockSizeHorizontal*4.0,
+          //                             fontWeight: FontWeight.w500,
+          //                             fontFamily: 'Roboto_Medium'
+          //                         ),),
+          //                     ],
+          //                   ),
+          //                 )
+          //             ),
+          //           ),
+          //         ),
+          //
+          //         Padding(
+          //           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,
+          //             right: SizeConfig.screenWidth*0.04,),
+          //           child: GestureDetector(
+          //
+          //             onTap: (){
+          //               if(mounted){
+          //                 setState(() {
+          //                   filterType = 3;
+          //                 });
+          //               }
+          //             },
+          //             child: Container(
+          //                 height: SizeConfig.screenHeight*0.05,
+          //                 width: SizeConfig.screenHeight*0.11,
+          //                 decoration: BoxDecoration(
+          //                   color: Colors.white,
+          //                   borderRadius: BorderRadius.circular(10),
+          //                   boxShadow: <BoxShadow>[
+          //                     BoxShadow(
+          //                         color: Colors.black.withOpacity(0.08),
+          //                         blurRadius: 3,
+          //                         spreadRadius: 2,
+          //                         offset: const Offset(2, 4)),
+          //                   ],
+          //                 ),
+          //                 child: Padding(
+          //                   padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01, right: SizeConfig.screenWidth*0.01),
+          //                   child: Row(
+          //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //                     children: [
+          //
+          //                       Container(
+          //                         height: SizeConfig.screenHeight*0.03,
+          //                         width: SizeConfig.screenWidth*0.06,
+          //                         decoration: BoxDecoration(
+          //                             color: filterType != 3 ? CommonColor.UNSELECT_TYPE_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
+          //                             shape: BoxShape.circle
+          //                         ),
+          //                       ),
+          //
+          //                       Text("Trailor",
+          //                         style: TextStyle(
+          //                             color: Colors.black,
+          //                             fontSize: SizeConfig.blockSizeHorizontal*4.0,
+          //                             fontWeight: FontWeight.w500,
+          //                             fontFamily: 'Roboto_Medium'
+          //                         ),),
+          //                     ],
+          //                   ),
+          //                 )
+          //             ),
+          //           ),
+          //         ),
+          //
+          //       ],
+          //     ),
+          //   )
+          //   Padding(
+          //     padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.01,
+          //       right: SizeConfig.screenWidth*0.04,),
+          //     child: GestureDetector(
+          //       onTap: (){
+          //         if(mounted){
+          //           setState(() {
+          //             filterType = 0;
+          //           });
+          //         }
+          //       },
+          //       child: Container(
+          //           height: SizeConfig.screenHeight*0.05,
+          //           width: SizeConfig.screenHeight*0.053,
+          //           decoration: BoxDecoration(
+          //             color: filterType != 0 ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR,
+          //             borderRadius: BorderRadius.circular(10),
+          //             boxShadow: <BoxShadow>[
+          //               BoxShadow(
+          //                   color: Colors.black.withOpacity(0.08),
+          //                   blurRadius: 3,
+          //                   spreadRadius: 2,
+          //                   offset: const Offset(2, 4)),
+          //             ],
+          //           ),
+          //           child: Center(
+          //             child: Text("All",
+          //               style: TextStyle(
+          //                   color: filterType == 0 ? Colors.white : CommonColor.BLACK_COLOR,
+          //                   fontSize: SizeConfig.blockSizeHorizontal*4.0,
+          //                   fontWeight: FontWeight.w500,
+          //                   fontFamily: 'Roboto_Medium'
+          //               ),),
+          //           )
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
 
 
