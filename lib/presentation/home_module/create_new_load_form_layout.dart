@@ -5594,6 +5594,7 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
               : vehicleType == 3
               ? "Trailor"
               : "",
+          "trailorType": trailerType == 1 ? "Flat Body" : trailerType == 2 ? "Half Body" : trailerType == 3 ? "Car Trailor" : trailerType == 4 ? "Multi Axel" : trailerType == 5 ? "Low Bed" : 'Flat Body',
           "capacity": "${int.parse(carryingCapacityController.text)} RLW, KG",
           "quantity": int.parse(vehicleNumberController.text),
           "tyreType": vehicleType == 1 || vehicleType == 2

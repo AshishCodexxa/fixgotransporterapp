@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/get_update_bid_dialog.dart';
+import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
+import 'package:fixgotransporterapp/all_dialogs/more_info_bid_load_post.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
@@ -591,14 +593,14 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                       var inputFormat = DateFormat('hh:mm a');
                       pickUpIndexTime = inputFormat.format(inputTime);
 
-                      /*showCupertinoDialog(
+                      showCupertinoDialog(
                           context: context,
                           barrierDismissible: true,
                           builder: (context) {
                             return AnimatedOpacity(
                                 opacity: 1.0,
                                 duration: const Duration(seconds: 2),
-                                child: LoadMoreInfoDialog(
+                                child: LoadMoreBidPostInfoDialog(
                                   isComeFrom: '',
                                   postDetails: items,
                                   postIndex: postIndex,
@@ -608,7 +610,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                                   finalLocation: passLastIndexAddress,
                                 ));
                           },
-                        );*/
+                        );
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcessTimelinePage()));
                       },
                       child: Container(
