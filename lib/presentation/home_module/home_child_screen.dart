@@ -128,254 +128,275 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
       body:  Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          CustomScrollView(
-            slivers: <Widget>[
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CustomScrollView(
+                slivers: <Widget>[
 
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    getAdvContainer(SizeConfig.screenHeight, SizeConfig.screenWidth)
-                  ],
-                ),
-              ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        getAdvContainer(SizeConfig.screenHeight, SizeConfig.screenWidth)
+                      ],
+                    ),
+                  ),
 
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    getPickUpAndDeliverLocation(SizeConfig.screenHeight, SizeConfig.screenWidth),
-                  ],
-                ),
-              ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        getPickUpAndDeliverLocation(SizeConfig.screenHeight, SizeConfig.screenWidth),
+                      ],
+                    ),
+                  ),
 
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    getFindingLoadFilter(SizeConfig.screenHeight, SizeConfig.screenWidth)
-                  ],
-                ),
-              ),
-
-
-              SliverPadding(
-                padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.1),
-                sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      childCount: items.length,
-                          (context, index) {
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        getFindingLoadFilter(SizeConfig.screenHeight, SizeConfig.screenWidth)
+                      ],
+                    ),
+                  ),
 
 
-                            DateTime tempDate = DateFormat("yyyy-MM-dd").parse(items[index].createdAt.toString());
-                            var inputDate = DateTime.parse(tempDate.toString());
-                            var outputFormat = DateFormat('dd MMMM yyyy');
-                            postOnDate = outputFormat.format(inputDate);
+                  SliverPadding(
+                    padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.1),
+                    sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: items.length,
+                              (context, index) {
 
-                            DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[index].createdAt.toString());
-                            var inputTime = DateTime.parse(parseDate.toString());
-                            var inputFormat = DateFormat('hh:mm a');
-                            postOnTime = inputFormat.format(inputTime);
 
-                            DateTime pickDate = DateFormat("yyyy-MM-dd").parse(items[index].pickupDate.toString());
-                            var pickDates = DateTime.parse(pickDate.toString());
-                            var outputFormats = DateFormat('dd MMMM yyyy');
-                            pickUpDate = outputFormats.format(pickDates);
+                                DateTime tempDate = DateFormat("yyyy-MM-dd").parse(items[index].createdAt.toString());
+                                var inputDate = DateTime.parse(tempDate.toString());
+                                var outputFormat = DateFormat('dd MMMM yyyy');
+                                postOnDate = outputFormat.format(inputDate);
 
-                            DateTime pickTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[index].pickupDate.toString());
-                            var pickTimes = DateTime.parse(pickTime.toString());
-                            var inputFormats = DateFormat('hh:mm a');
-                            pickUpTime = inputFormats.format(pickTimes);
+                                DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[index].createdAt.toString());
+                                var inputTime = DateTime.parse(parseDate.toString());
+                                var inputFormat = DateFormat('hh:mm a');
+                                postOnTime = inputFormat.format(inputTime);
 
-                            pickUpLocation = "${items[index].pickup?.address?.street}, ${items[index].pickup?.address?.city}, ${items[index].pickup?.address?.district}, ${items[index].pickup?.address?.laneNumber}, ${items[index].pickup?.address?.state}, ${items[index].pickup?.address?.country}, ${items[index].pickup?.address?.postalCode}";
+                                DateTime pickDate = DateFormat("yyyy-MM-dd").parse(items[index].pickupDate.toString());
+                                var pickDates = DateTime.parse(pickDate.toString());
+                                var outputFormats = DateFormat('dd MMMM yyyy');
+                                pickUpDate = outputFormats.format(pickDates);
 
-                            finalLocation = "${items[index].receiver?.address?.street}, ${items[index].receiver?.address?.city}, ${items[index].pickup?.address?.district}, ${items[index].pickup?.address?.laneNumber}, ${items[index].receiver?.address?.state}, ${items[index].receiver?.address?.country}, ${items[index].receiver?.address?.postalCode}";
+                                DateTime pickTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[index].pickupDate.toString());
+                                var pickTimes = DateTime.parse(pickTime.toString());
+                                var inputFormats = DateFormat('hh:mm a');
+                                pickUpTime = inputFormats.format(pickTimes);
 
-                            final endTime = DateTime.parse("${items[index].postExpiryDate}");
-                            Duration remainingTime = endTime.difference(DateTime.now());
+                                pickUpLocation = "${items[index].pickup?.address?.street}, ${items[index].pickup?.address?.city}, ${items[index].pickup?.address?.district}, ${items[index].pickup?.address?.laneNumber}, ${items[index].pickup?.address?.state}, ${items[index].pickup?.address?.country}, ${items[index].pickup?.address?.postalCode}";
 
-                            final formattedTime = _printDuration(remainingTime);
+                                finalLocation = "${items[index].receiver?.address?.street}, ${items[index].receiver?.address?.city}, ${items[index].pickup?.address?.district}, ${items[index].pickup?.address?.laneNumber}, ${items[index].receiver?.address?.state}, ${items[index].receiver?.address?.country}, ${items[index].receiver?.address?.postalCode}";
 
-                            return  Padding(
-                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
-                            left: SizeConfig.screenWidth*0.0
-                          ),
-                          child: Theme(
-                            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                            child: Padding(
-                              padding:  EdgeInsets.only(
-                                  left: SizeConfig.screenWidth*0.02,
-                                  right: SizeConfig.screenWidth*0.02,
-                                top: SizeConfig.screenHeight*0.01
+                                final endTime = DateTime.parse("${items[index].postExpiryDate}");
+                                Duration remainingTime = endTime.difference(DateTime.now());
+
+                                final formattedTime = _printDuration(remainingTime);
+
+                                return  Padding(
+                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
+                                left: SizeConfig.screenWidth*0.0
                               ),
-                              child: Container(
-                                decoration:  BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                        color: Colors.black.withOpacity(0.07),
-                                        blurRadius: 5,
-                                        spreadRadius: 2,
-                                        offset: const Offset(2, 2)),
-                                  ],
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    ExpansionTile(
-                                      title: Padding(
-                                        padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02,
-                                        top: SizeConfig.screenHeight*0.01),
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.0),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    "Time Left  $formattedTime.",
-                                                    style: TextStyle(
-                                                        color: CommonColor.TO_AREA_COLOR,
-                                                        fontSize: SizeConfig.blockSizeHorizontal*2.5,
-                                                        fontFamily: "Roboto_Medium",
-                                                        fontWeight: FontWeight.w400
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    color: Colors.transparent,
-                                                    width: SizeConfig.screenWidth*0.7,
-                                                    child: Text(
-                                                      companyName,
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                                          fontFamily: "Roboto_Medium",
-                                                          fontWeight: FontWeight.w400
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,),
-                                                    child: Container(
-                                                      color: Colors.transparent,
-                                                      width: SizeConfig.screenWidth*0.5,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        children: [
-
-                                                          Container(
-                                                            color: Colors.transparent,
-                                                            width: SizeConfig.screenWidth*0.5,
-                                                            child: Text(
-                                                              "$pickUpLocation ---> $finalLocation",
-                                                              style: TextStyle(
-                                                                  color: CommonColor.BLACK_COLOR,
-                                                                  fontSize: SizeConfig.blockSizeHorizontal*2.0,
-                                                                  fontFamily: "Roboto_Medium",
-                                                                  fontWeight: FontWeight.w400
-                                                              ),
-                                                            ),
-                                                          ),
-
-
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.0,
-                                                    top: SizeConfig.screenHeight*0.01),
-                                                    child: Column(
-                                                      children: [
-                                                        RichText(
-                                                          text: TextSpan(
-                                                              text: '\u{20B9}',
-                                                              style: TextStyle(
-                                                                color: Colors.black,
-                                                                fontWeight: FontWeight.w400,
-                                                                fontSize: SizeConfig.blockSizeHorizontal*3.7,
-                                                              ),
-                                                              children: [
-                                                                TextSpan(
-                                                                    text: ' ${items[index].fare}/-',
-                                                                    style: TextStyle(
-                                                                        fontSize: SizeConfig.blockSizeHorizontal*4.0,
-                                                                        color: Colors.black,
-                                                                        fontWeight: FontWeight.bold))
-                                                              ]),
+                              child: Theme(
+                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                                child: Padding(
+                                  padding:  EdgeInsets.only(
+                                      left: SizeConfig.screenWidth*0.02,
+                                      right: SizeConfig.screenWidth*0.02,
+                                    top: SizeConfig.screenHeight*0.01
+                                  ),
+                                  child: Container(
+                                    decoration:  BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color: Colors.black.withOpacity(0.07),
+                                            blurRadius: 5,
+                                            spreadRadius: 2,
+                                            offset: const Offset(2, 2)),
+                                      ],
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        ExpansionTile(
+                                          title: Padding(
+                                            padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02,
+                                            top: SizeConfig.screenHeight*0.01),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        "Time Left  $formattedTime.",
+                                                        style: TextStyle(
+                                                            color: CommonColor.TO_AREA_COLOR,
+                                                            fontSize: SizeConfig.blockSizeHorizontal*2.5,
+                                                            fontFamily: "Roboto_Medium",
+                                                            fontWeight: FontWeight.w400
                                                         ),
-                                                        Padding(
-                                                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.001),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+                                                  child: Row(
+                                                    children: [
+                                                      Container(
+                                                        color: Colors.transparent,
+                                                        width: SizeConfig.screenWidth*0.7,
+                                                        child: Text(
+                                                          companyName,
+                                                          style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                              fontFamily: "Roboto_Medium",
+                                                              fontWeight: FontWeight.w400
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.0,),
+                                                        child: Container(
+                                                          color: Colors.transparent,
+                                                          width: SizeConfig.screenWidth*0.5,
                                                           child: Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.start,
                                                             children: [
-                                                              Text("(Transport Fare)",
-                                                                style: TextStyle(
-                                                                    color: Colors.black54,
-                                                                    fontSize: SizeConfig.blockSizeHorizontal*2.0,
-                                                                    height: SizeConfig.screenHeight*0.002
-                                                                ),),
+
+                                                              Container(
+                                                                color: Colors.transparent,
+                                                                width: SizeConfig.screenWidth*0.5,
+                                                                child: Text(
+                                                                  "$pickUpLocation ---> $finalLocation",
+                                                                  style: TextStyle(
+                                                                      color: CommonColor.BLACK_COLOR,
+                                                                      fontSize: SizeConfig.blockSizeHorizontal*2.0,
+                                                                      fontFamily: "Roboto_Medium",
+                                                                      fontWeight: FontWeight.w400
+                                                                  ),
+                                                                ),
+                                                              ),
+
+
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.0,
+                                                        top: SizeConfig.screenHeight*0.01),
+                                                        child: Column(
+                                                          children: [
+                                                            RichText(
+                                                              text: TextSpan(
+                                                                  text: '\u{20B9}',
+                                                                  style: TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.w400,
+                                                                    fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                                                  ),
+                                                                  children: [
+                                                                    TextSpan(
+                                                                        text: ' ${items[index].fare}/-',
+                                                                        style: TextStyle(
+                                                                            fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                                                            color: Colors.black,
+                                                                            fontWeight: FontWeight.bold))
+                                                                  ]),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.001),
+                                                              child: Row(
+                                                                children: [
+                                                                  Text("(Transport Fare)",
+                                                                    style: TextStyle(
+                                                                        color: Colors.black54,
+                                                                        fontSize: SizeConfig.blockSizeHorizontal*2.0,
+                                                                        height: SizeConfig.screenHeight*0.002
+                                                                    ),),
+                                                                ],
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
+                                                ),
+                                                SizedBox(
+                                                  height: SizeConfig.screenHeight*0.01,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
+                                                  left: SizeConfig.screenWidth*0.03,
+                                                  right: SizeConfig.screenWidth*0.03,
+                                              bottom: SizeConfig.screenHeight*0.02),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.circular(15),
+                                                ),
+                                                child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: SizeConfig.screenHeight*0.01,
-                                            )
-                                          ],
+                                          ]
                                         ),
-                                      ),
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.0,
-                                              left: SizeConfig.screenWidth*0.03,
-                                              right: SizeConfig.screenWidth*0.03,
-                                          bottom: SizeConfig.screenHeight*0.02),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(15),
-                                            ),
-                                            child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
-                                          ),
-                                        ),
-                                      ]
+                                        Visibility(
+                                            visible: isLoading,
+                                            child: const CircularProgressIndicator()
+                                        )
+                                      ],
                                     ),
-                                    Visibility(
-                                        visible: isLoading,
-                                        child: const CircularProgressIndicator()
-                                    )
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    )
-                ),
+                            );
+                          },
+                        )
+                    ),
+                  ),
+
+
+                ],
               ),
-
-
+              Visibility(
+                visible: isLoading,
+                child: CircularProgressIndicator(),
+              ),
+              Visibility(
+                visible: items.isEmpty ? true : false,
+                child: Padding(
+                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.35),
+                  child: Text("Company Post Not Available.",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto_Medium"
+                  ),),
+                ),
+              )
             ],
           ),
           Padding(
@@ -429,7 +450,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
