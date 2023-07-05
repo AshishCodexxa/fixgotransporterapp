@@ -74,7 +74,7 @@ class _LoadMoreBidPostInfoDialogState extends State<LoadMoreBidPostInfoDialog> {
     advancePay = totalFare * ratio;
 
     int totalsFare = widget.postDetails[widget.postIndex].post?.fare ?? 0;
-    double ratios = (widget.postDetails[widget.postIndex].post?.advancePayment?.ratio ?? 0) / 100;
+    double ratios = (widget.postDetails[widget.postIndex].post?.deliveryPayment?.ratio ?? 0) / 100;
     deliveryPay = totalsFare * ratios;
 
     if(widget.postDetails[widget.postIndex].status == "PENDING"){
