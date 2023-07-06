@@ -489,6 +489,15 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
           Visibility(
             visible: isLoading,
               child: CircularProgressIndicator()
+          ),
+          Visibility(
+            visible: items.isEmpty ? true : false,
+            child: Text("My Post Not Available.",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto_Medium"
+              ),),
           )
         ],
       ),
