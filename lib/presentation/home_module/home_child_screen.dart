@@ -84,8 +84,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
     refresh();
   }
 
-  refresh() {
-    ApiClient().getCompanyAllPost().then((value) {
+  refresh() async {
+    /*ApiClient().getCompanyAllPost().then((value) {
       if (mounted) {
         setState(() {
           isLoading = false;
@@ -119,7 +119,25 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
           );
         }
       });
+    });*/
+
+    final result = await ApiClient().getCompanyAllPost();
+
+    final responseData = GetAllCompanyPostResponseModel.fromJson(result);
+
+    items.addAll(responseData.data);
+
+    await Future.forEach(responseData.data, (element) async {
+      final customerData =
+          await ApiClient().getUserDetailsApi(element.customer.toString());
+      companyName.add(customerData['data']['companyName']);
     });
+
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -487,13 +505,13 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
             padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.02),
             child: GestureDetector(
               onTap: () {
-                if(companiesName.isEmpty) {
+                if (companiesName.isEmpty) {
                   showDialog<void>(
                     context: context,
                     barrierDismissible: false, // user must tap button!
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        shape:  RoundedRectangleBorder(
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                         title: const Text('Update Profile'),
@@ -507,17 +525,16 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         actions: <Widget>[
                           TextButton(
                             child: Container(
-                                height: SizeConfig.screenHeight*0.04,
-                                width: SizeConfig.screenWidth*0.15,
+                                height: SizeConfig.screenHeight * 0.04,
+                                width: SizeConfig.screenWidth * 0.15,
                                 decoration: BoxDecoration(
                                     color: CommonColor.APP_BAR_COLOR,
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: const Center(child: Text('OK',
-                                  style: TextStyle(
-                                      color: Colors.white
-                                  ),))
-                            ),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: const Center(
+                                    child: Text(
+                                  'OK',
+                                  style: TextStyle(color: Colors.white),
+                                ))),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -526,12 +543,11 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       );
                     },
                   );
-                }else{
+                } else {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (
-                              context) => const NewLoadScreenForm()));
+                          builder: (context) => const NewLoadScreenForm()));
                 }
               },
               child: Container(
@@ -649,7 +665,9 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                 ? "Pick-up Location"
                                 : pickLocation,
                             style: TextStyle(
-                                color: pickLocation.isEmpty ? Colors.black26 : Colors.black,
+                                color: pickLocation.isEmpty
+                                    ? Colors.black26
+                                    : Colors.black,
                                 fontSize: SizeConfig.blockSizeHorizontal * 4.0,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Roboto_Regular'),
@@ -715,7 +733,9 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                 ? "Delivery Location"
                                 : dilveryLocation,
                             style: TextStyle(
-                                color: dilveryLocation.isEmpty ? Colors.black26 : Colors.black,
+                                color: dilveryLocation.isEmpty
+                                    ? Colors.black26
+                                    : Colors.black,
                                 fontSize: SizeConfig.blockSizeHorizontal * 4.0,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Roboto_Regular'),
