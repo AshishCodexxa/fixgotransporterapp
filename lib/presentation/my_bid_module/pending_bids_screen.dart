@@ -80,9 +80,9 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
 
       for(int i = 0; i < items.length; i++){
 
-        print(items[i].customer.toString());
+        print(items[i].post?.customer.toString());
 
-          ApiClient().getUserDetailsApi(items[i].customer.toString()).then((value){
+          ApiClient().getUserDetailsApi(items[i].post!.customer.toString()).then((value){
 
             if(mounted){
               setState(() {
@@ -699,7 +699,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: CompanyVerifyDialog(companyId: items[postIndex].customer.toString(),),
+                            child: CompanyVerifyDialog(companyId: items[postIndex].post!.customer.toString(),),
                           );
                         });
                   },

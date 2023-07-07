@@ -867,11 +867,12 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                   onDoubleTap: () {},
                   onTap: () {
                     items.clear();
-                    isLoading = false;
-                    if (isLoading == false) {
-                      isLoading = true;
-                      refresh();
-                    }
+                    refresh();
+                    // isLoading = false;
+                    // if (isLoading == false) {
+                    //   isLoading = true;
+                    //   refresh();
+                    // }
                   },
                   child: Container(
                       height: SizeConfig.screenHeight * 0.05,
