@@ -566,9 +566,11 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
                   pickUpDate = pickedDates;
 
                   print(pickUpDate);
-                  setState(() {
+                  if(mounted) {
+                    setState(() {
                     dateInput.text = pickUpDate.toString();
                   });
+                  }
 
                   /*  if(pickedDates!.isBefore(DateTime.now())){
                       ScaffoldMessenger.of(context)
@@ -1283,7 +1285,8 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
                                             //no image
                                             return;
                                           }
-                                          setState(() {
+                                          if(mounted) {
+                                            setState(() {
                                             images.length < 3
                                                 ? images.addAll(value)
                                                 : ScaffoldMessenger.of(context)
@@ -1291,6 +1294,7 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
                                                 content: Text(
                                                     "You can upload only 3 Images")));
                                           });
+                                          }
                                         });
                                       },
                                       child: Container(
@@ -1766,7 +1770,9 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
                                             onTap: () {
                                               // print("clear");
                                               images.removeAt(i);
-                                              setState(() {});
+                                              if(mounted) {
+                                                setState(() {});
+                                              }
                                             },
                                             child: Container(
                                               decoration: const BoxDecoration(

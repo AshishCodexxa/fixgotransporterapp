@@ -866,11 +866,13 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                   onTap: () {
                     items.clear();
                     refresh();
-                    // isLoading = false;
-                    // if (isLoading == false) {
-                    //   isLoading = true;
-                    //   refresh();
-                    // }
+                    if(isLoading == false){
+                      if(mounted){
+                        setState(() {
+                          isLoading = true;
+                        });
+                      }
+                    }
                   },
                   child: Container(
                       height: SizeConfig.screenHeight * 0.05,

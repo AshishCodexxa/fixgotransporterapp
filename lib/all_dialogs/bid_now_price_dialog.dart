@@ -83,7 +83,7 @@ class _BidNowPriceDialogState extends State<BidNowPriceDialog> {
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        height: SizeConfig.screenHeight * 0.5,
+        height: SizeConfig.screenHeight * 0.53,
         color: Colors.transparent,
         child: Container(
           decoration: const BoxDecoration(
