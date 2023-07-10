@@ -6,8 +6,6 @@ import 'package:fixgotransporterapp/all_dialogs/vehicle_amount_pay_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
-import 'package:fixgotransporterapp/presentation/my_post_module/interested_vehicle_owner_list.dart';
-import 'package:fixgotransporterapp/presentation/my_post_module/vehicle_owner_info_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
