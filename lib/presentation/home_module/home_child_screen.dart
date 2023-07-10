@@ -63,8 +63,6 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
 
   bool isLoading = false;
 
-  Timer? _timer;
-
   @override
   void initState() {
     super.initState();
@@ -484,13 +482,13 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
               ),
               Visibility(
                 visible: isLoading,
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(),
               ),
               Visibility(
                 visible: items.isEmpty ? true : false,
                 child: Padding(
                   padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.35),
-                  child: Text(
+                  child: const Text(
                     "Company Post Not Available.",
                     style: TextStyle(
                         color: Colors.black,
