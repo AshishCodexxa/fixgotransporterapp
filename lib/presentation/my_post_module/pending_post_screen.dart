@@ -45,7 +45,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
 
   final items = <Doc>[];
 
-  String companyName = "";
+  final companyName = <String>[];
 
   bool isLoading = false;
 
@@ -63,6 +63,8 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
   String pickUpIndexDate = "";
   String pickUpIndexTime = "";
 
+  String companyCustomer = "";
+
   double advancePay = 0.0;
   double duePay = 0.0;
 
@@ -79,7 +81,9 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
       });
     }
 
-    ApiClient().getAllTransporterPost().then((value){
+    refresh();
+
+    /*ApiClient().getAllTransporterPost().then((value){
 
       if(mounted){
         setState(() {
@@ -118,7 +122,29 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
         }
       });
 
+    });*/
+  }
+
+  refresh() async {
+
+    final result = await ApiClient().getAllTransporterPost();
+
+    final responseData = GetAllTransporterPostResponseModel.fromMap(result);
+
+    items.addAll(responseData.data?.docs as Iterable<Doc>);
+
+    await Future.forEach(responseData.data?.docs as Iterable<Doc>, (element) async {
+      final customerData =
+      await ApiClient().getUserDetailsApi(element.companyCustomer ?? '${element.customer}');
+      companyName.add(customerData['data']['companyName']);
     });
+
+    if(mounted){
+      setState(() {
+        isLoading = false;
+      });
+    }
+
   }
 
 
@@ -1084,7 +1110,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
 
                             Container(
                               width: parentWidth*0.1,
-                              child: Text(companyName,
+                              child: Text(companyName[postIndex],
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400,

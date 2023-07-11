@@ -41,6 +41,7 @@ class ApiConstants {
   String deletePickupAddress = "pickup/delete/";
   String getAllMyBidListStatus = "post/my-bid?status=";
   String getAllTransporterPost = "post/?status=";
+  String postLoadApi = "post/repost";
 
 
 

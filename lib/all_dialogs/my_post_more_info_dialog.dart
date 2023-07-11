@@ -112,7 +112,7 @@ class _MyPostMoreInfoDialogState extends State<MyPostMoreInfoDialog> {
             borderRadius: BorderRadius.circular(15.0),
           ),
           child:  Container(
-              height: widget.isComeFrom == "1" ? SizeConfig.screenHeight*0.84 :SizeConfig.screenHeight*0.9,
+              height: widget.isComeFrom == "1" ? SizeConfig.screenHeight*0.84 :SizeConfig.screenHeight*0.91,
               decoration:  const BoxDecoration(
                 borderRadius:  BorderRadius.all(Radius.circular(25.0)),
                 //color: CommonColor.RED_COLOR,

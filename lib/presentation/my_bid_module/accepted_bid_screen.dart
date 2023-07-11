@@ -643,6 +643,11 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                 child: GestureDetector(
                   onTap: (){
 
+                    passPickIndexAddress = "${items[postIndex].post?.pickup?.address?.street}, ${items[postIndex].post?.pickup?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber} ${items[postIndex].post?.pickup?.address?.state}, ${items[postIndex].post?.pickup?.address?.country}, ${items[postIndex].post?.pickup?.address?.postalCode}";
+
+                    passLastIndexAddress = "${items[postIndex].post?.receiver?.address?.street}, ${items[postIndex].post?.receiver?.address?.city}, ${items[postIndex].post?.receiver?.address?.state}, ${items[postIndex].post?.receiver?.address?.country}, ${items[postIndex].post?.receiver?.address?.postalCode}";
+
+
                     showModalBottomSheet(
                         context: context,
                         backgroundColor: Colors.transparent,
@@ -654,9 +659,17 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: const PostLoadDialog(),
+                            child: PostLoadDialog(
+                              companyName: companyName[postIndex],
+                              load: items[postIndex].post!.loadDetail!.load.toString(),
+                              loadUnit: items[postIndex].post!.loadDetail!.loadUnit.toString(),
+                              vehicleBody: items[postIndex].post!.vehicle!.vehicleType.toString(),
+                              vehicleCount: items[postIndex].post!.vehicle!.quantity.toString(),
+                              pickUpLocation: passPickIndexAddress,
+                              finalLocation: passLastIndexAddress, postId: items[postIndex].post!.id.toString(),),
                           );
                         });
+                    // ApiClient().postLoadApi();
                   },
                   child: Container(
                     width: SizeConfig.screenWidth*0.18,

@@ -4042,7 +4042,7 @@ class _NewLoadScreenFormState extends State<NewLoadScreenForm> {
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                             label: Text(
-                                              "Total Fare",
+                                              "Total Fare As Per Vehicle",
                                               style: TextStyle(
                                                 color: CommonColor
                                                     .UNSELECT_TYPE_COLOR

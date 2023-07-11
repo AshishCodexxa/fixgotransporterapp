@@ -1,12 +1,27 @@
+import 'package:fixgotransporterapp/all_dialogs/load_post_success_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
+import 'package:fixgotransporterapp/data/model/get_post_load_response_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
 
 
 class PostLoadDialog extends StatefulWidget {
-  const PostLoadDialog({Key? key}) : super(key: key);
+
+
+  final String companyName;
+  final String load;
+  final String loadUnit;
+  final String vehicleBody;
+  final String vehicleCount;
+  final String pickUpLocation;
+  final String finalLocation;
+  final String postId;
+
+  const PostLoadDialog({Key? key, required this.companyName, required this.load, required this.loadUnit, required this.vehicleBody, required this.vehicleCount, required this.pickUpLocation, required this.finalLocation, required this.postId}) : super(key: key);
 
   @override
   State<PostLoadDialog> createState() => _PostLoadDialogState();
@@ -91,7 +106,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        height: SizeConfig.screenHeight * 0.8,
+        height: SizeConfig.screenHeight * 0.85,
         color: Colors.transparent,
         child: Container(
           decoration: const BoxDecoration(
@@ -184,20 +199,24 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
 
-                                  Text("XYZ",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Roboto_Regular',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: SizeConfig.blockSizeHorizontal*4.0
-                                    ),),
+                                  Container(
+                                    color: Colors.transparent,
+                                    width: SizeConfig.screenWidth*0.6,
+                                    child: Text(widget.companyName,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Roboto_Regular',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: SizeConfig.blockSizeHorizontal*4.0
+                                      ),),
+                                  ),
 
                                   Padding(
                                     padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.005),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("10 Tonne(s)",
+                                        Text("${widget.load} ${widget.loadUnit}",
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontFamily: 'Roboto_Regular',
@@ -224,7 +243,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
 
-                              Text("Requirement : Open Body",
+                              Text("Requirement : ${widget.vehicleBody}",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Roboto_Regular',
@@ -237,13 +256,17 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("City Avenue, Wakad > Pune Station",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Roboto_Regular',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: SizeConfig.blockSizeHorizontal*3.0
-                                      ),),
+                                    Container(
+                                      color: Colors.transparent,
+                                      width: SizeConfig.screenWidth*0.7,
+                                      child: Text("${widget.pickUpLocation} ---> ${widget.finalLocation}.",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'Roboto_Regular',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: SizeConfig.blockSizeHorizontal*2.7
+                                        ),),
+                                    ),
 
                                   ],
                                 ),
@@ -358,7 +381,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                     child: TextFormField(
                       controller: servicePriceController,
                       focusNode: _servicePriceFocus,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         enabledBorder: const UnderlineInputBorder(
@@ -507,6 +530,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                           child: TextFormField(
                             controller: advancePayController,
                             focusNode: _advanceFocus,
+                            enabled: false,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               hintText:perVal == 0.0 || vehiclePriceController.text.isEmpty? "Amount" : (percent * perVal).toStringAsFixed(1),
@@ -517,12 +541,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                               ),
                               contentPadding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, right: SizeConfig.screenWidth*0.05,
                                   bottom: SizeConfig.screenHeight*0.016),
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)
-                              ),
+                              border: InputBorder.none,
                             ),
                           ),
                         ),
@@ -648,6 +667,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                           child: TextFormField(
                             // controller: quantityLoadController,
                             // focusNode: _userNameFocus,
+                            enabled: false,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               hintText:deliverPayment == 0.0 || vehiclePriceController.text.isEmpty? "Amount" : "${deliverPayment.toStringAsFixed(1)}",
@@ -658,12 +678,7 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                               ),
                               contentPadding: EdgeInsets.only(left: SizeConfig.screenWidth*0.05, right: SizeConfig.screenWidth*0.05,
                                   bottom: SizeConfig.screenHeight*0.016),
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.transparent)
-                              ),
+                              border: InputBorder.none,
                             ),
                           ),
                         ),
@@ -743,7 +758,6 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
                 ),
               ),
               getSubmitButton(SizeConfig.screenHeight, SizeConfig.screenWidth),
-
             ],
           ),
         ),
@@ -751,17 +765,6 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
     );
   }
 
-
-  Widget getAmountLayout(double parentHeight, double parentWidth){
-    return Padding(
-      padding: EdgeInsets.only(top: parentHeight*0.02),
-      child: Column(
-        children: [
-
-        ],
-      ),
-    );
-  }
 
   Widget getSubmitButton(double parentHeight, double parentWidth){
     return Padding(
@@ -771,28 +774,41 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
       child: GestureDetector(
         
         onTap: (){
-          // showCupertinoDialog(
-          //   context: context,
-          //   barrierDismissible: true,
-          //   builder: (context) {
-          //     return const AnimatedOpacity(
-          //         opacity: 1.0,
-          //         duration: Duration(seconds: 2),
-          //         child: LoadPostSuccessDialog());
-          //   },
-          // );
+        final response = ApiClient().postLoadApi(
+           widget.postId,
+           int.parse(servicePriceController.text),
+           int.parse(vehiclePriceController.text),
+           count,
+             advPay == 1 ? "ONLINE" : advPay == 2 ? "CASH" : "",
+           100 - count,
+           deliverPay == 1 ? "ONLINE" : deliverPay == 2 ? "CASH" : "",
+         );
+
+        response.then((value){
+          showCupertinoDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return const AnimatedOpacity(
+                  opacity: 1.0,
+                  duration: Duration(seconds: 2),
+                  child: LoadPostSuccessDialog());
+            },
+          );
+        });
+
         },
         child: Container(
           height: parentHeight*0.055,
           width: parentWidth*0.75,
           decoration: BoxDecoration(
-              color: CommonColor.LOAD_SUBMIT_COLOR,
+              color:deliverPay == 0 ? CommonColor.LOAD_SUBMIT_COLOR : CommonColor.SIGN_UP_TEXT_COLOR,
               borderRadius: BorderRadius.circular(10)
           ),
           child: Center(
             child: Text("Submit",
               style: TextStyle(
-                  color: CommonColor.LOAD_SUBMIT_TEXT_COLOR,
+                  color:deliverPay == 0 ? CommonColor.LOAD_SUBMIT_TEXT_COLOR : CommonColor.WHITE_COLOR,
                   fontSize: SizeConfig.blockSizeHorizontal*5.0,
                   fontFamily: 'Roboto_Bold'
               ),),
@@ -801,4 +817,5 @@ class _PostLoadDialogState extends State<PostLoadDialog> {
       ),
     );
   }
+
 }

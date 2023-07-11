@@ -422,4 +422,62 @@ class ApiClient {
     }
   }
 
+
+/////////////////////// Transporter Post Api ///////////////////////////////////
+
+  Future<Map<String, dynamic>> postLoadApi(String companyId, int commission,
+      int fare, int advRatio, String advMode, int delRatio, String delMode) async {
+
+    print("postId $companyId");
+    print("commission $commission");
+    print("fare $fare");
+    print("advRatio $advRatio");
+    print("advMode $advMode");
+    print("delRatio $delRatio");
+    print("delMode $delMode");
+
+    String url = "${ApiConstants().baseUrl}${ApiConstants().postLoadApi}";
+
+    String? sessionToken = GetStorage().read<String>(
+        ConstantData.userAccessToken);
+
+    try {
+      Response response = await _dio.post(
+        url,
+        data: {
+          "companyPostID": companyId,
+          "commission": commission,
+          "fare": fare,
+          "advancePayment": {
+            "ratio": advRatio,
+            "mode": advMode
+          },
+          "deliveryPayment": {
+            "ratio": delRatio,
+            "mode": delMode
+          }
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $sessionToken',
+          },
+        ),
+      );
+
+      if (response.statusCode == 400) {
+        print("Hiissssi");
+      }
+      else{
+        print("Hiii");
+      }
+
+      print("postLoadApiSC --> ${response.statusCode}");
+      print("postLoadApi --> ${response.data}");
+
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
 }

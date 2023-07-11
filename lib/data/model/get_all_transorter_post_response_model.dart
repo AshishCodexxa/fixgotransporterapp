@@ -112,6 +112,7 @@ class Doc {
   Receiver? receiver;
   String? customer;
   String? postType;
+  String? companyPostID;
   String? status;
   DateTime? postExpiryDate;
   DateTime? pickupDate;
@@ -121,6 +122,7 @@ class Doc {
   int? lowestBid;
   int? lowestBidder;
   int? vehicleAccepted;
+  String? companyCustomer;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -135,6 +137,7 @@ class Doc {
     this.receiver,
     this.customer,
     this.postType,
+    this.companyPostID,
     this.status,
     this.postExpiryDate,
     this.pickupDate,
@@ -144,6 +147,7 @@ class Doc {
     this.lowestBid,
     this.lowestBidder,
     this.vehicleAccepted,
+    this.companyCustomer,
     this.createdAt,
     this.updatedAt,
     this.v,
@@ -161,6 +165,7 @@ class Doc {
       'receiver': receiver?.toMap(),
       'customer': customer,
       'postType': postType,
+      'companyPostID': companyPostID,
       'status': status,
       'postExpiryDate': postExpiryDate?.millisecondsSinceEpoch,
       'pickupDate': pickupDate?.millisecondsSinceEpoch,
@@ -170,6 +175,7 @@ class Doc {
       'lowestBid': lowestBid,
       'lowestBidder': lowestBidder,
       'vehicleAccepted': vehicleAccepted,
+      'companyCustomer': companyCustomer,
       'createdAt': createdAt?.millisecondsSinceEpoch,
       'updatedAt': updatedAt?.millisecondsSinceEpoch,
       'v': v,
@@ -187,6 +193,7 @@ class Doc {
       receiver: map['receiver'] != null ? Receiver.fromMap(map['receiver'] as Map<String,dynamic>) : null,
       customer: map['customer'] != null ? map['customer'] as String : null,
       postType: map['postType'] != null ? map['postType'] as String : null,
+      companyPostID: map['companyPostID'] != null ? map['companyPostID'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
       postExpiryDate: map['postExpiryDate'] != null ? DateTime.parse(map['postExpiryDate']) : null,
       pickupDate: map['pickupDate'] != null ? DateTime.parse(map['pickupDate']) : null,
@@ -196,6 +203,7 @@ class Doc {
       lowestBid: map['lowestBid'] != null ? map['lowestBid'] as int : null,
       lowestBidder: map['lowestBidder'] != null ? map['lowestBidder'] as int : null,
       vehicleAccepted: map['vehicleAccepted'] != null ? map['vehicleAccepted'] as int : null,
+      companyCustomer: map['companyCustomer'] != null ? map['companyCustomer'] as String : null,
       createdAt: map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
       updatedAt: map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
       v: map['v'] != null ? map['v'] as int : null,
