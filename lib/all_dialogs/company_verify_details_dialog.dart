@@ -8,8 +8,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class CompanyVerifyDialog extends StatefulWidget {
 
   final String companyId;
+  final String postStatus;
 
-  const CompanyVerifyDialog({Key? key, required this.companyId}) : super(key: key);
+  const CompanyVerifyDialog({Key? key, required this.companyId, required this.postStatus}) : super(key: key);
 
   @override
   State<CompanyVerifyDialog> createState() => _CompanyVerifyDialogState();
@@ -185,28 +186,31 @@ class _CompanyVerifyDialogState extends State<CompanyVerifyDialog> {
                             ),
                           ),
 
-                          Padding(
-                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                          Visibility(
+                            visible: widget.postStatus == "PENDING" ? false : true,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.01),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
 
-                                Icon(Icons.phone_android_outlined,
-                                  color: Colors.black,),
+                                  Icon(Icons.phone_android_outlined,
+                                    color: Colors.black,),
 
-                                Container(
-                                  width: SizeConfig.screenWidth*0.55,
-                                  color: Colors.transparent,
-                                  child: Text(companyDetails['phone'],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Roboto_Regular',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: SizeConfig.blockSizeHorizontal*4.5
-                                    ),),
-                                ),
+                                  Container(
+                                    width: SizeConfig.screenWidth*0.55,
+                                    color: Colors.transparent,
+                                    child: Text(companyDetails['phone'],
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Roboto_Regular',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: SizeConfig.blockSizeHorizontal*4.5
+                                      ),),
+                                  ),
 
-                              ],
+                                ],
+                              ),
                             ),
                           ),
 

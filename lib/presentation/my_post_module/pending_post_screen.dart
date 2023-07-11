@@ -1063,7 +1063,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                               padding: EdgeInsets.only(
                                 bottom: MediaQuery.of(context).viewInsets.bottom,
                               ),
-                              child: CompanyVerifyDialog(companyId: items[postIndex].customer.toString(),),
+                              child: CompanyVerifyDialog(companyId: items[postIndex].customer.toString(), postStatus: items[postIndex].status.toString(),),
                             );
                           });
                     },

@@ -46,11 +46,9 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
   String pickUpIndexDate = "";
   String pickUpIndexTime = "";
 
-  String companyName = "";
+  final companyName = <String>[];
 
   bool isLoading = false;
-
-  Timer? _timer;
 
 
 
@@ -64,7 +62,10 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
       });
     }
 
-    ApiClient().getMyBidStatusAllPost().then((value){
+    refresh();
+
+
+    /*ApiClient().getMyBidStatusAllPost().then((value){
 
       if(mounted){
         setState(() {
@@ -106,9 +107,31 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
         }
       });
 
-    });
+    });*/
   }
 
+
+  refresh() async {
+
+    final result = await ApiClient().getMyBidStatusAllPost();
+
+    final responseData = GetMyBidPostResponseModel.fromMap(result);
+
+    items.addAll(responseData.data);
+
+    await Future.forEach(responseData.data, (element) async {
+      final customerData =
+      await ApiClient().getUserDetailsApi(element.post!.customer.toString());
+      companyName.add(customerData['data']['companyName']);
+    });
+
+    if(mounted){
+      setState(() {
+        isLoading = false;
+      });
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -395,7 +418,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             isComeFrom: '2',
                             mainPrice: (items[postIndex].post?.lowestBid == 0 ? items[postIndex].post?.fare : items[postIndex].post?.lowestBid) ?? 0,
                             bidAmount: items[postIndex].post?.lowestBid ?? 0,
-                            postDetails: items, postIndex: postIndex, companyName: companyName, postId: items[postIndex].post!.id.toString(),
+                            postDetails: items, postIndex: postIndex, companyName: companyName[postIndex], postId: items[postIndex].post!.id.toString(),
                           ),
                         );
                       });
@@ -699,7 +722,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: CompanyVerifyDialog(companyId: items[postIndex].post!.customer.toString(),),
+                            child: CompanyVerifyDialog(companyId: items[postIndex].post!.customer.toString(), postStatus: items[postIndex].post!.status.toString(),),
                           );
                         });
                   },
@@ -720,7 +743,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
 
                           Container(
                             width: parentWidth*0.1,
-                            child: Text(companyName,
+                            child: Text(companyName[postIndex],
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,

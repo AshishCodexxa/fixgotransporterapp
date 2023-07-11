@@ -510,7 +510,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                   padding: EdgeInsets.only(
                                     bottom: MediaQuery.of(context).viewInsets.bottom,
                                   ),
-                                  child: const CompanyVerifyDialog(companyId: '',),
+                                  child: const CompanyVerifyDialog(companyId: '', postStatus: '',),
                                 );
                               });
                         },

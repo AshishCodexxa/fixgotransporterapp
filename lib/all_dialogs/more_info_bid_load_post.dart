@@ -69,11 +69,11 @@ class _LoadMoreBidPostInfoDialogState extends State<LoadMoreBidPostInfoDialog> {
     print(widget.postDetails);
 
 
-    int totalFare = widget.postDetails[widget.postIndex].post?.fare ?? 0;
+    int totalFare = widget.postDetails[widget.postIndex].post?.lowestBid ?? 0;
     double ratio = (widget.postDetails[widget.postIndex].post?.advancePayment?.ratio ?? 0) / 100;
     advancePay = totalFare * ratio;
 
-    int totalsFare = widget.postDetails[widget.postIndex].post?.fare ?? 0;
+    int totalsFare = widget.postDetails[widget.postIndex].post?.lowestBid ?? 0;
     double ratios = (widget.postDetails[widget.postIndex].post?.deliveryPayment?.ratio ?? 0) / 100;
     deliveryPay = totalsFare * ratios;
 
@@ -797,7 +797,7 @@ class _LoadMoreBidPostInfoDialogState extends State<LoadMoreBidPostInfoDialog> {
                       ),
                       children: [
                         TextSpan(
-                            text: ' ${widget.postDetails[widget.postIndex].post?.fare}/-',
+                            text: ' ${widget.postDetails[widget.postIndex].post?.lowestBid}/-',
                             style: TextStyle(
                                 fontSize: SizeConfig.blockSizeHorizontal*3.0,
                                 color: Colors.black,

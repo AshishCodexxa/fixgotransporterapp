@@ -1,13 +1,15 @@
-import 'package:fixgotransporterapp/all_dialogs/bid_now_price_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
+import 'package:fixgotransporterapp/all_dialogs/more_info_bid_load_post.dart';
 import 'package:fixgotransporterapp/all_dialogs/post_load_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/draw_dash_border_class.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
+import 'package:fixgotransporterapp/data/model/get_all_bid_status_list_response_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 
 
 
@@ -19,40 +21,155 @@ class AcceptedBidScreen extends StatefulWidget {
 }
 
 class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
+
+
+  final items = <Datum>[];
+
+  String postOnDate = "";
+  String postOnTime = "";
+
+  String pickUpDate = "";
+  String pickUpTime = "";
+
+  String pickUpLocation = "";
+  String finalLocation = "";
+
+  String passPickIndexAddress = "";
+  String passLastIndexAddress = "";
+  String pickUpIndexDate = "";
+  String pickUpIndexTime = "";
+
+  final companyName = <String>[];
+
+  bool isLoading = false;
+
+  double advancePay = 0.0;
+  double duePay = 0.0;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    if(mounted){
+      setState(() {
+        isLoading = true;
+      });
+    }
+
+    refresh();
+  }
+
+  refresh() async {
+
+    final result = await ApiClient().getMyBidAcceptedStatusPost();
+
+    final responseData = GetMyBidPostResponseModel.fromMap(result);
+
+    items.addAll(responseData.data);
+
+    await Future.forEach(responseData.data, (element) async {
+      final customerData =
+      await ApiClient().getUserDetailsApi(element.post!.customer.toString());
+      companyName.add(customerData['data']['companyName']);
+    });
+
+    if(mounted){
+      setState(() {
+        isLoading = false;
+      });
+    }
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: ListView.builder(
-          itemCount: 5,
-          padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.03),
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02,
-                  left: SizeConfig.screenWidth * 0.03,
-                  right: SizeConfig.screenWidth * 0.03),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 5,
-                        spreadRadius: 1,
-                        offset: const Offset(2, 6)),
-                  ],
-                ),
-                child: getInfoCardLayout(
-                    SizeConfig.screenHeight, SizeConfig.screenWidth),
-              ),
-            );
-          }
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          ListView.builder(
+              itemCount: items.length,
+              padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.03),
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02,
+                      left: SizeConfig.screenWidth * 0.03,
+                      right: SizeConfig.screenWidth * 0.03),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 5,
+                            spreadRadius: 1,
+                            offset: const Offset(2, 6)),
+                      ],
+                    ),
+                    child: getInfoCardLayout(
+                        SizeConfig.screenHeight, SizeConfig.screenWidth, index),
+                  ),
+                );
+              }
+          ),
+          Visibility(
+              visible: isLoading,
+              child: const CircularProgressIndicator()
+          ),
+          Visibility(
+            visible: items.isEmpty ? true : false,
+            child: const Text("Bid Accepting Post Not Available.",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto_Medium"
+              ),),
+          )
+        ],
       ),
     );
   }
 
-  Widget getInfoCardLayout(double parentHeight, double parentWidth) {
+  Widget getInfoCardLayout(double parentHeight, double parentWidth, postIndex) {
+
+
+    DateTime tempDate = DateFormat("yyyy-MM-dd").parse(items[postIndex].createdAt.toString());
+    var inputDate = DateTime.parse(tempDate.toString());
+    var outputFormat = DateFormat('dd MMMM yyyy');
+    postOnDate = outputFormat.format(inputDate);
+
+    DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse(items[postIndex].createdAt.toString());
+    var inputTime = DateTime.parse(parseDate.toString());
+    var inputFormat = DateFormat('hh:mm a');
+    postOnTime = inputFormat.format(inputTime);
+
+    DateTime pickDate = DateFormat("yyyy-MM-dd").parse("${items[postIndex].post?.pickupDate}");
+    var pickDates = DateTime.parse(pickDate.toString());
+    var outputFormats = DateFormat('dd MMMM yyyy');
+    pickUpDate = outputFormats.format(pickDates);
+
+    DateTime pickTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse("${items[postIndex].post?.pickupDate}");
+    var pickTimes = DateTime.parse(pickTime.toString());
+    var inputFormats = DateFormat('hh:mm a');
+    pickUpTime = inputFormats.format(pickTimes);
+
+    pickUpLocation = "${items[postIndex].post?.pickup?.address?.street}, ${items[postIndex].post?.pickup?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber}, ${items[postIndex].post?.pickup?.address?.state}, ${items[postIndex].post?.pickup?.address?.country}, ${items[postIndex].post?.pickup?.address?.postalCode}";
+
+    finalLocation = "${items[postIndex].post?.receiver?.address?.street}, ${items[postIndex].post?.receiver?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber}, ${items[postIndex].post?.receiver?.address?.state}, ${items[postIndex].post?.receiver?.address?.country}, ${items[postIndex].post?.receiver?.address?.postalCode}";
+
+    int? totalFare = items[postIndex].post?.fare;
+    double ratio = (items[postIndex].post?.advancePayment!.ratio)! / 100;
+    advancePay = (totalFare ?? 0) * ratio;
+
+    int? totalFares = items[postIndex].post?.fare;
+    double ratios = (items[postIndex].post?.deliveryPayment!.ratio)! / 100;
+    duePay = (totalFares ?? 0) * ratios;
+
+
     return Column(
       children: [
 
@@ -84,13 +201,14 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                           width: parentWidth * 0.55,
                           color: Colors.transparent,
                           child: Text(
-                            "City Avenue, Wakad",
+                            pickUpLocation,
                             style: TextStyle(
                                 color: CommonColor.BLACK_COLOR,
                                 fontSize: SizeConfig.blockSizeHorizontal * 3.0,
                                 fontFamily: "Roboto_Medium",
                                 fontWeight: FontWeight.w400
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -129,13 +247,14 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                           width: parentWidth * 0.55,
                           color: Colors.transparent,
                           child: Text(
-                            "Pune Station",
+                            finalLocation,
                             style: TextStyle(
                                 color: CommonColor.BLACK_COLOR,
                                 fontSize: SizeConfig.blockSizeHorizontal * 3.0,
                                 fontFamily: "Roboto_Medium",
                                 fontWeight: FontWeight.w400
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -160,7 +279,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                         ),
                         children: [
                           TextSpan(
-                              text: ' 2000/-',
+                              text: ' ${items[postIndex].post?.lowestBid}/-',
                               style: TextStyle(
                                   fontSize: SizeConfig.blockSizeHorizontal *
                                       4.5,
@@ -184,7 +303,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Post on 26th Jan 2023 | 10:30 am",
+                    "Post on $postOnDate | $postOnTime",
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: SizeConfig.blockSizeHorizontal * 3.0,
@@ -253,7 +372,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "28 Jan 2023",
+                          pickUpDate,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal * 3.5,
@@ -291,7 +410,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "02:00 pm",
+                          pickUpTime,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: SizeConfig.blockSizeHorizontal*3.5,
@@ -329,14 +448,38 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                         left: parentWidth * 0.03),
                     child: GestureDetector(
                       onTap: () {
+
+                        passPickIndexAddress = "${items[postIndex].post?.pickup?.address?.street}, ${items[postIndex].post?.pickup?.address?.city}, ${items[postIndex].post?.pickup?.address?.district}, ${items[postIndex].post?.pickup?.address?.laneNumber} ${items[postIndex].post?.pickup?.address?.state}, ${items[postIndex].post?.pickup?.address?.country}, ${items[postIndex].post?.pickup?.address?.postalCode}";
+
+                        passLastIndexAddress = "${items[postIndex].post?.receiver?.address?.street}, ${items[postIndex].post?.receiver?.address?.city}, ${items[postIndex].post?.receiver?.address?.state}, ${items[postIndex].post?.receiver?.address?.country}, ${items[postIndex].post?.receiver?.address?.postalCode}";
+
+                        DateTime tempDate = DateFormat("yyyy-MM-dd").parse("${items[postIndex].post?.pickupDate}");
+                        var inputDate = DateTime.parse(tempDate.toString());
+                        var outputFormat = DateFormat('dd MMMM yyyy');
+                        pickUpIndexDate = outputFormat.format(inputDate);
+
+                        DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parse("${items[postIndex].post?.pickupDate}");
+                        var inputTime = DateTime.parse(parseDate.toString());
+                        var inputFormat = DateFormat('hh:mm a');
+                        pickUpIndexTime = inputFormat.format(inputTime);
+
+
                         showCupertinoDialog(
                           context: context,
                           barrierDismissible: true,
                           builder: (context) {
-                            return const AnimatedOpacity(
+                            return AnimatedOpacity(
                                 opacity: 1.0,
-                                duration: Duration(seconds: 2),
-                                child: LoadMoreInfoDialog(isComeFrom: '', postDetails: [], postIndex: 0,));
+                                duration: const Duration(seconds: 2),
+                                child: LoadMoreBidPostInfoDialog(
+                                  isComeFrom: '',
+                                  postDetails: items,
+                                  postIndex: postIndex,
+                                  pickupDate: pickUpIndexDate,
+                                  pickupTime: pickUpIndexTime,
+                                  pickupLocation: passPickIndexAddress,
+                                  finalLocation: passLastIndexAddress,
+                                ));
                           },
                         );
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProcessTimelinePage()));
@@ -391,7 +534,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                             ),
                             children: [
                               TextSpan(
-                                  text: '10 Ton(s)',
+                                  text: '${items[postIndex].post?.loadDetail?.load} ${items[postIndex].post?.loadDetail?.loadUnit}',
                                   style: TextStyle(
                                       fontSize: SizeConfig.blockSizeHorizontal *
                                           3.7,
@@ -420,7 +563,7 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: const CompanyVerifyDialog(companyId: '',),
+                            child: CompanyVerifyDialog(companyId: items[postIndex].post!.customer.toString(), postStatus: items[postIndex].post!.status.toString()),
                           );
                         });
                   },
@@ -439,13 +582,18 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          Text("Codexxa",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Roboto_Medium',
-                              fontSize: SizeConfig.blockSizeHorizontal * 2.7,
-                            ),)
+                          Container(
+                            width: parentWidth*0.1,
+                            child: Text(companyName[postIndex],
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto_Medium',
+                                fontSize: SizeConfig.blockSizeHorizontal * 2.7,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
 
                         ],
                       ),
@@ -464,25 +612,28 @@ class _AcceptedBidScreenState extends State<AcceptedBidScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: parentWidth * 0.45,
+                width: parentWidth * 0.65,
                 color: Colors.transparent,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Adv. - 1000/- (Online)",
+                    Text("Adv. - $advancePay/- (${items[postIndex].post?.advancePayment?.mode})",
                       style: TextStyle(
                         color: CommonColor.FROM_AREA_COLOR,
                         fontWeight: FontWeight.w400,
                         fontSize: SizeConfig.blockSizeHorizontal *
                             2.5,
                       ),),
-                    Text("Due. - 1000/- ",
-                      style: TextStyle(
-                        color: CommonColor.TO_AREA_COLOR,
-                        fontWeight: FontWeight.w400,
-                        fontSize: SizeConfig.blockSizeHorizontal *
-                            2.5,
-                      ),),
+                    Padding(
+                      padding: EdgeInsets.only(left: parentWidth*0.02),
+                      child: Text("Due. - $duePay/- (${items[postIndex].post?.deliveryPayment?.mode})",
+                        style: TextStyle(
+                          color: CommonColor.TO_AREA_COLOR,
+                          fontWeight: FontWeight.w400,
+                          fontSize: SizeConfig.blockSizeHorizontal *
+                              2.5,
+                        ),),
+                    ),
                   ],
                 ),
               ),

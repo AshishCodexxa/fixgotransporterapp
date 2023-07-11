@@ -410,7 +410,7 @@ class _CanceledBidScreenState extends State<CanceledBidScreen> {
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: const CompanyVerifyDialog(companyId: '',),
+                            child: const CompanyVerifyDialog(companyId: '', postStatus: '',),
                           );
                         });
                   },

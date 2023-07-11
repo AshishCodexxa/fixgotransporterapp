@@ -1347,7 +1347,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                                     companyId: items[postIndex]
                                         .pickup!
                                         .customer
-                                        .toString(),
+                                        .toString(), postStatus: items[postIndex].status.toString(),
                                   ),
                                 );
                               });
