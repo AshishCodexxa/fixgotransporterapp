@@ -50,7 +50,7 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
 
   bool isLoading = false;
 
-
+  Timer? _timer;
 
   @override
   void initState() {
@@ -130,6 +130,14 @@ class _PendingBidScreenState extends State<PendingBidScreen> {
         isLoading = false;
       });
     }
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if(mounted) {
+        setState(
+              () {},
+        );
+      }
+    });
 
   }
 

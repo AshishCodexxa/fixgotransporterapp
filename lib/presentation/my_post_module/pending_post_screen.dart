@@ -83,6 +83,8 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
 
     refresh();
 
+
+
     /*ApiClient().getAllTransporterPost().then((value){
 
       if(mounted){
@@ -144,6 +146,15 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
         isLoading = false;
       });
     }
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if(mounted) {
+        setState(
+              () {},
+        );
+      }
+    });
+
 
   }
 

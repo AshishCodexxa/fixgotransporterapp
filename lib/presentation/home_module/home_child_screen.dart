@@ -5,6 +5,7 @@ import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.da
 import 'package:fixgotransporterapp/all_dialogs/load_more_info_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/dashboard/dashboard_screen.dart';
 import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
 import 'package:fixgotransporterapp/data/dio_client.dart';
 import 'package:fixgotransporterapp/data/model/get_all_company_post_response_model.dart';
@@ -62,6 +63,8 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
   final companyName = <String>[];
 
   bool isLoading = false;
+
+  Timer? _timer;
 
   @override
   void initState() {
@@ -136,6 +139,15 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
         isLoading = false;
       });
     }
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if(mounted) {
+        setState(
+              () {},
+        );
+      }
+    });
+
   }
 
   @override
@@ -163,6 +175,34 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                       [
                         getPickUpAndDeliverLocation(
                             SizeConfig.screenHeight, SizeConfig.screenWidth),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.02, left: SizeConfig.screenWidth*0.03),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: SizeConfig.screenHeight*0.04,
+                                width: SizeConfig.screenWidth*0.2,
+                                decoration: BoxDecoration(
+                                  color: CommonColor.SIGN_UP_TEXT_COLOR,
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(
+                                  child: Text("Search",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeConfig.blockSizeHorizontal*4.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Roboto_Normal'
+                                  ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -522,17 +562,22 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         ),
                         actions: <Widget>[
                           TextButton(
-                            child: Container(
-                                height: SizeConfig.screenHeight * 0.04,
-                                width: SizeConfig.screenWidth * 0.15,
-                                decoration: BoxDecoration(
-                                    color: CommonColor.APP_BAR_COLOR,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: const Center(
-                                    child: Text(
-                                  'OK',
-                                  style: TextStyle(color: Colors.white),
-                                ))),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const Dashboard(isComeFrom:"1")));
+                              },
+                              child: Container(
+                                  height: SizeConfig.screenHeight * 0.04,
+                                  width: SizeConfig.screenWidth * 0.15,
+                                  decoration: BoxDecoration(
+                                      color: CommonColor.APP_BAR_COLOR,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: const Center(
+                                      child: Text(
+                                    'OK',
+                                    style: TextStyle(color: Colors.white),
+                                  ))),
+                            ),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -574,7 +619,7 @@ class _HomeChildScreenState extends State<HomeChildScreen> {
                         padding: EdgeInsets.only(
                             left: SizeConfig.screenWidth * 0.02),
                         child: Text(
-                          "New Load",
+                          "Post Load",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: SizeConfig.blockSizeHorizontal * 4.0,
