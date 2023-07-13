@@ -641,34 +641,37 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
           Padding(
             padding: EdgeInsets.only(right: parentWidth*0.05),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /*Visibility(
-                  visible: bidItems.length != 0 ? true : false,
-                  child: Row(
-                    children: [
-                      Container(
-                        height: parentHeight*0.007,
-                        width: parentWidth*0.015,
-                        decoration: BoxDecoration(
-                            color: CommonColor.APP_BAR_COLOR,
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: parentWidth*0.007),
-                        child: Text(
-                          "Tap to View Vehicle Owner Bid",
-                          style: TextStyle(
+                Visibility(
+                  visible: items[postIndex].lowestBid != 0 ? true : false,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: parentWidth*0.05),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: parentHeight*0.007,
+                          width: parentWidth*0.015,
+                          decoration: BoxDecoration(
                               color: CommonColor.APP_BAR_COLOR,
-                              fontSize: SizeConfig.blockSizeHorizontal * 2.0,
-                              fontFamily: "Roboto_Medium",
-                              fontWeight: FontWeight.w400),
+                              borderRadius: BorderRadius.circular(10)
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: EdgeInsets.only(left: parentWidth*0.007),
+                          child: Text(
+                            "Tap to View Vehicle Owner Bid",
+                            style: TextStyle(
+                                color: CommonColor.APP_BAR_COLOR,
+                                fontSize: SizeConfig.blockSizeHorizontal * 2.0,
+                                fontFamily: "Roboto_Medium",
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),*/
+                ),
                 Text(
                   "Time Left  $formattedTime.",
                   style: TextStyle(
@@ -686,7 +689,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: parentWidth*0.05, top: parentHeight*0.01),
+                padding: EdgeInsets.only(left: parentWidth*0.05, top: parentHeight*0.013),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
