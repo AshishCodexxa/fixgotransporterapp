@@ -44,6 +44,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
   int index = 0;
   int vehicleIndex = -1;
   int? selectedTransListIndex;
+  int? bidLoader;
 
   final items = <Doc>[];
 
@@ -54,6 +55,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
   final vehicle = <int>[];
 
   bool isLoading = false;
+  bool isBidLoading = false;
 
   String postOnDate = "";
   String postOnTime = "";
@@ -183,6 +185,12 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
 
                                       print(items[index].id);
 
+                                      if(mounted){
+                                        setState(() {
+                                          bidLoader = index;
+                                        });
+                                      }
+
                                       final bidResult = await ApiClient().getLimitedBidOfVehicleOwner(items[index].id.toString());
 
                                       final responseData = GetVehicleOwnerBidResponseModel.fromMap(bidResult);
@@ -224,6 +232,14 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                         }
                                       }
 
+                                      if(mounted){
+                                        setState(() {
+                                          bidLoader = -1;
+                                        });
+                                      }
+
+
+
                                     },
                                     child: Stack(
                                       alignment: Alignment.center,
@@ -241,6 +257,10 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                               borderRadius: BorderRadius.circular(10)
                                           ),
                                           child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
+                                        ),
+                                        Visibility(
+                                          visible: index == bidLoader,
+                                            child: CircularProgressIndicator()
                                         ),
                                         Visibility(
                                           visible: index == selectedTransListIndex,
@@ -477,7 +497,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                   child: GestureDetector(
 
                                                     onTap: (){
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const InterestedVehicleOwnerList()));
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> InterestedVehicleOwnerList(postId: items[index].id.toString(),)));
                                                     },
                                                     child: Container(
                                                       width: SizeConfig.screenWidth*0.21,
@@ -1120,8 +1140,16 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: parentWidth*0.05,),
                   child: GestureDetector(
-                    
                     onTap: (){
+
+                      String? companyId = "";
+
+                      if(items[postIndex].companyCustomer == null){
+                        companyId = items[postIndex].customer;
+                      }else{
+                        companyId = items[postIndex].companyCustomer;
+                      }
+
                       showModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,
@@ -1133,7 +1161,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                               padding: EdgeInsets.only(
                                 bottom: MediaQuery.of(context).viewInsets.bottom,
                               ),
-                              child: CompanyVerifyDialog(companyId: items[postIndex].customer.toString(), postStatus: items[postIndex].status.toString(),),
+                              child: CompanyVerifyDialog(companyId: companyId.toString(), postStatus: items[postIndex].status.toString(),),
                             );
                           });
                     },

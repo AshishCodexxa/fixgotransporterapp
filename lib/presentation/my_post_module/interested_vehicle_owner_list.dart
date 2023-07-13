@@ -1,21 +1,60 @@
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/booking_details_screen.dart';
 import 'package:fixgotransporterapp/presentation/my_post_module/vehicle_owner_info_profile.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/model/get_vehicle_owner_bid_response_model.dart';
 
 
 
 
 class InterestedVehicleOwnerList extends StatefulWidget {
-  const InterestedVehicleOwnerList({Key? key}) : super(key: key);
+
+  final String postId;
+
+  const InterestedVehicleOwnerList({Key? key, required this.postId}) : super(key: key);
 
   @override
   State<InterestedVehicleOwnerList> createState() => _InterestedVehicleOwnerListState();
 }
 
 class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList> {
+
+
+  bool isLoading = false;
+
+  final bidItems = <Datum>[];
+
+
+  @override
+  void initState() {
+    super.initState();
+    refresh();
+  }
+
+  refresh() async {
+
+    if(mounted){
+      setState(() {
+        isLoading = true;
+      });
+    }
+
+    final bidResult = await ApiClient().getAllBidOfVehicleOwner(widget.postId);
+
+    final responseData = GetVehicleOwnerBidResponseModel.fromMap(bidResult);
+
+    bidItems.clear();
+
+    bidItems.addAll(responseData.data as Iterable<Datum>);
+
+    print("bidResult ${bidItems.length}");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -82,7 +121,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
     return Container(
       height: SizeConfig.safeUsedHeight * .88,
       child: ListView.builder(
-          itemCount: 10,
+          itemCount: bidItems.length,
           padding: EdgeInsets.zero,
           itemBuilder: (BuildContext context, int index) {
             return Column(
@@ -106,7 +145,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
 
-                              Text("Mahesh Transporter",
+                              Text("${bidItems[index].customer?.name}",
                                 style: TextStyle(
                                     color: CommonColor.BLACK_COLOR,
                                     fontSize: SizeConfig.blockSizeHorizontal*4.0,
@@ -124,7 +163,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                                     ),
                                     children: [
                                       TextSpan(
-                                          text: ' 2000/-',
+                                          text: ' ${bidItems[index].bidAmount}/-',
                                           style: TextStyle(
                                               fontSize: SizeConfig.blockSizeHorizontal*3.7,
                                               color: Colors.black,
@@ -140,26 +179,10 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("Pune",
+                                Text("${bidItems[index].customer?.companyAddress}",
                                   style: TextStyle(
                                       color: CommonColor.BLACK_COLOR,
                                       fontSize: SizeConfig.blockSizeHorizontal*3.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Roboto_Regular'
-                                  ),),
-                              ],
-                            ),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.003),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text("Vehicle Available on : 1 Feb 23",
-                                  style: TextStyle(
-                                      color: CommonColor.BLACK_COLOR,
-                                      fontSize: SizeConfig.blockSizeHorizontal*3.5,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'Roboto_Regular'
                                   ),),
@@ -173,19 +196,19 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  width: SizeConfig.screenWidth*0.11,
+                                  width: SizeConfig.screenWidth*0.085,
                                   height: SizeConfig.screenHeight*0.023,
                                   decoration: BoxDecoration(
                                     color: CommonColor.SELECT_TYPE_COLOR,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
 
                                       Padding(
                                         padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02),
-                                        child: Text("4.5",
+                                        child: Text("${bidItems[index].customer?.rating?.rate}",
                                           style: TextStyle(
                                               color: CommonColor.WHITE_COLOR,
                                               fontSize: SizeConfig.blockSizeHorizontal*2.7,

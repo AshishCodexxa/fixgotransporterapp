@@ -506,5 +506,31 @@ class ApiClient {
     }
   }
 
+  Future<Map<String, dynamic>> getAllBidOfVehicleOwner(String postId) async {
+
+    String url = "${ApiConstants().baseUrl}${ApiConstants().getVehicleOwnerBid}$postId";
+
+    String? sessionToken = GetStorage().read<String>(
+        ConstantData.userAccessToken);
+
+    try {
+      Response response = await _dio.get(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $sessionToken',
+          },
+        ),
+      );
+
+      print("getLimitedBidOfVehicleOwnerSC --> ${response.statusCode}");
+      print("getLimitedBidOfVehicleOwnerData --> ${response.data}");
+
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
 
 }
