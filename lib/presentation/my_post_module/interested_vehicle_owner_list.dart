@@ -47,11 +47,15 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
 
     final responseData = GetVehicleOwnerBidResponseModel.fromMap(bidResult);
 
-    bidItems.clear();
-
     bidItems.addAll(responseData.data as Iterable<Datum>);
 
     print("bidResult ${bidItems.length}");
+
+    if(mounted){
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
 
@@ -59,27 +63,36 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.zero,
+      body: Stack(
+        alignment: Alignment.center,
         children: [
-          Container(
-            color: CommonColor.APP_BAR_COLOR,
-            height: SizeConfig.safeUsedHeight * .12,
-            child: getTopText(SizeConfig.screenHeight, SizeConfig.screenWidth),
-          ),
+          ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                color: CommonColor.APP_BAR_COLOR,
+                height: SizeConfig.safeUsedHeight * .12,
+                child: getTopText(SizeConfig.screenHeight, SizeConfig.screenWidth),
+              ),
 
-          Container(
-            color: CommonColor.WHITE_COLOR,
-            height: SizeConfig.safeUsedHeight * .88,
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.1),
-              children: [
-                getAllListLayout(SizeConfig.screenHeight, SizeConfig.screenWidth)
-              ],
-            ),
+              Container(
+                color: CommonColor.WHITE_COLOR,
+                height: SizeConfig.safeUsedHeight * .88,
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.1),
+                  children: [
+                    getAllListLayout(SizeConfig.screenHeight, SizeConfig.screenWidth)
+                  ],
+                ),
+              ),
+            ],
           ),
+          Visibility(
+            visible: isLoading,
+              child: const CircularProgressIndicator()
+          )
         ],
       ),
     );
@@ -97,7 +110,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
             },
             child: Container(
                 color: Colors.transparent,
-                child: Icon(Icons.arrow_back_ios_new,
+                child: const Icon(Icons.arrow_back_ios_new,
                 color: CommonColor.WHITE_COLOR,)),
           ),
           Padding(
@@ -134,7 +147,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                   ),
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleOwnerInfoProfile()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const VehicleOwnerInfoProfile()));
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -230,7 +243,7 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
 
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingDetailsScreen()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const BookingDetailsScreen()));
                                   },
                                   child: Container(
                                     width: SizeConfig.screenWidth*0.18,
@@ -271,8 +284,8 @@ class _InterestedVehicleOwnerListState extends State<InterestedVehicleOwnerList>
                   child: Container(
                     height: SizeConfig.screenWidth*0.003,
                     color: Colors.black12,
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Text("hii",
                           style: TextStyle(
                               color: Colors.transparent
