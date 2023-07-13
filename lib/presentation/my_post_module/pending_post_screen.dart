@@ -13,6 +13,7 @@ import 'package:fixgotransporterapp/presentation/my_post_module/interested_vehic
 import 'package:fixgotransporterapp/presentation/my_post_module/vehicle_owner_info_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 String _printDuration(Duration duration) {
@@ -230,9 +231,9 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: selectedIndex != index ? Colors.white : Colors.transparent,
+                                          color: /*selectedIndex != index ?*/items[index].companyCustomer != null ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR.withOpacity(0.2)/*: Colors.red*/,
                                           boxShadow: <BoxShadow>[
-                                            selectedIndex != index ? BoxShadow(
+                                          items[index].companyCustomer != null ? BoxShadow(
                                                 color: Colors.black.withOpacity(0.1),
                                                 blurRadius: 5,
                                                 spreadRadius: 1,
@@ -1108,7 +1109,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                       height: parentHeight*0.025,
                       width: parentWidth*0.16,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: items[postIndex].companyCustomer != null ? Colors.white : Colors.blue[50],
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.black26,)
                       ),

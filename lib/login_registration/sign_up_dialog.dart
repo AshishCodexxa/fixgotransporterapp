@@ -1,7 +1,7 @@
 
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
-import 'package:fixgotransporterapp/login_registration/adhar_pan_register_screen.dart';
+import 'package:fixgotransporterapp/login_registration/transporter_details_register_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -193,7 +193,7 @@ class _SignUpDialogState extends State<SignUpDialog> {
                       GestureDetector(
                         onTap: (){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyRegistration()));
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>AadhaarPanCardRegisterScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>TransporterDetailsScreen()));
                         },
                         child: Container(
                           height: SizeConfig.screenHeight*0.057,

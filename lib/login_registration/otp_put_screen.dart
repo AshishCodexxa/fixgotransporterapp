@@ -4,7 +4,7 @@ import 'package:fixgotransporterapp/common_file/size_config.dart';
 import 'package:fixgotransporterapp/dashboard/dashboard_screen.dart';
 import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
 import 'package:fixgotransporterapp/data/dio_client.dart';
-import 'package:fixgotransporterapp/login_registration/adhar_pan_register_screen.dart';
+import 'package:fixgotransporterapp/login_registration/transporter_details_register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -224,7 +224,7 @@ class _OtpPutScreenState extends State<OtpPutScreen>  with TickerProviderStateMi
                                 print(value['data']['hasProfileSetup']);
 
                                 value['data']['hasProfileSetup'] == false?
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const AadhaarPanCardRegisterScreen()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const TransporterDetailsScreen()))
                                     : Navigator.push(context, MaterialPageRoute(builder: (context)=>const Dashboard()));
                               }
 

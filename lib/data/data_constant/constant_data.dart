@@ -15,6 +15,7 @@ class ConstantData {
   static const String emailId = 'emailId';
   static const String contactNo = 'contactNo';
   static const String companyName = 'companyName';
+  static const String companyAddress = 'companyAddress';
 
   static const String PENDING_POST = 'PENDING';
   static const String ONGOING_POST = 'ONGOING';

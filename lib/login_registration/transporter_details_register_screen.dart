@@ -2,21 +2,24 @@
 import 'package:fixgotransporterapp/all_dialogs/register_success_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
 import 'package:fixgotransporterapp/common_file/size_config.dart';
+import 'package:fixgotransporterapp/data/data_constant/constant_data.dart';
+import 'package:fixgotransporterapp/data/dio_client.dart';
 import 'package:fixgotransporterapp/login_registration/kyc_verification_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 
 
 
-class AadhaarPanCardRegisterScreen extends StatefulWidget {
-  const AadhaarPanCardRegisterScreen({Key? key}) : super(key: key);
+class TransporterDetailsScreen extends StatefulWidget {
+  const TransporterDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  State<AadhaarPanCardRegisterScreen> createState() => _AadhaarPanCardRegisterScreenState();
+  State<TransporterDetailsScreen> createState() => _TransporterDetailsScreenState();
 }
 
-class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScreen> {
+class _TransporterDetailsScreenState extends State<TransporterDetailsScreen> {
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController transporterNameController = TextEditingController();
@@ -26,46 +29,86 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
   final _transporterNameFocus = FocusNode();
   final _transporterLocationFocus = FocusNode();
 
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if(mounted){
+      setState(() {
+        isLoading = true;
+      });
+    }
+
+    ApiClient().getUserProfileData().then((value){
+
+      GetStorage().write(ConstantData.userName, value['data']['name']);
+      GetStorage().write(ConstantData.companyName, value['data']['companyName']);
+      GetStorage().write(ConstantData.companyAddress, value['data']['companyAddress']);
+
+      userNameController.text = value['data']['name'];
+      transporterNameController.text = value['data']['companyName'];
+      transporterLocationController.text = value['data']['companyAddress'];
+
+      if(mounted){
+        setState(() {
+          isLoading = false;
+        });
+      }
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
+      body: Stack(
+        alignment: Alignment.center,
         children: [
+          Column(
+            children: [
 
-          Container(
-            height: SizeConfig.screenHeight*0.12,
-            color: CommonColor.APP_BAR_COLOR,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.05),
-                  child: Text("Registration",
-                    style: TextStyle(
-                        color: CommonColor.WHITE_COLOR,
-                        fontSize: SizeConfig.blockSizeHorizontal*6.0,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Roboto_Medium'
-                    ),),
+              Container(
+                height: SizeConfig.screenHeight*0.12,
+                color: CommonColor.APP_BAR_COLOR,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.05),
+                      child: Text("Registration",
+                        style: TextStyle(
+                            color: CommonColor.WHITE_COLOR,
+                            fontSize: SizeConfig.blockSizeHorizontal*6.0,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Roboto_Medium'
+                        ),),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+
+              SizedBox(
+                height: SizeConfig.screenHeight*0.88,
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.03),
+                  children: [
+                    getAllFieldLayout(SizeConfig.screenHeight, SizeConfig.screenWidth)
+                  ],
+                ),
+              )
+
+            ],
           ),
-
-          SizedBox(
-            height: SizeConfig.screenHeight*0.88,
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: SizeConfig.screenHeight*0.03),
-              children: [
-                getAllFieldLayout(SizeConfig.screenHeight, SizeConfig.screenWidth)
-              ],
-            ),
+          Visibility(
+            visible: isLoading,
+              child: const CircularProgressIndicator()
           )
-
         ],
       ),
     );
@@ -182,10 +225,10 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
                 focusNode: _transporterNameFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  prefixIcon: Image(image: AssetImage("assets/images/company.png"),),
+                  prefixIcon: const Image(image: AssetImage("assets/images/company.png"),),
                   label: RichText(
                     text: TextSpan(
-                        text: 'Transporter Name',
+                        text: 'Transporter Company Name',
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.w400,
@@ -240,7 +283,7 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
                 focusNode: _transporterLocationFocus,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  prefixIcon: Image(image: AssetImage("assets/images/company_location.png"),),
+                  prefixIcon: const Image(image: AssetImage("assets/images/company_location.png"),),
                   label: RichText(
                     text: TextSpan(
                         text: 'Transporter Location',
@@ -278,7 +321,47 @@ class _AadhaarPanCardRegisterScreenState extends State<AadhaarPanCardRegisterScr
             children: [
               GestureDetector(
                 onTap: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>KYCVerifyScreen()));
+                  if(mounted){
+                    setState(() {
+                      isLoading = true;
+                    });
+                  }
+
+                  ApiClient().editUserProfileData(
+                      userNameController.text,
+                      transporterNameController.text,
+                      '',
+                      transporterLocationController.text,
+                      [],
+                      [],
+                      '',
+                      '',
+                      '',
+                      '',
+                      isLoading
+                  ).then((value){
+
+                    if(mounted){
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+
+
+                    ApiClient().getUserProfileData().then((value) {
+                      if (value.isEmpty) return;
+
+                      GetStorage().write(ConstantData.userName, value['data']['name']);
+                      GetStorage().write(ConstantData.companyName, value['data']['companyName']);
+                      GetStorage().write(ConstantData.companyAddress, value['data']['companyAddress']);
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const KYCVerifyScreen()));
+
+                    });
+
+
+                  });
+
                 },
                 child: Container(
                   height: SizeConfig.screenHeight*0.057,
