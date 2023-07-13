@@ -40,9 +40,15 @@ class ApiConstants {
   String addBidAgainstPost = "bid/transporter";
   String deletePickupAddress = "pickup/delete/";
   String getAllMyBidListStatus = "post/my-bid?status=";
+
+
+
+/////////////////////// Transporter Post Api ///////////////////////////////////
+
+
   String getAllTransporterPost = "post/?status=";
   String postLoadApi = "post/repost";
-
+  String getVehicleOwnerBid = "post/bid/";
 
 
 }

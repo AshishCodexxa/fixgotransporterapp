@@ -1,6 +1,5 @@
 
 import 'dart:async';
-
 import 'package:fixgotransporterapp/all_dialogs/company_verify_details_dialog.dart';
 import 'package:fixgotransporterapp/all_dialogs/my_post_more_info_dialog.dart';
 import 'package:fixgotransporterapp/common_file/common_color.dart';
@@ -13,8 +12,9 @@ import 'package:fixgotransporterapp/presentation/my_post_module/interested_vehic
 import 'package:fixgotransporterapp/presentation/my_post_module/vehicle_owner_info_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+
+import '../../data/model/get_vehicle_owner_bid_response_model.dart';
 
 String _printDuration(Duration duration) {
   String twoDigits(int n) => n.toString().padLeft(2, "0");
@@ -43,10 +43,15 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
 
   int index = 0;
   int vehicleIndex = -1;
+  int? selectedTransListIndex;
 
   final items = <Doc>[];
 
-  final companyName = <String>[];
+  final bidItems = <Datum>[];
+
+  final companyName = [];
+
+  final vehicle = <int>[];
 
   bool isLoading = false;
 
@@ -69,7 +74,24 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
   double advancePay = 0.0;
   double duePay = 0.0;
 
+  int vehicleLen = 0;
+
   Timer? _timer;
+
+
+  startTimer() {
+    var durtaion = const Duration(seconds: 2);
+    return Timer(durtaion, dialogHide);
+  }
+
+  void dialogHide() {
+    if(mounted){
+      setState(() {
+        selectedTransListIndex = -1;
+      });
+    }
+  }
+
 
 
   @override
@@ -85,47 +107,6 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
     refresh();
 
 
-
-    /*ApiClient().getAllTransporterPost().then((value){
-
-      if(mounted){
-        setState(() {
-          isLoading = false;
-        });
-      }
-
-      var jsonList = GetAllTransporterPostResponseModel.fromMap(value);
-
-      print("jsonList --> $jsonList");
-
-      items.addAll(jsonList.data?.docs as Iterable<Doc>);
-
-      print("jsonList --> ${items.length}");
-
-      for(int i = 0; i < items.length; i++){
-
-        print(items[i].customer.toString());
-
-        ApiClient().getUserDetailsApi(items[i].customer.toString()).then((value){
-          if(mounted){
-            setState(() {
-              companyName = value['data']['companyName'];
-              print("companyName $companyName");
-            });
-          }
-        });
-
-      }
-
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if(mounted) {
-          setState(
-                () {},
-          );
-        }
-      });
-
-    });*/
   }
 
   refresh() async {
@@ -198,50 +179,88 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                       left: SizeConfig.screenWidth*0.03,
                                       right: SizeConfig.screenWidth*0.03),
                                   child: GestureDetector(
-                                    onTap: (){
-                                      if(index != selectedIndex){
-                                        selectedIndex = index;
+                                    onTap: () async {
 
-                                        index = selectedIndex!;
+                                      print(items[index].id);
 
-                                        print(selectedIndex);
-                                        if(mounted) {
-                                          setState(() {
+                                      final bidResult = await ApiClient().getLimitedBidOfVehicleOwner(items[index].id.toString());
 
-                                          });
+                                      final responseData = GetVehicleOwnerBidResponseModel.fromMap(bidResult);
+
+                                      bidItems.clear();
+
+                                      bidItems.addAll(responseData.data as Iterable<Datum>);
+
+                                      print("bidResult ${bidItems.length}");
+
+
+                                      if(bidItems.length != 0){
+                                        if(index != selectedIndex){
+                                          selectedIndex = index;
+
+                                          index = selectedIndex!;
+
+                                          print(selectedIndex);
+                                          if(mounted) {
+                                            setState(() {
+
+                                            });
+                                          }
+                                        }
+                                        else{
+                                          selectedIndex = -1;
+                                          if(mounted) {
+                                            setState(() {
+
+                                            });
+                                          }
                                         }
                                       }else{
-                                        selectedIndex = -1;
-                                        if(mounted) {
-                                          setState(() {
-
-                                          });
-                                        }
-                                      }
-                                    },
-                                    onDoubleTap: (){
-                                      if(selectedIndex == index){
-                                        selectedIndex = -1;
                                         if(mounted){
                                           setState(() {
-
+                                            selectedTransListIndex = index;
+                                            startTimer();
                                           });
                                         }
                                       }
+
                                     },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: /*selectedIndex != index ?*/items[index].companyCustomer != null ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR.withOpacity(0.2)/*: Colors.red*/,
-                                          boxShadow: <BoxShadow>[
-                                          items[index].companyCustomer != null ? BoxShadow(
-                                                color: Colors.black.withOpacity(0.1),
-                                                blurRadius: 5,
-                                                spreadRadius: 1,
-                                                offset: const Offset(2, 6)) : const BoxShadow(color: Colors.transparent),
-                                          ],
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: /*selectedIndex != index ?*/items[index].companyCustomer != null ? Colors.white : CommonColor.SIGN_UP_TEXT_COLOR.withOpacity(0.2)/*: Colors.red*/,
+                                              boxShadow: <BoxShadow>[
+                                              items[index].companyCustomer != null ? BoxShadow(
+                                                    color: Colors.black.withOpacity(0.1),
+                                                    blurRadius: 5,
+                                                    spreadRadius: 1,
+                                                    offset: const Offset(2, 6)) : const BoxShadow(color: Colors.transparent),
+                                              ],
+                                              borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          child: getInfoCardLayout(SizeConfig.screenHeight, SizeConfig.screenWidth, index),
+                                        ),
+                                        Visibility(
+                                          visible: index == selectedTransListIndex,
+                                          child: Container(
+                                            height: SizeConfig.screenHeight*0.04,
+                                            width: SizeConfig.screenWidth*0.4,
+                                            decoration: BoxDecoration(
+                                              color: CommonColor.SIGN_UP_TEXT_COLOR.withOpacity(0.9),
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                            child: Center(child: Text("No Bid Available.",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: SizeConfig.blockSizeHorizontal*3.7,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Roboto_Medium'
+                                              ),)),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -249,7 +268,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                 Visibility(
                                   visible: index == selectedIndex,
                                   child: Container(
-                                    height: SizeConfig.screenHeight*0.49,
+                                    height: bidItems.length == 3 ? SizeConfig.screenHeight*0.49 : bidItems.length == 2 ? SizeConfig.screenHeight*0.32 : 0.0,
                                     child: CustomScrollView(
                                       physics: const NeverScrollableScrollPhysics(),
                                       slivers: [
@@ -263,7 +282,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
 
                                         SliverList(
                                             delegate: SliverChildBuilderDelegate(
-                                              childCount: 3,
+                                              childCount: bidItems.length,
                                                   (context, index) {
                                                 return Column(
                                                   children: [
@@ -286,7 +305,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
 
-                                                                  Text("Nikita Vehicle Owner",
+                                                                  Text("${bidItems[index].customer?.name}",
                                                                     style: TextStyle(
                                                                         color: CommonColor.BLACK_COLOR,
                                                                         fontSize: SizeConfig.blockSizeHorizontal*4.0,
@@ -304,7 +323,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                         ),
                                                                         children: [
                                                                           TextSpan(
-                                                                              text: ' 2000 / Vehicle',
+                                                                              text: ' ${bidItems[index].bidAmount} / Vehicle',
                                                                               style: TextStyle(
                                                                                   fontSize: SizeConfig.blockSizeHorizontal*3.7,
                                                                                   color: Colors.black,
@@ -320,26 +339,10 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                 child: Row(
                                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                                   children: [
-                                                                    Text("Pune",
+                                                                    Text("${bidItems[index].customer?.companyAddress}",
                                                                       style: TextStyle(
                                                                           color: CommonColor.BLACK_COLOR,
                                                                           fontSize: SizeConfig.blockSizeHorizontal*3.0,
-                                                                          fontWeight: FontWeight.w500,
-                                                                          fontFamily: 'Roboto_Regular'
-                                                                      ),),
-                                                                  ],
-                                                                ),
-                                                              ),
-
-                                                              Padding(
-                                                                padding: EdgeInsets.only(top: SizeConfig.screenHeight*0.003),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  children: [
-                                                                    Text("Vehicle Available on : 1 Feb 23",
-                                                                      style: TextStyle(
-                                                                          color: CommonColor.BLACK_COLOR,
-                                                                          fontSize: SizeConfig.blockSizeHorizontal*3.5,
                                                                           fontWeight: FontWeight.w500,
                                                                           fontFamily: 'Roboto_Regular'
                                                                       ),),
@@ -355,19 +358,19 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                     Row(
                                                                       children: [
                                                                         Container(
-                                                                          width: SizeConfig.screenWidth*0.11,
+                                                                          width: SizeConfig.screenWidth*0.08,
                                                                           height: SizeConfig.screenHeight*0.023,
                                                                           decoration: BoxDecoration(
                                                                             color: CommonColor.SELECT_TYPE_COLOR,
                                                                             borderRadius: BorderRadius.circular(5),
                                                                           ),
                                                                           child: Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            mainAxisAlignment: MainAxisAlignment.center,
                                                                             children: [
 
                                                                               Padding(
                                                                                 padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02),
-                                                                                child: Text("4.5",
+                                                                                child: Text("${bidItems[index].customer?.rating?.rate}",
                                                                                   style: TextStyle(
                                                                                       color: CommonColor.WHITE_COLOR,
                                                                                       fontSize: SizeConfig.blockSizeHorizontal*2.7,
@@ -377,7 +380,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                               ),
 
                                                                               Padding(
-                                                                                padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.017),
+                                                                                padding: EdgeInsets.only(right: SizeConfig.screenWidth*0.015),
                                                                                 child: Icon(Icons.star,
                                                                                   size: SizeConfig.blockSizeHorizontal*2.5,
                                                                                   color: Colors.white,),
@@ -389,7 +392,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                                                                         Padding(
                                                                           padding: EdgeInsets.only(left: SizeConfig.screenWidth*0.02),
                                                                           child: Text(
-                                                                            "No. of Vehicle : 04",
+                                                                            "No. of Vehicle : ${bidItems[index].vehicles?.length}",
                                                                             style: TextStyle(
                                                                                 color: Colors.black,
                                                                                 fontSize: SizeConfig.blockSizeHorizontal*2.7,
@@ -526,11 +529,11 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
           ),
           Visibility(
             visible: isLoading,
-              child: CircularProgressIndicator()
+              child: const CircularProgressIndicator()
           ),
           Visibility(
             visible: items.isEmpty ? true : false,
-            child: Text("My Post Not Available.",
+            child: const Text("My Post Not Available.",
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
@@ -640,6 +643,32 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                /*Visibility(
+                  visible: bidItems.length != 0 ? true : false,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: parentHeight*0.007,
+                        width: parentWidth*0.015,
+                        decoration: BoxDecoration(
+                            color: CommonColor.APP_BAR_COLOR,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: parentWidth*0.007),
+                        child: Text(
+                          "Tap to View Vehicle Owner Bid",
+                          style: TextStyle(
+                              color: CommonColor.APP_BAR_COLOR,
+                              fontSize: SizeConfig.blockSizeHorizontal * 2.0,
+                              fontFamily: "Roboto_Medium",
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),*/
                 Text(
                   "Time Left  $formattedTime.",
                   style: TextStyle(
@@ -932,7 +961,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                             builder: (context) {
                               return AnimatedOpacity(
                                   opacity: 1.0,
-                                  duration: Duration(seconds: 2),
+                                  duration: const Duration(seconds: 2),
                                   child: MyPostMoreInfoDialog(
                                     isComeFrom: '',
                                     postDetails: items,
@@ -1062,7 +1091,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("Adv. - ${advancePay}/- (${items[postIndex].advancePayment?.mode})",
+                                Text("Adv. - $advancePay/- (${items[postIndex].advancePayment?.mode})",
                                   style: TextStyle(
                                     color: CommonColor.FROM_AREA_COLOR,
                                     fontWeight: FontWeight.w400,
@@ -1121,6 +1150,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                           children: [
 
                             Container(
+                              color: Colors.transparent,
                               width: parentWidth*0.1,
                               child: Text(companyName[postIndex],
                                 style: TextStyle(
@@ -1156,7 +1186,7 @@ class _PendingPostScreenState extends State<PendingPostScreen> {
                     if(index != vehicleIndex){
                       vehicleIndex = index;
 
-                      index = vehicleIndex!;
+                      index = vehicleIndex;
 
                       print(vehicleIndex);
                       if(mounted) {
